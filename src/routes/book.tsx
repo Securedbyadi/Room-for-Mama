@@ -95,7 +95,7 @@ function Book() {
       {step === "times" && parsed && (
         <>
           <div>
-            <h1 className="t-title">Three times that fit</h1>
+            {slots.length > 0 && <h1 className="t-title">Three times that fit</h1>}
             <p className="mt-2 text-ink-muted">
               Times in {zoneLabel(parsed.zone)}.{" "}
               <button
