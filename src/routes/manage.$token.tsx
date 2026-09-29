@@ -187,13 +187,12 @@ function MakeRoomOffer({ token, onDone }: { token: string; onDone: () => void })
   const p = q.data.price;
   return (
     <section className="flex flex-col gap-4">
-      <h2 className="t-title">Make Room</h2>
-      <p className="text-ink-muted">Four half hours, one a week.</p>
       <Drawing name="illo-the-chair" />
+      <div><h2 className="t-display">Four half hours,<br />one a week</h2><p className="mt-2 font-semibold text-ink-muted">One weekly time, shown in your time.</p></div>
       {plan.length === 4 ? <MakeRoomPlan plan={plan} zone={zone} /> : <p>No weekly time fits just now. I’ll be in touch.</p>}
-      {p && <p className="rounded-2xl bg-sunk p-4 t-time">{p.currency === "PKR" ? `PKR ${p.amount.toLocaleString("en")}` : `US$${p.amount}`}</p>}
+      {p && <p className="t-display">{p.currency === "PKR" ? `PKR ${p.amount.toLocaleString("en")}` : `US$${p.amount}`} <span className="font-body text-[17px] font-semibold">for all four</span></p>}
       {plan.length === 4 && (
-        <ButtonMain onClick={async () => { await hold({ data: { token } }); onDone(); }}>Book all four</ButtonMain>
+        <div><ButtonMain onClick={async () => { await hold({ data: { token } }); onDone(); }}>Book all four</ButtonMain><p className="mt-3 text-center font-semibold text-ink-muted">Held for 48 hours while you pay.</p></div>
       )}
     </section>
   );
