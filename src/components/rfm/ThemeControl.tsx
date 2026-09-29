@@ -16,6 +16,33 @@ function applyMode(mode: ThemeMode) {
   document.documentElement.style.colorScheme = mode === "day" ? "light" : mode === "night" ? "dark" : "light dark";
 }
 
+/** Round day/night switch. Stays on Auto until she taps; then flips to the other look and remembers it. */
+export function ThemeRound({ className = "" }: { className?: string }) {
+  const [dark, setDark] = useState(false);
+  useEffect(() => {
+    const mode = readMode();
+    applyMode(mode);
+    setDark(mode === "night" || (mode === "auto" && window.matchMedia("(prefers-color-scheme: dark)").matches));
+  }, []);
+  const flip = () => {
+    const next: ThemeMode = dark ? "day" : "night";
+    applyMode(next);
+    window.localStorage.setItem(STORAGE_KEY, next);
+    setDark(!dark);
+  };
+  return (
+    <button
+      type="button"
+      onClick={flip}
+      aria-label={dark ? "Switch to day" : "Switch to night"}
+      className={`relative grid h-14 w-14 place-items-center rounded-full border-2 border-ink bg-paper ${className}`}
+    >
+      <span className={`theme-swap absolute ${dark ? "opacity-0" : "opacity-100"}`}><Icon name="icon-day" size={28} /></span>
+      <span className={`theme-swap absolute ${dark ? "opacity-100" : "opacity-0"}`}><Icon name="icon-night" size={28} /></span>
+    </button>
+  );
+}
+
 export function ThemeControl({ compact = false }: { compact?: boolean | undefined }) {
   const [mode, setMode] = useState<ThemeMode>("auto");
 
