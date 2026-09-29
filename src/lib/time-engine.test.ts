@@ -149,7 +149,7 @@ describe("moving a call", () => {
 
 describe("notice and reach", () => {
   const all = (noticeH: number, extra = {}) =>
-    findSlots({ from: NOW, motherZone: KHI, durationMin: 20, noticeH, count: 100, onePerDay: false, ...extra });
+    findSlots({ from: NOW, motherZone: KHI, durationMin: 20, noticeH, count: 1000, onePerDay: false, ...extra });
 
   it("new calls need 6 h notice", () => {
     const slots = all(6);
