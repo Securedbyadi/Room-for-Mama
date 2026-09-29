@@ -42,7 +42,7 @@ export function useDeals(): Deal[] {
 function CardFace({ deal, alwaysLine }: { deal: Deal; alwaysLine?: boolean }) {
   return (
     <>
-      <Drawing name={deal.drawing} className={`${deal.drawing === "illo-her-half-hour" ? "home-steam" : ""} h-[255px] !border-0 [&>div]:h-full [&>div]:p-2`} />
+      <Drawing name={deal.drawing} className={`${deal.drawing === "illo-her-half-hour" ? "home-steam" : ""} fan-art h-[255px] !border-0 [&>div]:h-full [&>div]:p-2`} />
       <h2 className="home-card-title mt-3 px-1">{deal.title}</h2>
       <div className={alwaysLine ? "px-1" : "fan-more px-1"}>
         <p className="mt-1 text-[15px] leading-[22px]">{deal.line}</p>

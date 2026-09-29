@@ -399,10 +399,12 @@ button[aria-pressed="true"] .theme-icon { opacity: 1; }
 }
 .fan-card {
   --r: 0deg; --x: 0px; --apart: 0px;
+  overflow: hidden;
   transform: translateX(var(--x)) rotate(var(--r));
   transition: transform 320ms ease-out, box-shadow 160ms ease-out;
   animation: rfm-deal 480ms ease-out both;
 }
+.fan-art { transition: height 320ms ease-out; }
 .fan-0 { --r: -8deg; --x: -180px; --apart: -34px; z-index: 1; animation-delay: 0ms; }
 .fan-1 { --r: -1.5deg; --x: 0px; z-index: 2; animation-delay: 80ms; }
 .fan-2 { --r: 6.5deg; --x: 180px; --apart: 34px; z-index: 3; animation-delay: 160ms; box-shadow: 6px 6px 0 0 var(--peach); }
@@ -412,6 +414,7 @@ button[aria-pressed="true"] .theme-icon { opacity: 1; }
   z-index: 10; box-shadow: 4px 4px 0 0 var(--peach); outline-offset: 4px;
 }
 .fan-card:hover .fan-more, .fan-card:focus-visible .fan-more { max-height: 120px; opacity: 1; }
+.fan-card:hover .fan-art, .fan-card:focus-visible .fan-art { height: 170px; }
 .fan:has(.fan-card:hover, .fan-card:focus-visible) .fan-card:not(:hover):not(:focus-visible) {
   transform: translateX(calc(var(--x) + var(--apart))) rotate(var(--r));
 }
@@ -463,7 +466,7 @@ button[aria-pressed="true"] .theme-icon { opacity: 1; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .fan-card, .logo-rise, .theme-swap, .fan-more, .rfm-button, .micro-link, .micro-card, .form-illustration, .final-illustration, .language-icon-card { animation: none; transition: none; }
+  .fan-card, .fan-art, .logo-rise, .theme-swap, .fan-more, .rfm-button, .micro-link, .micro-card, .form-illustration, .final-illustration, .language-icon-card { animation: none; transition: none; }
   ::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*) { animation: none !important; }
 }
 
