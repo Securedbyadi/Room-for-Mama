@@ -370,7 +370,7 @@ button[aria-pressed="true"] .theme-icon { opacity: 1; }
 }
 .fan-card, .rfm-deal-card {
   --ink: #34402a; --ink-muted: #5b6450; --line: #e2d6c3;
-  background: #fbf6ee; color: #34402a; border: 2px solid #34402a; border-radius: 22px; display: block;
+  background: #fbf6ee; color: #34402a; border: 2px solid #34402a; border-radius: 22px;
 }
 .fan-card {
   --r: 0deg; --x: 0px; --apart: 0px;

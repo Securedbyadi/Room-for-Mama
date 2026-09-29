@@ -61,7 +61,7 @@ function Fan({ deals }: { deals: Deal[] }) {
           key={d.to}
           to={d.to}
           viewTransition
-          className={`fan-card fan-${i} absolute top-10 left-1/2 w-[260px] -ml-[130px] p-3`}
+          className={`fan-card fan-${i} block absolute top-10 left-1/2 w-[260px] -ml-[130px] p-3`}
           style={{ viewTransitionName: d.vt }}
         >
           <CardFace deal={d} />
@@ -84,7 +84,7 @@ function Deck({ deals }: { deals: Deal[] }) {
     <div className="deck">
       <div ref={ref} onScroll={onScroll} className="-mx-5 flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-pl-5 px-5 pt-2 pb-3 [scrollbar-width:none]">
         {deals.map((d) => (
-          <Link key={d.to} to={d.to} viewTransition className="rfm-deal-card w-[80%] shrink-0 snap-start p-3" style={{ viewTransitionName: d.vt }}>
+          <Link key={d.to} to={d.to} viewTransition className="rfm-deal-card block w-[80%] shrink-0 snap-start p-3" style={{ viewTransitionName: d.vt }}>
             <CardFace deal={d} alwaysLine />
           </Link>
         ))}
