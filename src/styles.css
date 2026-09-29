@@ -328,10 +328,6 @@
 .anim-sheet {
   animation: rfm-sheet-rise 380ms ease-out both;
 }
-.home-steam svg #steam {
-  animation: rfm-steam 3s ease-in-out infinite;
-  transform-origin: center;
-}
 @supports (animation-timeline: view()) {
   .section-reveal {
     animation: rfm-reveal 320ms ease-out both;
@@ -462,7 +458,7 @@ button[aria-pressed="true"] .theme-icon { opacity: 1; }
   .rfm-splash > * { width: min(72vw, 240px); height: 160px; }
   .rfm-splash::before { width: min(54vw, 190px); }
   .rfm-splash .rfm-drawing > div { height: 156px; padding: 4px; }
-  .rfm-splash .rfm-drawing svg { max-height: 148px; width: auto; }
+  .rfm-splash .rfm-drawing img { max-height: 148px; width: auto; }
   .rfm-deal-card { min-height: 390px; }
 }
 
@@ -474,7 +470,6 @@ button[aria-pressed="true"] .theme-icon { opacity: 1; }
 @media (prefers-reduced-motion: reduce) {
   .anim-fade,
   .anim-sheet,
-  .home-steam svg #steam,
   .section-reveal,
   .slot-selected,
   .mug-next-motion::after,
