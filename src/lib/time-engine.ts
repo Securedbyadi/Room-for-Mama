@@ -108,7 +108,7 @@ export function offsetMin(zone: string, date: Date): number {
 
 function parseHM(hm: string): [number, number] {
   const [h, m] = hm.split(":").map(Number);
-  return [h, m];
+  return [h ?? 0, m ?? 0];
 }
 
 /** Does a call of `durationMin` starting at `start` fit inside a coach window? */
