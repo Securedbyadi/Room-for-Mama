@@ -3,3 +3,8 @@
 - [x] Add illustrated split layouts to mother forms and outcomes
 - [x] Add reduced-motion-safe micro animations
 - [ ] Verify day/night desktop/phone and working flows
+- [ ] Restore every pictured home section below the full-screen hero
+- [ ] Add SafetyNote and country helplines to every public page footer
+- [ ] Use the exact assigned brand drawings/icons for each mother-flow step
+- [ ] Limit micro-interactions to the approved motion list
+- [ ] Keep approved plan context in docs and rely on connected GitHub auto-sync for every change
