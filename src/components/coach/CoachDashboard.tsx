@@ -3,6 +3,7 @@
  * Nothing here touches the real calendar or email.
  */
 import { useEffect, useMemo, useState, type ReactNode } from "react";
+import { createPortal } from "react-dom";
 import { ButtonMain, ButtonOutline, Chip, Drawing, Icon, Logo, type IconName } from "../rfm/brand";
 import { ThemeRound } from "../rfm/ThemeControl";
 import { MakeRoomPlan } from "../rfm/MakeRoomPlan";
@@ -211,7 +212,7 @@ function Sheet({ children, onClose, title }: { children: ReactNode; onClose: () 
     window.addEventListener("keydown", k);
     return () => window.removeEventListener("keydown", k);
   }, [onClose]);
-  return (
+  return createPortal(
     <div className="fixed inset-0 z-50" role="dialog" aria-modal="true" aria-label={title}>
       <button type="button" aria-label="Close" onClick={onClose} className="anim-fade absolute inset-0 bg-[#1F2619]/40" />
       <div className="coach-sheet absolute inset-x-0 bottom-0 flex max-h-[88svh] flex-col gap-4 overflow-y-auto rounded-t-[28px] bg-paper p-6 shadow-[0_-8px_32px_rgba(31,38,25,0.18)] lg:inset-y-0 lg:right-0 lg:left-auto lg:max-h-none lg:w-[440px] lg:rounded-t-none lg:rounded-l-[28px]">
@@ -221,7 +222,8 @@ function Sheet({ children, onClose, title }: { children: ReactNode; onClose: () 
         </div>
         {children}
       </div>
-    </div>
+    </div>,
+    document.body,
   );
 }
 
