@@ -163,7 +163,7 @@ describe("notice and reach", () => {
     const slots = all(6);
     const last = slots[slots.length - 1]!;
     expect(last.start.getTime() - NOW.getTime()).toBeLessThanOrEqual(42 * 86400e3);
-    expect(last.start.getTime() - NOW.getTime()).toBeGreaterThan(40 * 86400e3);
+    expect(last.start.getTime() - NOW.getTime()).toBeGreaterThan(39 * 86400e3) // Fri 20 Nov; Mon 23 Nov is past 6 weeks;
   });
 
   it("offers one time per day", () => {
