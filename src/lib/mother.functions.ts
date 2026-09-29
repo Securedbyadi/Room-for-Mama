@@ -342,7 +342,9 @@ export const moveMyCall = createServerFn({ method: "POST" })
     const newStart = new Date(data.start);
     const newEnd = new Date(newStart.getTime() + dur);
     // A move the coach started (her Baby's up) counts on the coach's side, not hers.
-    const coachMove = call.coach_move_pending;
+    // Only when she picks one of the exact times the coach offered.
+    const offered = (call.coach_move_options ?? []) as string[];
+    const coachMove = call.coach_move_pending && offered.some((o) => new Date(o).getTime() === new Date(data.start).getTime());
     const result = te.moveCall({
       call: { start: oldStart, end: new Date(call.ends_at) },
       movesSoFar: coachMove ? 0 : call.moves_used,
@@ -371,7 +373,9 @@ export const moveMyCall = createServerFn({ method: "POST" })
       .update({
         starts_at: newStart.toISOString(),
         ends_at: newEnd.toISOString(),
-        ...(coachMove ? { coach_move_pending: false } : { moves_used: call.moves_used + 1 }),
+        ...(coachMove ? {} : { moves_used: call.moves_used + 1 }),
+        coach_move_pending: false,
+        coach_move_options: [],
         keep_spot_sent_at: null,
         keep_spot_confirmed_at: null,
         reminder_sent_at: null,
@@ -484,7 +488,7 @@ export const holdMakeRoom = createServerFn({ method: "POST" })
     const { s, weeks } = await proposePlan(r, db, mother);
     if (weeks.length !== 4) return { ok: false as const };
     const price = await priceFor(db, s, mother.zone);
-    const reference = `RM${Math.floor(100000 + Math.random() * 900000)}`;
+    const reference = await r.nextReference(db);
     const { data: plan, error } = await db
       .from("plans")
       .insert({

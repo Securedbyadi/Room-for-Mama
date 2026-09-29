@@ -130,6 +130,9 @@ export const resolveNeed = createServerFn({ method: "POST" })
       await r.queueEmail(db, { motherId: need.mother_id, to: s.coach_email, kind: "coach-invite", subject: r.callTitle("make_room"), lines: ["Four half hours confirmed."], ics: invite });
       await r.logAutomation(db, s, "payment", need.mother_id);
     }
+    if (need.kind === "refund" && need.plan_id) {
+      await db.from("plans").update({ status: "refunded" }).eq("id", need.plan_id);
+    }
     if (need.kind === "third_move" && need.call_id) {
       // One more free move for her.
       await db.from("calls").update({ moves_used: 1 }).eq("id", need.call_id);
@@ -216,7 +219,7 @@ export const coachBabysUp = createServerFn({ method: "POST" })
     const opts = te.babysUpOptions({ call: { start: new Date(call.starts_at), end: new Date(call.ends_at) }, now: new Date(), motherZone: m.zone, durationMin: (new Date(call.ends_at).getTime() - new Date(call.starts_at).getTime()) / 60_000, rules: r.rulesFrom(s), busy: await r.busyCalls(db) });
     const origin = await r.requestOrigin();
     const { data: link } = await db.from("mother_links").select("token").eq("mother_id", call.mother_id).maybeSingle();
-    await db.from("calls").update({ coach_moves_used: call.coach_moves_used + 1, coach_move_pending: true }).eq("id", call.id);
+    await db.from("calls").update({ coach_moves_used: call.coach_moves_used + 1, coach_move_pending: true, coach_move_options: opts.map((o) => o.start.toISOString()) }).eq("id", call.id);
     await db.from("move_log").insert({ call_id: call.id, moved_by: "coach", from_at: call.starts_at, to_at: null });
     await r.queueEmail(db, { motherId: call.mother_id, to: m.email, kind: "coach-babys-up", subject: r.callTitle(call.kind), lines: ["My baby’s up, so I need to move our call. Pick whichever of these suits you:", ...opts.map((o) => `${te.fmtLong(o.start, m.zone)}, your time`)], action: { label: "Pick a new time", url: link ? r.manageUrl(origin, link.token) : origin } });
     await r.logAutomation(db, s, "move", call.mother_id);
