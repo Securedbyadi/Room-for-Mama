@@ -534,7 +534,10 @@ export const cancelMine = createServerFn({ method: "POST" })
       await db.from("calls").update({ status: "cancelled" }).eq("plan_id", plan.id).in("status", ["held", "booked"]).gte("starts_at", now);
       await db.from("plans").update({ status: pause ? "paused" : "cancelled" }).eq("id", plan.id);
       await db.from("mothers").update({ status: pause ? "paused" : "offered" }).eq("id", mother.id);
-      return { kind: pause ? ("paused" as const) : ("refund" as const) };
+      // She has paid and cancelled before the first call: a refund for the coach to send.
+      const paid = plan.status === "paid_pending" || plan.status === "confirmed";
+      if (!pause && paid) await db.from("needs_you").insert({ kind: "refund", mother_id: mother.id, plan_id: plan.id });
+      return { kind: pause ? ("paused" as const) : paid ? ("refund" as const) : ("cancelled" as const) };
     }
     await db.from("calls").update({ status: "cancelled" }).eq("mother_id", mother.id).in("status", ["held", "booked"]).gte("starts_at", now);
     return { kind: "cancelled" as const };
