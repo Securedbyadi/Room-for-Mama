@@ -1,49 +1,41 @@
-# Room for Mama: build plan
+# Room for Mama — build plan
 
-All brand files are already in public/brand (logos, 5 drawings, 23 icons, app-icon PNGs). They are used as they are, never redrawn. Words follow the Feel and words section everywhere, table names included (mothers, calls, plans, never clients or sessions).
+Approved order: Phase 0 → time engine + tests → all six screens on demo data → Lovable Cloud (tables, real bookings, emails).
 
-## Phase 0: foundation (before any screen)
+Placeholders for Meet link, payment details and coach email (coach fills them in Rules later). No email domain yet — emails show as a preview page. "Not a fit" note is final copy (below).
 
-1. Look: colour tokens for day and night (night follows the phone), shadcn mapping (primary = main button, secondary/muted/accent = sunk, ring ink, border line, input line-strong, destructive clay). Fraunces (SOFT 100, WONK 1) and Figtree from Google Fonts, the type scale, radii, focus ring, motion (320 ms fades, sheet rise, steam drift, reduced motion).
-2. Offset print: a single `offset` style, 2 px ink border and a hard 4 px shadow, peach on the website, butter in the coach app.
-3. Home-screen: web manifest with rfm-app-icon-192/-512, apple-touch-icon 180, rfm-favicon. Manifest only, no offline mode.
-4. Shared parts, built once: Logo (day/night swap), Icon (inlined SVG, currentColor), Drawing (always on a light paper card), Button, Slot, MomentField, BookedCard, BabysUpSheet, MakeRoomTimeline, NeedsYouCard, TimeGivenBack, SafetyNote (with country helplines).
+## Phase 0 — look and shared pieces (done)
+- Day/night colour tokens, Fraunces (SOFT 100, WONK 1) + Figtree, offset print, radii, motion, reduced motion.
+- Shared components: Logo, Icon, Drawing, Button, Slot, MomentField, BookedCard, BabysUpSheet, MakeRoomTimeline, NeedsYouCard, TimeGivenBack, SafetyNote, Page.
+- Favicon, manifest, app icon, fonts in the root route.
 
-## Phase 1: hello call booking
+## Phase 1 — time engine (done)
+- Pure TypeScript module `src/lib/time-engine.ts`: zones, windows, buffers, slot finding, weekly planning, clock changes, Baby's up options, formatting.
+- Vitest suite with the plan's six test cases — all passing.
 
-1. Lovable Cloud: settings (every rule in project knowledge, owner-editable), helplines table (seeded), mothers, calls, plans, payments, moves, waitlist, private_notes (coach only), automation_log, manage tokens. RLS on every table; visitors read nothing directly. A database constraint stops two calls overlapping (including buffer) on the coach calendar. Rate limits: 5 per email, 20 per IP, per hour.
-2. Time engine as pure functions with unit tests covering every case in the brief (Sara's three offers, Make Room across the UK clock change, Toronto clock change moving to 12:00, a call ending exactly at 23:00, Maryam's Baby's up, one per day, max 3 a day, 6 h / 1 h notice, 6 weeks ahead).
-3. Home page (screen 1), then the quiet-moment page (screen 2): her words go to Lovable AI, only days, times and city are kept; her zone detected with a Change link; 3 earliest times; waitlist when none fit.
-4. Book: first name, email, optional phone, then "You're in" (screen 3).
-5. Emails from hello@roomformama.com: one branded template, confirmation with calendar invite and video link; the coach gets the same invite. Nothing personal in subjects.
-6. 5-minute job: Keep my spot links 24 h before, release at 3 h to the first on the waitlist, end expired holds. Each action writes automation_log.
+## Phase 2 — six screens on demo data (in progress)
+Mother's flow:
+1. Home (`/`) — hero, drawing, "Book a free hello call". Done.
+2. Pick a time (`/book`) — quiet-moment question, "Try it as a mama in Manchester", 3 offered times, name/email/phone form. Done on demo data.
+3. You're in (`/booked`) — confirmation, Add to my calendar (.ics), Baby's up sheet. Done on demo data.
+4. Make Room (`/make-room`) — all 4 weekly calls at one time, clock-change notes, "Book all four", held state with placeholder payment details, "I've paid" with reference.
+5. Baby's up — sheet with up to 3 new times, "Move my call", third move goes to Needs you (demo state).
+6. Email preview page (`/emails`) — the branded template rendered for each email kind (confirmation, Keep my spot, reminder, thank-you, offer, Not a fit), since no email domain yet.
 
-## Phase 2: Make Room and moving
+Coach app (demo data, no login yet):
+- Today (`/coach`) — her calls in her time with each mother's local time, her own Baby's up, Needs you exceptions, "Offer Make Room" / "Not a fit", one-line small step.
+- "Not a fit" note (final): "Thank you for the hello call. I don't think Make Room is the right fit for you just now, and I'd rather say so kindly than take your time or money. If you ever want another chat, I'm here."
 
-1. Coach "Offer Make Room" sends her the Make Room page (screen 4): four weekly times in both windows, clock-change notes, price by zone and founding price for the first 10.
-2. Book all four: held 48 h, payment details (bank, Raast, JazzCash, Wise), "I've paid" with reference RM####, coach confirms in one tap, unpaid holds release.
-3. Reminders 30 min before with Baby's up; the Baby's up sheet (screen 5) with up to 3 new times; moves update invites; twice per side, then a Needs you item.
-4. Thank-you email with the small step after each call.
-5. Manage link (token, no login): calls, move, pay, cancel (refund / pause rules). Privacy page.
+Demo rules: demo rows only, never the real calendar or email; no real people.
 
-## Phase 3: coach app
+## Phase 3 — Lovable Cloud (after the screens work)
+- Enable Lovable Cloud; tables: settings (Meet link, payment details, coach email, minutes), mothers, calls, plans, payments, waitlist, private notes, automation_log, helplines (seeded).
+- RLS on every table; visitors never read tables; mother actions via server functions checking the manage token (random, 32+ chars); no-double-booking constraint; rate limits (5 bookings/email, 20/IP per hour).
+- Real bookings, manage link, privacy page; Lovable AI for the quiet-moment extraction (store only days/times/city).
+- Emails via Lovable Cloud from hello@roomformama.com once the domain is set up (skipped for now).
+- 5-minute job (reminders, Keep my spot, releases, expired holds) and 07:00 Lahore digest; automation_log minutes as listed.
+- Coach login, Mothers/Rules/Given back tabs, Time given back totals, "Run today's automations now".
 
-1. Coach login, tabs Today (screen 6), Mothers, Rules, Given back.
-2. Today with each mother's local time, Join, her own Baby's up, Needs you exceptions, Offer Make Room / Not a fit, small step line.
-3. Mothers: calls, payments, private notes, Share helplines. Rules editor for settings and helplines.
-4. Time given back (week, month, all time, estimated) and feed; 07:00 Lahore digest; "Run today's automations now".
-5. Demo: 5 weeks of sample calls in Lahore, Dubai, Manchester, Toronto, some moved, 3 finished plans, Wednesday 14 October matching screen 6 (Hina 14:30, Sara 15:30, Maryam 21:00 moved, Emily RM1047 US$80 in Needs you). "Try it as a mama in Manchester" fills the sample message. Demo rows never touch the real calendar or email.
-
-## Things I need from you (placeholders until then)
-
-- The coach's Google Meet link.
-- Payment details: bank account, Raast ID, JazzCash number, Wise details.
-- The coach's login email.
-- Sending from hello@roomformama.com needs the roomformama.com domain set up for email; I'll open that step when we reach emails.
-- The "Not a fit" note, or I'll draft one in her voice for you to edit.
-
-## Technical notes
-
-- TanStack Start with server functions for all mother actions (token checked server-side); scheduled jobs call protected public endpoints.
-- Time engine in a pure module using Intl time-zone data, tested with Vitest.
-- Calendar invites as .ics attachments.
+## Waiting on the coach (placeholders until then)
+- Google Meet link, payment details (bank, Raast, JazzCash, Wise), coach login email — all editable later in Rules.
+- roomformama.com email domain — skipped for now.
