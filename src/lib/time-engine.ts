@@ -144,7 +144,7 @@ export function isFree(
   return !busy.some((b) => b.start.getTime() < e && b.end.getTime() > s);
 }
 
-function callsOnCoachDay(rules: CoachRules, busy: BusyInterval[], day: Date): number {
+export function callsOnCoachDay(rules: CoachRules, busy: BusyInterval[], day: Date): number {
   const p = localParts(rules.zone, day);
   return busy.filter((b) => {
     const bp = localParts(rules.zone, b.start);
