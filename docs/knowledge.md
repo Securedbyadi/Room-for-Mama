@@ -70,13 +70,13 @@ Colours day / night (night follows the phone):
 - ink #34402A / #F6EEE3; ink-muted #5B6450 / #C4C9B5; line #E2D6C3 / #3A4531; line-strong #8E8A74 / #7F8A70
 - butter #F5D06F: selected time, next call. peach #F3B08F: warmth. sage #9BAF86: done. butter-soft #FAE8B4 / #4A4424 (held times, clock notes), peach-soft #F9DCCB / #4A3A2E, sage-soft #DDE5D2 / #34422C. clay #A4452B / #F0A08A: errors only, with a word.
 - Main button: ink, page text; at night butter, #1F2619 text. Other text on butter, peach or sage: #34402A. They are never text colours.
-- No blue, pure white or black, gradients or baby pastels. shadcn: primary = main button; secondary, muted, accent = sunk; ring ink; border line; input line-strong; destructive clay.
+- No blue, pure white or black, gradients or baby pastels.
 The one bold idea, offset print: the selected time, "You’re in" and Needs you get a 2 px ink border and a hard 4 px shadow down-right, no blur, in peach (butter in the coach app). No other shadows but the Baby’s up sheet.
 Type (Google Fonts): Fraunces, SOFT 100, WONK 1, for headings: display 40/44 700, title 28/34 700, heading 21/28 650; "for you." in italic 600. Figtree for the rest: body 17/26, buttons 17/600, captions 13/600. Times: Figtree 600, tabular, with the zone.
 Brand files in public/brand (or attached), used as they are, never redrawn, recoloured or retyped. Logo: rfm-logo-horizontal (night: -night) in the header; rfm-favicon; rfm-app-icon (home-screen icon).
 Drawings, on light #FBF6EE cards even at night: illo-her-half-hour (home), illo-tea-warm (You’re in), illo-baby-up (Baby’s up), illo-the-chair (Make Room), illo-tea-cold (empty states).
 Icons: the 23 SVGs, inlined, 22–48 px; ink is currentColor, details on colour blocks stay #34402A. MakeRoomTimeline: icon-mug-done (finished), icon-mug-next, icon-mug-waiting (later).
-Layout: one column, max 480 px, 20 px gutter; one full-width main button per screen, low on app screens; 48 px tap targets; 64 px slots. Radius: slots and inputs 16, cards 22, buttons pill, sheet top 28. Focus: 2 px page gap, 2 px ink.
+Layout: home is a website (full-width sections to 1120 px on desktop, one column on phones); booking pages one centred column, max 480 px, 20 px gutter; one full-width main button per screen, low on app screens; 48 px tap targets; 64 px slots. Radius: slots and inputs 16, cards 22, buttons pill, sheet top 28. Focus: 2 px page gap, 2 px ink.
 Motion: 320 ms fades; the Baby’s up sheet rises 24 px in 380 ms; the home drawing’s #steam drifts up on a slow 3 s loop; nothing bounces; honour reduced motion.
 
 ## Integrity and security
