@@ -452,6 +452,38 @@ button[aria-pressed="true"] .theme-icon { opacity: 1; }
 .micro-card:hover { transform: translateY(-4px); }
 @keyframes rfm-illustration-arrive { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
 
+/* Animated phone mockup in the 3 a.m. band: one calm 9 s loop */
+.bup-scene { animation: bup-scene 9s ease-in-out infinite; }
+.bup-sheet { animation: bup-sheet 9s ease-in-out infinite; }
+.bup-slot { animation: bup-slot 9s ease-in-out infinite; }
+.bup-slot-0 { animation-delay: 0ms; }
+.bup-slot-1 { animation-delay: 90ms; }
+.bup-slot-2 { animation-delay: 180ms; }
+.bup-selected { animation: bup-selected 9s ease-in-out infinite; }
+.bup-cta { animation: bup-cta 9s ease-in-out infinite; }
+@keyframes bup-scene {
+  0%, 4% { opacity: 0; }
+  10%, 88% { opacity: 1; }
+  96%, 100% { opacity: 0; }
+}
+@keyframes bup-sheet {
+  0%, 4% { transform: translateY(48px); }
+  14%, 100% { transform: translateY(0); }
+}
+@keyframes bup-slot {
+  0%, 14% { opacity: 0; transform: translateY(10px); }
+  22%, 100% { opacity: 1; transform: translateY(0); }
+}
+@keyframes bup-selected {
+  0%, 30% { box-shadow: 0 0 0 0 var(--peach); }
+  38%, 100% { box-shadow: 4px 4px 0 0 var(--peach); }
+}
+@keyframes bup-cta {
+  0%, 52% { transform: scale(1); }
+  56% { transform: scale(.97); }
+  60%, 100% { transform: scale(1); }
+}
+
 @media (max-width: 1023px) {
   .rfm-split-page { align-content: start; }
   .rfm-splash { min-height: 160px; padding: 8px; }
@@ -463,7 +495,8 @@ button[aria-pressed="true"] .theme-icon { opacity: 1; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .fan-card, .fan-art, .logo-rise, .theme-swap, .fan-more, .rfm-button, .micro-link, .micro-card, .form-illustration, .final-illustration, .language-icon-card { animation: none; transition: none; }
+  .fan-card, .fan-art, .logo-rise, .theme-swap, .fan-more, .rfm-button, .micro-link, .micro-card, .form-illustration, .final-illustration, .language-icon-card,
+  .bup-scene, .bup-sheet, .bup-slot, .bup-selected, .bup-cta { animation: none; transition: none; }
   ::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*) { animation: none !important; }
 }
 
