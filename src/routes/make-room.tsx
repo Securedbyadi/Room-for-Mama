@@ -17,9 +17,9 @@ export const Route = createFileRoute("/make-room")({
     s["mama"] === "toronto" ? { mama: "toronto" } : {},
   head: () => ({
     meta: [
-      { title: "Make Room — Room for Mama" },
+      { title: "Make Room | Room for Mama" },
       { name: "description", content: "Four half hours, one a week." },
-      { property: "og:title", content: "Make Room — Room for Mama" },
+      { property: "og:title", content: "Make Room | Room for Mama" },
       { property: "og:description", content: "Four half hours, one a week." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
@@ -46,23 +46,22 @@ function MakeRoom() {
   });
 
   return (
-    <Page>
-      <div>
-        <h1 className="t-title">Make Room</h1>
-        <p className="mt-2 text-ink-muted">Four half hours, one a week.</p>
-      </div>
-
+    <Page headerAction={<span className="t-caption uppercase tracking-[0.12em] text-ink-muted">Make Room</span>}>
       <Drawing name="illo-the-chair" />
+
+      <div>
+        <h1 className="t-display">Four half hours,<br />one a week</h1>
+        <p className="mt-2 font-semibold text-ink-muted">One weekly time, shown in your time.</p>
+      </div>
 
       <MakeRoomPlan plan={plan} zone={ZONE} />
 
-      <p className="rounded-2xl bg-sunk p-4 t-time">
-        {ZONE === "Asia/Karachi" ? "PKR 8,000" : "US$80"}
-      </p>
+      <div><p className="t-display">{ZONE === "Asia/Karachi" ? "PKR 8,000" : "US$80"} <span className="font-body text-[17px] font-semibold">for all four</span></p><p className="mt-2 inline-block rounded-full bg-peach-soft px-4 py-2 font-semibold">Founding price, usually {ZONE === "Asia/Karachi" ? "PKR 12,000" : "US$120"}</p></div>
 
       {stage === "offer" && (
         <div className="mt-auto pt-4">
           <ButtonMain onClick={() => setStage("held")}>Book all four</ButtonMain>
+          <p className="mt-3 text-center font-semibold text-ink-muted">Held for 48 hours while you pay.</p>
         </div>
       )}
 

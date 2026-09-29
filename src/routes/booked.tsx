@@ -15,9 +15,9 @@ export const Route = createFileRoute("/booked")({
   }),
   head: () => ({
     meta: [
-      { title: "You’re in — Room for Mama" },
+      { title: "You’re in | Room for Mama" },
       { name: "description", content: "Your hello call is booked." },
-      { property: "og:title", content: "You’re in — Room for Mama" },
+      { property: "og:title", content: "You’re in | Room for Mama" },
       { property: "og:description", content: "Your hello call is booked." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
@@ -86,13 +86,16 @@ function Booked() {
   };
 
   return (
-    <Page>
-      <Card offset="peach" className="flex flex-col gap-3">
-        <Drawing name="illo-tea-warm" className="youre-in-rise" />
-        <h1 className="t-title">You’re in.</h1>
-        <p className="t-time text-[17px]">{fmtLong(current, zone)}, your time.</p>
+    <Page headerAction={<a href="#my-call" className="font-semibold underline underline-offset-8">My calls</a>}>
+      <Drawing name="illo-tea-warm" className="youre-in-rise" />
+      <Card offset="peach" className="flex flex-col gap-3" >
+        <div className="flex items-center gap-3"><Icon name="icon-done" size={30} /><h1 className="t-title">You’re in.</h1></div>
+        <div id="my-call">
+          <p className="t-time text-[20px]">{fmtLong(current, zone)}</p>
+          <p className="t-caption mt-1 text-ink-muted">your time · 20 minutes · video call</p>
+        </div>
         <p>
-          If the baby wakes, tap Baby’s up and pick another time. No need to explain.
+          If the baby wakes, tap <strong>Baby’s up</strong> and pick another time. No need to explain.
         </p>
       </Card>
 
@@ -106,9 +109,10 @@ function Booked() {
         <a href={icsUrl(current, name)} download="hello-call.ics" className="block">
           <ButtonOutline>Add to my calendar</ButtonOutline>
         </a>
-        <ButtonMain onClick={() => { setPicked(options[0] ?? null); setSheetOpen(true); }}>
-          <Icon name="icon-babys-up" size={22} /> Baby’s up
-        </ButtonMain>
+        <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-4">
+          <p className="font-semibold text-ink-muted">The video link is in your email.</p>
+          <button type="button" className="min-h-12 font-semibold underline underline-offset-4" onClick={() => { setPicked(options[0] ?? null); setSheetOpen(true); }}>Baby’s up</button>
+        </div>
         <SafetyNote zone={zone} />
       </div>
 
@@ -125,7 +129,7 @@ function Booked() {
             aria-label="Baby’s up"
           >
             <div className="mb-4 flex items-start gap-3">
-               <Drawing name="illo-baby-up" className="baby-awake-once w-20 shrink-0" />
+               <Drawing name="illo-baby-up" className="baby-awake-once aspect-square w-20 shrink-0 rounded-full [&>div]:p-1" />
               <div>
                 <h2 className="t-heading">No problem.</h2>
                 <p className="text-ink-muted">Babies don’t read calendars.</p>
@@ -138,6 +142,7 @@ function Booked() {
                   key={o.start.toISOString()}
                   label={fmtLong(o.start, zone)}
                   selected={picked?.start.getTime() === o.start.getTime()}
+                   marker
                   onClick={() => setPicked(o)}
                 />
               ))}

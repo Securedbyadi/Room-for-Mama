@@ -22,9 +22,9 @@ export const Route = createFileRoute("/manage/$token")({
   validateSearch: (s: Record<string, unknown>): { just?: "booked" | undefined } => (s["just"] === "booked" ? { just: "booked" } : {}),
   head: () => ({
     meta: [
-      { title: "Your calls — Room for Mama" },
+      { title: "Your calls | Room for Mama" },
       { name: "description", content: "See, move or pay for your calls." },
-      { property: "og:title", content: "Your calls — Room for Mama" },
+      { property: "og:title", content: "Your calls | Room for Mama" },
       { property: "og:description", content: "See, move or pay for your calls." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
@@ -77,14 +77,9 @@ function Manage() {
   const title = (k: string) => (k === "hello" ? "Hello call with Room for Mama" : "Half hour with Room for Mama");
 
   return (
-    <Page>
+    <Page headerAction={<span className="font-semibold underline underline-offset-8">My calls</span>}>
       {just === "booked" && next ? (
-        <Card offset="peach" className="flex flex-col gap-3">
-          <Drawing name="illo-tea-warm" className="youre-in-rise" />
-          <h1 className="t-title">You’re in.</h1>
-          <p className="t-time text-[17px]">{fmtLong(new Date(next.starts_at), zone)}, your time.</p>
-          <p>If the baby wakes, tap Baby’s up and pick another time. No need to explain.</p>
-        </Card>
+        <><Drawing name="illo-tea-warm" className="youre-in-rise" /><Card offset="peach" className="flex flex-col gap-3"><div className="flex items-center gap-3"><Icon name="icon-done" size={30} /><h1 className="t-title">You’re in.</h1></div><div><p className="t-time text-[20px]">{fmtLong(new Date(next.starts_at), zone)}</p><p className="t-caption mt-1 text-ink-muted">your time · {next.kind === "hello" ? "20 minutes" : "half hour"} · video call</p></div><p>If the baby wakes, tap <strong>Baby’s up</strong> and pick another time. No need to explain.</p></Card></>
       ) : (
         <h1 className="t-title">Hello, {d.mother.firstName}</h1>
       )}
@@ -147,7 +142,7 @@ function BabysUpSheet({ token, call, zone, onClose, onMoved }: { token: string; 
     <div className="fixed inset-0 z-40 bg-ink/30" onClick={onClose} role="presentation">
       <div className="anim-sheet absolute inset-x-0 bottom-0 mx-auto w-full max-w-[480px] rounded-t-[28px] bg-paper p-5 pb-8 shadow-[0_-8px_24px_rgba(0,0,0,0.18)]" onClick={(e) => e.stopPropagation()} role="dialog" aria-label="Baby’s up">
         <div className="mb-4 flex items-start gap-3">
-          <Drawing name="illo-baby-up" className="baby-awake-once w-20 shrink-0" />
+           <Drawing name="illo-baby-up" className="baby-awake-once aspect-square w-20 shrink-0 rounded-full [&>div]:p-1" />
           <div>
             <h2 className="t-heading">No problem.</h2>
             <p className="text-ink-muted">Babies don’t read calendars.</p>
@@ -158,7 +153,7 @@ function BabysUpSheet({ token, call, zone, onClose, onMoved }: { token: string; 
           {q.isLoading && <p className="text-ink-muted">Finding times.</p>}
           {q.data?.length === 0 && <p>No open times just now. I’ll be in touch.</p>}
           {q.data?.map((o) => (
-            <Slot key={o.start} label={fmtLong(new Date(o.start), zone)} selected={chosen === o.start} onClick={() => setPicked(o.start)} />
+            <Slot key={o.start} label={fmtLong(new Date(o.start), zone)} sub={`your time, ${zone.split("/").at(-1)?.replaceAll("_", " ") ?? zone}`} selected={chosen === o.start} marker onClick={() => setPicked(o.start)} />
           ))}
         </div>
         <div className="mt-4">
