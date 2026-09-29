@@ -115,7 +115,7 @@ function Book() {
   };
 
   return (
-    <Page illustration={<Drawing key={`${step}-${illustrationName}`} name={illustrationName} className={`form-illustration ${illustrationName === "illo-her-half-hour" ? "home-steam" : ""}`} />}>
+    <Page illustration={<Drawing key={`${step}-${illustrationName}`} name={illustrationName} className={`form-illustration ${illustrationName === "illo-her-half-hour" ? "home-steam" : ""}`} bare />}>
       {step === "moment" && (
         <>
           <div>

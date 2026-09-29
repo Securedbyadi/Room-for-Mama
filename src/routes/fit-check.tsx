@@ -24,10 +24,10 @@ function FitCheck() {
   const [notFit, setNotFit] = useState<FitChoice | null>(null);
   const question = FIT_QUESTIONS[step];
   const stepIllustrations = [
-    <Drawing key="baby" name="illo-baby-up" className="form-illustration" />,
-    <Drawing key="day" name="illo-her-half-hour" className="form-illustration home-steam" />,
-    <div key="language" className="language-icon-card grid aspect-square place-items-center rounded-[22px] bg-paper"><Icon name="icon-hello-call" size={96} /></div>,
-    <Drawing key="video" name="illo-the-chair" className="form-illustration" />,
+    <Drawing key="baby" name="illo-baby-up" className="form-illustration" bare />,
+    <Drawing key="day" name="illo-her-half-hour" className="form-illustration home-steam" bare />,
+    <div key="language" className="language-icon-card grid aspect-square place-items-center"><Icon name="icon-hello-call" size={96} /></div>,
+    <Drawing key="video" name="illo-the-chair" className="form-illustration" bare />,
   ];
 
   const answer = (choice: FitChoice) => {
@@ -45,7 +45,7 @@ function FitCheck() {
 
   if (notFit) {
     return (
-      <Page illustration={<Drawing name="illo-tea-cold" className="final-illustration" />}>
+      <Page illustration={<Drawing name="illo-tea-cold" className="final-illustration" bare />}>
         <div>
           <p className="t-caption mb-2 text-ink-muted">Not the right fit just now</p>
           <h1 className="t-title">Thank you for checking.</h1>

@@ -90,16 +90,18 @@ export type DrawingName =
 export function Drawing({
   name,
   className = "",
+  bare = false,
 }: {
   name: DrawingName;
   className?: string;
+  bare?: boolean;
 }) {
   const raw = svgFor(drawingModules, "drawings", name);
   if (!raw) return null;
   return (
     <div
       className={`rfm-drawing rfm-${name} overflow-hidden ${className}`}
-      style={{ background: "#FBF6EE", borderRadius: 22, border: "1px solid var(--line)" }}
+      style={bare ? undefined : { background: "#FBF6EE", borderRadius: 22, border: "1px solid var(--line)" }}
     >
       <div
         className="flex items-center justify-center p-4 [&>svg]:h-auto [&>svg]:w-full"
