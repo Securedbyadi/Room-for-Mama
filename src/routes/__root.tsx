@@ -77,21 +77,36 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
     meta: [
       { charSet: "utf-8" },
       { name: "viewport", content: "width=device-width, initial-scale=1" },
-      { title: "Lovable App" },
-      { name: "description", content: "Lovable Generated Project" },
-      { name: "author", content: "Lovable" },
-      { property: "og:title", content: "Lovable App" },
-      { property: "og:description", content: "Lovable Generated Project" },
+      { title: "Room for Mama" },
+      {
+        name: "description",
+        content:
+          "Gentle routine coaching for mothers of babies and toddlers. Half an hour a week, with a mother who’s living it too.",
+      },
+      { property: "og:title", content: "Room for Mama" },
+      {
+        property: "og:description",
+        content:
+          "Gentle routine coaching for mothers of babies and toddlers. Half an hour a week, with a mother who’s living it too.",
+      },
       { property: "og:type", content: "website" },
-      { name: "twitter:card", content: "summary_large_image" },
-      { name: "twitter:site", content: "@Lovable" },
+      { name: "twitter:card", content: "summary" },
+      { name: "theme-color", content: "#F6EEE3" },
     ],
     links: [
       {
         rel: "stylesheet",
         href: appCss,
       },
-      { rel: "icon", href: "/favicon.ico", type: "image/x-icon" },
+      { rel: "icon", href: "/brand/logo/rfm-favicon.svg", type: "image/svg+xml" },
+      { rel: "apple-touch-icon", href: "/brand/logo/png/rfm-app-icon-180.png" },
+      { rel: "manifest", href: "/manifest.webmanifest" },
+      { rel: "preconnect", href: "https://fonts.googleapis.com" },
+      { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
+      {
+        rel: "stylesheet",
+        href: "https://fonts.googleapis.com/css2?family=Fraunces:ital,opsz,wght,SOFT,WONK@0,9..144,100..900,100,1;1,9..144,100..900,100,1&family=Figtree:wght@400;600;700&display=swap",
+      },
     ],
   }),
   shellComponent: RootShell,

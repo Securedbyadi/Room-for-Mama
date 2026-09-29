@@ -1,24 +1,46 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { ButtonMain, Drawing, Page } from "../components/rfm/brand";
+import { SafetyNote } from "../components/rfm/SafetyNote";
 
-// No head() here: the home route inherits title/description/og/twitter from
-// __root.tsx, and ships no og:image so serve-time hosting can inject the
-// project's social preview (explicit og:image or latest screenshot).
 export const Route = createFileRoute("/")({
-  component: Index,
+  head: () => ({
+    meta: [
+      { title: "Room for Mama — a little room for you" },
+      {
+        name: "description",
+        content:
+          "Gentle routine coaching for mothers of babies and toddlers. Half an hour a week, with a mother who’s living it too.",
+      },
+      { property: "og:title", content: "Room for Mama — a little room for you" },
+      {
+        property: "og:description",
+        content:
+          "Gentle routine coaching for mothers of babies and toddlers. Half an hour a week, with a mother who’s living it too.",
+      },
+    ],
+  }),
+  component: Home,
 });
 
-// IMPORTANT: Replace this placeholder. See ./README.md for routing conventions.
-function Index() {
+function Home() {
   return (
-    <div
-      className="flex min-h-screen items-center justify-center"
-      style={{ backgroundColor: "#fcfbf8" }}
-    >
-      <img
-        data-lovable-blank-page-placeholder="REMOVE_THIS"
-        src="https://cdn.gpteng.co/blank-app-v1.svg"
-        alt="Your app will live here!"
-      />
-    </div>
+    <Page>
+      <div className="mt-4">
+        <h1 className="t-display">
+          A little room <span className="t-italic">for you.</span>
+        </h1>
+        <p className="mt-4 text-ink-muted">
+          Gentle routine coaching for mothers of babies and toddlers. Half an
+          hour a week, with a mother who’s living it too.
+        </p>
+      </div>
+
+      <Drawing name="illo-her-half-hour" />
+
+      <div className="mt-auto flex flex-col gap-4 pt-6">
+        <ButtonMain to="/book">Book a free hello call</ButtonMain>
+        <SafetyNote />
+      </div>
+    </Page>
   );
 }
