@@ -164,7 +164,7 @@ export const bookHello = createServerFn({ method: "POST" })
 
     // Reuse her record if she has booked before with this email: keep her details and her manage link.
     let tok = r.newToken();
-    const { data: existing } = await db.from("mothers").select("id").ilike("email", email).limit(1).maybeSingle();
+    const { data: existing } = await db.from("mothers").select("id").eq("email", email).limit(1).maybeSingle();
     let motherId: string;
     let isNew = false;
     if (existing) {
@@ -239,7 +239,9 @@ export const bookHello = createServerFn({ method: "POST" })
       ics: invite,
     });
     await r.logAutomation(db, s, "booked", motherId);
-    return { ok: true as const, token: tok };
+    // Never hand an existing mother's link to whoever typed her email: it goes to her inbox only.
+    if (!isNew) return { ok: true as const, token: null };
+    return { ok: true as const, token: tok as string | null };
   });
 
 /* ---------- waitlist ---------- */
