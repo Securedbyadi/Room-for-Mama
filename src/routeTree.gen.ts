@@ -12,6 +12,7 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as BookRouteImport } from './routes/book'
 import { Route as BookedRouteImport } from './routes/booked'
+import { Route as CoachRouteImport } from './routes/coach'
 import { Route as EmailsRouteImport } from './routes/emails'
 import { Route as MakeRoomRouteImport } from './routes/make-room'
 
@@ -30,6 +31,11 @@ const BookedRoute = BookedRouteImport.update({
   path: '/booked',
   getParentRoute: () => rootRouteImport,
 } as any)
+const CoachRoute = CoachRouteImport.update({
+  id: '/coach',
+  path: '/coach',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const EmailsRoute = EmailsRouteImport.update({
   id: '/emails',
   path: '/emails',
@@ -45,6 +51,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/book': typeof BookRoute
   '/booked': typeof BookedRoute
+  '/coach': typeof CoachRoute
   '/emails': typeof EmailsRoute
   '/make-room': typeof MakeRoomRoute
 }
@@ -52,6 +59,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/book': typeof BookRoute
   '/booked': typeof BookedRoute
+  '/coach': typeof CoachRoute
   '/emails': typeof EmailsRoute
   '/make-room': typeof MakeRoomRoute
 }
@@ -60,21 +68,24 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/book': typeof BookRoute
   '/booked': typeof BookedRoute
+  '/coach': typeof CoachRoute
   '/emails': typeof EmailsRoute
   '/make-room': typeof MakeRoomRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/book' | '/booked' | '/emails' | '/make-room'
+  fullPaths: '/' | '/book' | '/booked' | '/coach' | '/emails' | '/make-room'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/book' | '/booked' | '/emails' | '/make-room'
-  id: '__root__' | '/' | '/book' | '/booked' | '/emails' | '/make-room'
+  to: '/' | '/book' | '/booked' | '/coach' | '/emails' | '/make-room'
+  id:
+    '__root__' | '/' | '/book' | '/booked' | '/coach' | '/emails' | '/make-room'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   BookRoute: typeof BookRoute
   BookedRoute: typeof BookedRoute
+  CoachRoute: typeof CoachRoute
   EmailsRoute: typeof EmailsRoute
   MakeRoomRoute: typeof MakeRoomRoute
 }
@@ -102,6 +113,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BookedRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/coach': {
+      id: '/coach'
+      path: '/coach'
+      fullPath: '/coach'
+      preLoaderRoute: typeof CoachRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/emails': {
       id: '/emails'
       path: '/emails'
@@ -123,6 +141,7 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   BookRoute: BookRoute,
   BookedRoute: BookedRoute,
+  CoachRoute: CoachRoute,
   EmailsRoute: EmailsRoute,
   MakeRoomRoute: MakeRoomRoute,
 }
