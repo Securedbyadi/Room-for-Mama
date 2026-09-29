@@ -1,7 +1,7 @@
 import { ANYWHERE_ELSE, SAFETY_NOTE, helplinesFor } from "../../lib/helplines";
 
 /** Goes on every booking screen, every email and the footer. */
-export function SafetyNote({ zone }: { zone?: string }) {
+export function SafetyNote({ zone }: { zone?: string | undefined }) {
   const lines = zone ? helplinesFor(zone) : [];
   return (
     <aside className="rounded-2xl bg-sunk p-4 text-[13px] leading-[19px] text-ink-muted">

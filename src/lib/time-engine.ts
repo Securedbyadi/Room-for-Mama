@@ -166,9 +166,9 @@ export interface FindSlotsOptions {
   /** One slot per day (default true). */
   onePerDay?: boolean;
   /** Mother's preference: not before this wall-clock time in HER zone, "HH:MM". */
-  notBeforeLocal?: string;
+  notBeforeLocal?: string | undefined;
   /** Mother's preference: not after this wall-clock time in HER zone, "HH:MM". */
-  notAfterLocal?: string;
+  notAfterLocal?: string | undefined;
 }
 
 /**
