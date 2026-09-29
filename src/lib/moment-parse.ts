@@ -23,7 +23,10 @@ export function parseMoment(text: string, fallbackZone: string): ParsedMoment {
   const zone = CITY_ZONES.find(([re]) => re.test(text))?.[1] ?? fallbackZone;
   let notBeforeLocal: string | undefined;
   let notAfterLocal: string | undefined;
-  if (/late morning|half eleven|11:?30/i.test(text)) {
+  if (/\b[1-4] ?am\b|small hours|middle of the night/i.test(text)) {
+    notBeforeLocal = "01:00";
+    notAfterLocal = "04:00";
+  } else if (/late morning|half eleven|11:?30/i.test(text)) {
     notBeforeLocal = "11:30";
     notAfterLocal = "12:00";
   } else if (/morning/i.test(text)) {
