@@ -75,12 +75,12 @@ export function localParts(zone: string, date: Date): LocalParts {
   const out: Record<string, string> = {};
   for (const p of dtf.formatToParts(date)) out[p.type] = p.value;
   return {
-    y: Number(out.year),
-    mo: Number(out.month),
-    d: Number(out.day),
-    h: Number(out.hour) % 24,
-    mi: Number(out.minute),
-    weekday: WEEKDAYS[out.weekday] ?? 0,
+    y: Number(out["year"]),
+    mo: Number(out["month"]),
+    d: Number(out["day"]),
+    h: Number(out["hour"]) % 24,
+    mi: Number(out["minute"]),
+    weekday: WEEKDAYS[out["weekday"] ?? ""] ?? 0,
   };
 }
 
