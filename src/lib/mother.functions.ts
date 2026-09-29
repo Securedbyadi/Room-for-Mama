@@ -331,9 +331,11 @@ export const moveMyCall = createServerFn({ method: "POST" })
     const dur = new Date(call.ends_at).getTime() - oldStart.getTime();
     const newStart = new Date(data.start);
     const newEnd = new Date(newStart.getTime() + dur);
+    // A move the coach started (her Baby's up) counts on the coach's side, not hers.
+    const coachMove = call.coach_move_pending;
     const result = te.moveCall({
       call: { start: oldStart, end: new Date(call.ends_at) },
-      movesSoFar: call.moves_used,
+      movesSoFar: coachMove ? 0 : call.moves_used,
       now: new Date(),
       newSlot: { start: newStart, end: newEnd },
     });
@@ -344,9 +346,14 @@ export const moveMyCall = createServerFn({ method: "POST" })
     }
     const rules = r.rulesFrom(s);
     const busy = await r.busyCalls(db, call.id);
+    const now = Date.now();
     const ok =
-      newStart.getTime() >= Date.now() + s.notice_move_h * 60 * MIN &&
+      newStart.getUTCMinutes() % 30 === 0 &&
+      newStart.getUTCSeconds() === 0 &&
+      newStart.getTime() >= now + s.notice_move_h * 60 * MIN &&
+      newStart.getTime() <= now + s.weeks_ahead * 7 * 24 * 60 * MIN &&
       te.fitsWindows(rules, newStart, dur / MIN) &&
+      te.callsOnCoachDay(rules, busy, newStart) < rules.maxPerDay &&
       te.isFree(newStart, newEnd, busy, rules.bufferMin);
     if (!ok) return { kind: "taken" as const };
     const { error } = await db
@@ -354,15 +361,16 @@ export const moveMyCall = createServerFn({ method: "POST" })
       .update({
         starts_at: newStart.toISOString(),
         ends_at: newEnd.toISOString(),
-        moves_used: call.moves_used + 1,
+        ...(coachMove ? { coach_move_pending: false } : { moves_used: call.moves_used + 1 }),
         keep_spot_sent_at: null,
         keep_spot_confirmed_at: null,
         reminder_sent_at: null,
       })
       .eq("id", call.id);
     if (error) return { kind: "taken" as const };
-    await db.from("move_log").insert({ call_id: call.id, moved_by: "mother", from_at: oldStart.toISOString(), to_at: newStart.toISOString() });
+    await db.from("move_log").insert({ call_id: call.id, moved_by: coachMove ? "coach" : "mother", from_at: oldStart.toISOString(), to_at: newStart.toISOString() });
     const origin = await r.requestOrigin();
+    const invite = [{ id: call.id, start: newStart, end: newEnd, kind: call.kind }];
     await r.queueEmail(db, {
       motherId: mother.id,
       to: mother.email,
@@ -370,6 +378,7 @@ export const moveMyCall = createServerFn({ method: "POST" })
       subject: r.callTitle(call.kind),
       lines: [`Moved. ${r.whenLine(newStart, mother.zone)}`, "Moving is always free."],
       action: { label: "See my call", url: r.manageUrl(origin, data.token) },
+      ics: invite,
     });
     await r.queueEmail(db, {
       motherId: mother.id,
@@ -377,6 +386,7 @@ export const moveMyCall = createServerFn({ method: "POST" })
       kind: "coach-invite",
       subject: r.callTitle(call.kind),
       lines: [`Moved to ${te.fmtLong(newStart, s.coach_zone)}, your time.`],
+      ics: invite,
     });
     await r.logAutomation(db, s, "move", mother.id);
     return { kind: "moved" as const, start: newStart.toISOString() };
