@@ -117,8 +117,8 @@ export function HomeHero() {
         <div className="max-w-[620px] lg:order-1">
           <h1 className="hero-title"><span className="lg:whitespace-nowrap">A little room</span> <span className="t-italic block">for you.</span></h1>
           <p className="hero-lead mt-5 text-ink-muted">Gentle routine coaching for mothers of babies and toddlers. Half an hour a week, with a mother who’s living it too.</p>
-          <div className="mt-7 flex flex-col gap-3 sm:flex-row sm:items-center">
-            <span id="hero-book" className="contents" /><ButtonMain to="/fit-check" className="sm:w-auto sm:shrink-0 sm:whitespace-nowrap">Book a free hello call</ButtonMain>
+          <div id="hero-book" className="mt-7 flex flex-col gap-3 sm:flex-row sm:items-center">
+            <ButtonMain to="/fit-check" className="sm:w-auto sm:shrink-0 sm:whitespace-nowrap">Book a free hello call</ButtonMain>
             <Link to="/book" search={{ demo: "manchester" }} className="micro-link inline-flex min-h-12 items-center font-semibold underline underline-offset-4">Try it as a mama in Manchester</Link>
           </div>
           <ul className="mt-7 flex flex-wrap gap-x-6 gap-y-3">
