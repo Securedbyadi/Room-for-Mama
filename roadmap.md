@@ -16,3 +16,4 @@
 - [x] Night mode issues on the home page
 - [x] Hero card drawings sit at the top of each card
 - [x] Less empty space above and below the hero
+- [x] Make the home page adapt cleanly across tablet widths without desktop overflow
