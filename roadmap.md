@@ -1,5 +1,5 @@
-- [ ] Rebuild home as the single full-screen reference hero
-- [ ] Add card-to-page expansion and matching destination openings
-- [ ] Add illustrated split layouts to mother forms and outcomes
-- [ ] Add reduced-motion-safe micro animations
+- [x] Rebuild home as the single full-screen reference hero
+- [x] Add card-to-page expansion and matching destination openings
+- [x] Add illustrated split layouts to mother forms and outcomes
+- [x] Add reduced-motion-safe micro animations
 - [ ] Verify day/night desktop/phone and working flows
