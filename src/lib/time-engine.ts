@@ -296,12 +296,10 @@ export function babysUpOptions(opts: {
   rules?: CoachRules;
   busy?: BusyInterval[];
 }): Slot[] {
-  const busy = (opts.busy ?? []).filter(
-    (b) => b.start.getTime() !== opts.call.start.getTime(),
-  );
+  // The old time stays busy: Baby's up never re-offers the slot she is leaving.
   return findSlots({
     rules: opts.rules,
-    busy,
+    busy: opts.busy,
     from: opts.now,
     motherZone: opts.motherZone,
     durationMin: opts.durationMin,
