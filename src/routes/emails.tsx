@@ -78,8 +78,8 @@ const EMAILS: EmailDef[] = [
 ];
 
 function Emails() {
-  const [active, setActive] = useState(EMAILS[0].id);
-  const email = EMAILS.find((e) => e.id === active)!;
+  const [active, setActive] = useState(EMAILS[0]?.id ?? "");
+  const email = EMAILS.find((e) => e.id === active) ?? EMAILS[0]!;
 
   return (
     <Page>

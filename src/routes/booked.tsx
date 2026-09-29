@@ -9,9 +9,9 @@ type Search = { slot: string; name: string; zone: string };
 
 export const Route = createFileRoute("/booked")({
   validateSearch: (s: Record<string, unknown>): Search => ({
-    slot: typeof s.slot === "string" ? s.slot : new Date().toISOString(),
-    name: typeof s.name === "string" ? s.name : "mama",
-    zone: typeof s.zone === "string" ? s.zone : "Asia/Karachi",
+    slot: typeof s["slot"] === "string" ? s["slot"] : new Date().toISOString(),
+    name: typeof s["name"] === "string" ? s["name"] : "mama",
+    zone: typeof s["zone"] === "string" ? s["zone"] : "Asia/Karachi",
   }),
   head: () => ({
     meta: [

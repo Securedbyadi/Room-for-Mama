@@ -129,8 +129,8 @@ function Coach() {
       </section>
 
       <p className="t-caption text-ink-muted">
-        Demo data only — no real mothers, no real calendar. Next:{" "}
-        {fmtLong(DEMO_CALLS[0].start, COACH_ZONE)}.
+        Demo data only — no real mothers, no real calendar.
+        {DEMO_CALLS[0] ? ` Next: ${fmtLong(DEMO_CALLS[0].start, COACH_ZONE)}.` : ""}
       </p>
 
       <div className="mt-auto pt-4">
