@@ -43,7 +43,7 @@ function CardFace({ deal, alwaysLine }: { deal: Deal; alwaysLine?: boolean }) {
   return (
     <>
       <Drawing name={deal.drawing} className={`${deal.drawing === "illo-her-half-hour" ? "home-steam" : ""} fan-art h-[188px] !border-0 [&>div]:h-full [&>div]:p-2`} />
-      <h2 className="home-card-title mt-3 px-1">{deal.title}</h2>
+      <h2 className="home-card-title mt-2 whitespace-nowrap">{deal.title}</h2>
       <div className={alwaysLine ? "px-1" : "fan-more px-1"}>
         <p className="mt-1 text-[15px] leading-[22px]">{deal.line}</p>
         <span className="mt-2 inline-block text-[15px] font-semibold underline underline-offset-4">Open</span>
@@ -110,13 +110,13 @@ export function HomeHero() {
   ];
   return (
     <section className="hero-grain relative overflow-hidden lg:min-h-[calc(100svh-80px)]">
-      <div className="relative mx-auto grid max-w-[1200px] gap-8 px-5 pt-2 pb-28 lg:min-h-[calc(100svh-80px)] lg:grid-cols-[minmax(620px,1fr)_minmax(0,1fr)] lg:items-center lg:gap-0 lg:pb-8">
+      <div className="relative mx-auto grid max-w-[1200px] grid-cols-[minmax(0,1fr)] gap-8 px-5 pt-2 pb-28 lg:min-h-[calc(100svh-80px)] lg:grid-cols-[minmax(620px,1fr)_minmax(0,1fr)] lg:items-center lg:gap-0 lg:pb-8">
         <div className="lg:order-2">
           <div className="hidden lg:block"><Fan deals={deals} /></div>
         </div>
         <div className="max-w-[620px] lg:order-1">
           <h1 className="hero-title"><span className="lg:whitespace-nowrap">A little room</span> <span className="t-italic block">for you.</span></h1>
-          <p className="hero-lead mt-5 text-ink-muted">Gentle routine coaching for mothers of babies and toddlers. Half an hour a week, with a mother who’s living it too.</p>
+          <p className="hero-lead mt-5 max-w-[520px] text-ink-muted">Gentle routine coaching for mothers of babies and toddlers. Half an hour a week, with a mother who’s living it too.</p>
           <div id="hero-book" className="mt-7 flex flex-col gap-3 sm:flex-row sm:items-center">
             <ButtonMain to="/fit-check" className="sm:w-auto sm:shrink-0 sm:whitespace-nowrap">Book a free hello call</ButtonMain>
             <Link to="/book" search={{ demo: "manchester" }} className="micro-link inline-flex min-h-12 items-center font-semibold underline underline-offset-4">Try it as a mama in Manchester</Link>
