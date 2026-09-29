@@ -135,8 +135,9 @@ export const bookHello = createServerFn({ method: "POST" })
     const origin = await r.requestOrigin();
 
     // Rate limit: 5 per email, 20 per connection, per hour.
+    // cf-connecting-ip is set by the hosting edge and can't be supplied by the browser.
     const { getRequestHeader } = await import("@tanstack/react-start/server");
-    const ip = (getRequestHeader("cf-connecting-ip") ?? getRequestHeader("x-forwarded-for") ?? "unknown").split(",")[0]!.trim();
+    const ip = (getRequestHeader("cf-connecting-ip") ?? "unknown").trim();
     const since = new Date(Date.now() - 60 * MIN).toISOString();
     const email = data.email.toLowerCase();
     const [{ count: byEmail }, { count: byIp }] = await Promise.all([
@@ -159,42 +160,55 @@ export const bookHello = createServerFn({ method: "POST" })
       te.isFree(start, end, busy, rules.bufferMin);
     if (!valid) return { ok: false as const, reason: "taken" as const };
 
+    // Reuse her record if she has booked before with this email.
     const tok = r.newToken();
-    const { data: mother, error: mErr } = await db
-      .from("mothers")
+    const profile = {
+      first_name: data.firstName,
+      phone: data.phone || null,
+      zone: data.zone,
+      city: data.city ?? null,
+      moment_days: data.days ?? [],
+      moment_not_before: data.notBeforeLocal ?? null,
+      moment_not_after: data.notAfterLocal ?? null,
+      token_hash: r.hashToken(tok),
+    };
+    const { data: existing } = await db.from("mothers").select("id").eq("email", email).order("created_at").limit(1).maybeSingle();
+    let motherId: string;
+    let isNew = false;
+    if (existing) {
+      motherId = existing.id;
+      await db.from("mothers").update(profile).eq("id", motherId);
+      await db.from("mother_links").delete().eq("mother_id", motherId);
+    } else {
+      const { data: mother, error: mErr } = await db.from("mothers").insert({ ...profile, email }).select("id").single();
+      if (mErr || !mother) throw new Error("Could not save");
+      motherId = mother.id;
+      isNew = true;
+    }
+    await db.from("mother_links").insert({ mother_id: motherId, token: tok });
+
+    const { data: call, error: cErr } = await db
+      .from("calls")
       .insert({
-        first_name: data.firstName,
-        email,
-        phone: data.phone || null,
-        zone: data.zone,
-        city: data.city ?? null,
-        moment_days: data.days ?? [],
-        moment_not_before: data.notBeforeLocal ?? null,
-        moment_not_after: data.notAfterLocal ?? null,
-        token_hash: r.hashToken(tok),
+        mother_id: motherId,
+        kind: "hello",
+        starts_at: start.toISOString(),
+        ends_at: end.toISOString(),
+        blocked_until: end.toISOString(),
+        status: "booked",
       })
       .select("id")
       .single();
-    if (mErr || !mother) throw new Error("Could not save");
-    await db.from("mother_links").insert({ mother_id: mother.id, token: tok });
-
-    const { error: cErr } = await db.from("calls").insert({
-      mother_id: mother.id,
-      kind: "hello",
-      starts_at: start.toISOString(),
-      ends_at: end.toISOString(),
-      blocked_until: end.toISOString(),
-      status: "booked",
-    });
-    if (cErr) {
-      await db.from("mothers").delete().eq("id", mother.id);
-      if (cErr.code === "23P01") return { ok: false as const, reason: "taken" as const };
+    if (cErr || !call) {
+      if (isNew) await db.from("mothers").delete().eq("id", motherId);
+      if (cErr?.code === "23P01") return { ok: false as const, reason: "taken" as const };
       throw new Error("Could not save");
     }
 
+    const invite = [{ id: call.id, start, end, kind: "hello" }];
     const url = r.manageUrl(origin, tok);
     await r.queueEmail(db, {
-      motherId: mother.id,
+      motherId,
       to: email,
       kind: "booked",
       subject: r.callTitle("hello"),
@@ -204,15 +218,17 @@ export const bookHello = createServerFn({ method: "POST" })
         `Video: ${s.meet_link}`,
       ],
       action: { label: "See my call", url },
+      ics: invite,
     });
     await r.queueEmail(db, {
-      motherId: mother.id,
+      motherId,
       to: s.coach_email,
       kind: "coach-invite",
       subject: r.callTitle("hello"),
       lines: [`${te.fmtLong(start, s.coach_zone)}, your time.`, `Video: ${s.meet_link}`],
+      ics: invite,
     });
-    await r.logAutomation(db, s, "booked", mother.id);
+    await r.logAutomation(db, s, "booked", motherId);
     return { ok: true as const, token: tok };
   });
 
