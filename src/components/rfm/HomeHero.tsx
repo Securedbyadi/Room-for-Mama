@@ -42,7 +42,7 @@ export function useDeals(): Deal[] {
 function CardFace({ deal, alwaysLine }: { deal: Deal; alwaysLine?: boolean }) {
   return (
     <div className="flex h-full min-h-0 flex-col">
-      <Drawing name={deal.drawing} className={`${deal.drawing === "illo-her-half-hour" ? "home-steam" : ""} fan-art min-h-0 flex-1 !border-0 [&>div]:h-full [&>div]:p-2`} />
+      <Drawing name={deal.drawing} className={`${deal.drawing === "illo-her-half-hour" ? "home-steam" : ""} fan-art min-h-0 flex-1 !border-0 [&>div]:h-full [&>div]:items-start [&>div]:p-2`} />
       <h2 className="home-card-title mt-auto whitespace-nowrap pt-2">{deal.title}</h2>
       <div className={alwaysLine ? "px-1" : "fan-more px-1"}>
         <p className="mt-1 text-[15px] leading-[22px]">{deal.line}</p>
@@ -109,8 +109,8 @@ export function HomeHero() {
     ["icon-video-call", "On video, from Lahore"],
   ];
   return (
-    <section className="hero-grain relative overflow-hidden lg:min-h-[calc(100svh-80px)]">
-      <div className="relative mx-auto grid max-w-[1200px] grid-cols-[minmax(0,1fr)] gap-8 px-5 pt-2 pb-28 lg:min-h-[calc(100svh-80px)] lg:grid-cols-[minmax(620px,1fr)_minmax(0,1fr)] lg:items-center lg:gap-0 lg:pb-8">
+    <section className="hero-grain relative overflow-hidden">
+      <div className="relative mx-auto grid max-w-[1200px] grid-cols-[minmax(0,1fr)] gap-8 px-5 pt-2 pb-16 lg:grid-cols-[minmax(620px,1fr)_minmax(0,1fr)] lg:items-center lg:gap-0 lg:py-10">
         <div className="lg:order-2">
           <div className="hidden lg:block"><Fan deals={deals} /></div>
         </div>

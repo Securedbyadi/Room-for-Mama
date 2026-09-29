@@ -8,3 +8,11 @@
 - [x] Use the exact assigned brand drawings/icons for each mother-flow step
 - [x] Limit micro-interactions to the approved motion list
 - [x] Keep approved plan context in docs and rely on connected GitHub auto-sync for every change
+- [x] Smooth, slower animations (hero cards, 3 a.m. phone)
+- [x] Coach name Sundas replaces "[Her first name]"
+- [x] Coach dashboard per docs/coach-dashboard.md (demo, /demo/coach)
+- [ ] Wire the real /coach to the new dashboard (days off, calendar feed tables) — next step
+- [x] Home drawings sit on the bottom edge of their light cards
+- [x] Night mode issues on the home page
+- [x] Hero card drawings sit at the top of each card
+- [x] Less empty space above and below the hero

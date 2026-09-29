@@ -398,14 +398,14 @@ button[aria-pressed="true"] .theme-icon { opacity: 1; }
   --r: 0deg; --x: 0px; --apart: 0px;
   overflow: hidden;
   transform: translateX(var(--x)) rotate(var(--r));
-  transition: transform 320ms ease-out, box-shadow 160ms ease-out;
-  animation: rfm-deal 480ms ease-out both;
+  transition: transform 640ms cubic-bezier(.22,1,.36,1), box-shadow 480ms cubic-bezier(.22,1,.36,1);
+  animation: rfm-deal 720ms cubic-bezier(.22,1,.36,1) both;
 }
-.fan-art { transition: opacity 320ms ease-out; }
+.fan-art { transition: opacity 520ms cubic-bezier(.22,1,.36,1), height 640ms cubic-bezier(.22,1,.36,1), max-height 640ms cubic-bezier(.22,1,.36,1); }
 .fan-0 { --r: -8deg; --x: -180px; --apart: -34px; z-index: 1; animation-delay: 0ms; }
-.fan-1 { --r: -1.5deg; --x: 0px; z-index: 2; animation-delay: 80ms; }
-.fan-2 { --r: 6.5deg; --x: 180px; --apart: 34px; z-index: 3; animation-delay: 160ms; box-shadow: 6px 6px 0 0 var(--peach); }
-.fan-more { max-height: 0; opacity: 0; overflow: hidden; transition: max-height 320ms ease-out, opacity 320ms ease-out; }
+.fan-1 { --r: -1.5deg; --x: 0px; z-index: 2; animation-delay: 120ms; }
+.fan-2 { --r: 6.5deg; --x: 180px; --apart: 34px; z-index: 3; animation-delay: 240ms; box-shadow: 6px 6px 0 0 var(--peach); }
+.fan-more { max-height: 0; opacity: 0; overflow: hidden; transition: max-height 640ms cubic-bezier(.22,1,.36,1), opacity 520ms ease-in-out 80ms; }
 .fan-card:hover, .fan-card:focus-visible {
   transform: translateX(var(--x)) translateY(-24px) rotate(0deg);
   z-index: 10; box-shadow: 4px 4px 0 0 var(--peach); outline-offset: 4px;
@@ -439,7 +439,7 @@ button[aria-pressed="true"] .theme-icon { opacity: 1; }
   width: min(82vw, 500px);
   aspect-ratio: 1;
   border-radius: 999px;
-  background: var(--sun-disc);
+  background: #FAE8B4;
 }
 .rfm-splash > * { position: relative; width: min(78vw, 460px); border: 0 !important; box-shadow: none !important; }
 .form-illustration, .final-illustration, .language-icon-card { animation: rfm-illustration-arrive 320ms ease-out both; }
@@ -452,14 +452,14 @@ button[aria-pressed="true"] .theme-icon { opacity: 1; }
 @keyframes rfm-illustration-arrive { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
 
 /* Animated phone mockup in the 3 a.m. band: one calm 9 s loop */
-.bup-scene { animation: bup-scene 9s ease-in-out infinite; }
-.bup-sheet { animation: bup-sheet 9s ease-in-out infinite; }
-.bup-slot { animation: bup-slot 9s ease-in-out infinite; }
+.bup-scene { animation: bup-scene 14s cubic-bezier(.22,1,.36,1) infinite; }
+.bup-sheet { animation: bup-sheet 14s cubic-bezier(.22,1,.36,1) infinite; }
+.bup-slot { animation: bup-slot 14s cubic-bezier(.22,1,.36,1) infinite; }
 .bup-slot-0 { animation-delay: 0ms; }
-.bup-slot-1 { animation-delay: 90ms; }
-.bup-slot-2 { animation-delay: 180ms; }
-.bup-selected { animation: bup-selected 9s ease-in-out infinite; }
-.bup-cta { animation: bup-cta 9s ease-in-out infinite; }
+.bup-slot-1 { animation-delay: 260ms; }
+.bup-slot-2 { animation-delay: 520ms; }
+.bup-selected { animation: bup-selected 14s cubic-bezier(.22,1,.36,1) infinite; }
+.bup-cta { animation: bup-cta 14s cubic-bezier(.22,1,.36,1) infinite; }
 @keyframes bup-scene {
   0%, 4% { opacity: 0; }
   10%, 88% { opacity: 1; }
@@ -478,9 +478,9 @@ button[aria-pressed="true"] .theme-icon { opacity: 1; }
   38%, 100% { box-shadow: 4px 4px 0 0 var(--peach); }
 }
 @keyframes bup-cta {
-  0%, 52% { transform: scale(1); }
-  56% { transform: scale(.97); }
-  60%, 100% { transform: scale(1); }
+  0%, 50% { transform: scale(1); }
+  56% { transform: scale(.985); }
+  64%, 100% { transform: scale(1); }
 }
 
 @media (max-width: 1023px) {
@@ -516,3 +516,13 @@ button[aria-pressed="true"] .theme-icon { opacity: 1; }
     --rfm-count: var(--rfm-count-to);
   }
 }
+
+/* Coach dashboard */
+.coach-tab { transition: background-color 160ms ease-out; }
+.coach-tab:hover { background: var(--sunk); }
+.coach-slot { transition: transform 160ms ease-out; }
+.coach-slot:hover { transform: translateY(-2px); }
+.coach-sheet { animation: coach-sheet-rise 380ms cubic-bezier(.22,1,.36,1) both; }
+@keyframes coach-sheet-rise { from { opacity: 0; translate: 0 24px; } to { opacity: 1; translate: 0 0; } }
+@media (min-width: 1024px) { @keyframes coach-sheet-rise { from { opacity: 0; translate: 24px 0; } to { opacity: 1; translate: 0 0; } } }
+@media (prefers-reduced-motion: reduce) { .coach-tab, .coach-slot, .coach-sheet { animation: none !important; transition: none !important; } }
