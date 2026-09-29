@@ -46,7 +46,7 @@ function Book() {
 
   return (
     <Page tag="Hello call">
-      <h1 className="t-title !text-[40px] !leading-[46px] mt-2">When do you usually get a quiet moment?</h1>
+      <h1 className="t-title !text-[34px] !leading-[40px] mt-2">When do you usually get a quiet moment?</h1>
       <div className="mt-6"><MomentField value={text} onChange={(v) => { setText(v); setAsked(false); setDemo(false); }} /></div>
       {!asked && (
         <div className="mt-6 space-y-3">

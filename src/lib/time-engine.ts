@@ -45,7 +45,7 @@ const WD: Record<string, number> = { Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat
 export function localParts(t: number, zone: string): Parts {
   const o: Record<string, string> = {};
   for (const p of dtf(zone).formatToParts(new Date(t))) o[p.type] = p.value;
-  return { y: +o["year"], m: +o["month"], d: +o["day"], h: +o["hour"], min: +o["minute"], wd: WD[o["weekday"]!]! };
+  return { y: +o["year"]!, m: +o["month"]!, d: +o["day"]!, h: +o["hour"]!, min: +o["minute"]!, wd: WD[o["weekday"]!]! };
 }
 
 /** Local wall time in a zone to a UTC instant. */
@@ -173,7 +173,7 @@ export function babysUpOptions(o: {
 
 // Formatting helpers (mother's zone, labelled).
 export function fmtSlot(t: number, zone: string) {
-  const day = new Intl.DateTimeFormat("en-GB", { timeZone: zone, weekday: "short", day: "numeric", month: "short" }).format(t);
+  const day = new Intl.DateTimeFormat("en-GB", { timeZone: zone, weekday: "short", day: "numeric", month: "short" }).format(t).replace(",", "");
   return { day, time: fmtTime(t, zone) };
 }
 export function fmtTime(t: number, zone: string) {

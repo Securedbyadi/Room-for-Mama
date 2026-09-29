@@ -29,7 +29,7 @@ export function parseMoment(text: string, fallbackZone: string): MotherPrefs & {
   if (/afternoon/.test(t)) { from = 12 * 60; to = 17 * 60; }
   if (/evening|night/.test(t)) { from = 18 * 60; to = 23 * 60; }
   if (around) {
-    let h = +around[1];
+    let h = +around[1]!;
     if (around[3] === "pm" && h < 12) h += 12;
     if (!around[3] && /evening|night|afternoon/.test(t) && h < 12) h += 12;
     from = h * 60 + (+(around[2] ?? 0)); to = from + 60;

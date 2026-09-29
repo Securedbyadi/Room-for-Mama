@@ -31,7 +31,7 @@ export function Logo({ className }: { className?: string }) {
   return (
     <picture className={className}>
       <source srcSet="/brand/logo/rfm-logo-horizontal-night.svg" media="(prefers-color-scheme: dark)" />
-      <img src="/brand/logo/rfm-logo-horizontal.svg" alt="Room for Mama" className="h-11 w-auto" />
+      <img src="/brand/logo/rfm-logo-horizontal.svg" alt="Room for Mama" className="h-9 w-auto sm:h-11" />
     </picture>
   );
 }
@@ -142,7 +142,7 @@ export function Page({ tag, right, children }: { tag?: string; right?: ReactNode
     <div className="mx-auto min-h-screen max-w-[480px] px-5 pb-10">
       <header className="flex h-20 items-center justify-between">
         <a href="/" className="focus-ring rounded"><Logo /></a>
-        {right ?? (tag && <span className="t-caption tracking-[0.12em] text-ink-muted uppercase">{tag}</span>)}
+        {right ?? (tag && <span className="t-caption whitespace-nowrap tracking-[0.12em] text-ink-muted uppercase">{tag}</span>)}
       </header>
       {children}
     </div>

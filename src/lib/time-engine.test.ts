@@ -20,8 +20,8 @@ describe("Make Room", () => {
   it("Sara keeps 11:00 London across the UK change", () => {
     const p = planWeekly(z(2026, 10, 20, 11, 0, L), L);
     expect(p.map((c) => hm(c.start, L))).toEqual(["10/20 11:00", "10/27 11:00", "11/3 11:00", "11/10 11:00"]);
-    expect(hm(p[0].start, K)).toBe("10/20 15:00");
-    expect(hm(p[1].start, K)).toBe("10/27 16:00");
+    expect(hm(p[0]!.start, K)).toBe("10/20 15:00");
+    expect(hm(p[1]!.start, K)).toBe("10/27 16:00");
   });
   it("Toronto keeps the coach's 22:00 after 1 Nov", () => {
     const p = planWeekly(z(2026, 10, 27, 13, 0, T), T);
