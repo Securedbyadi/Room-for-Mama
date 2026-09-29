@@ -33,7 +33,7 @@ type Stage = "offer" | "held" | "confirmed";
 function MakeRoom() {
   const { mama } = Route.useSearch();
   const demo = DEMO_PLANS[mama ?? "manchester"];
-  const ZONE = demo.zone;
+  const ZONE: string = demo.zone;
   const [stage, setStage] = useState<Stage>("offer");
   const [reference, setReference] = useState("");
   const [y, mo, d, h, mi] = demo.first;
