@@ -16,6 +16,7 @@ import { Route as BookRouteImport } from './routes/book'
 import { Route as BookedRouteImport } from './routes/booked'
 import { Route as EmailsRouteImport } from './routes/emails'
 import { Route as FitCheckRouteImport } from './routes/fit-check'
+import { Route as JudgesRouteImport } from './routes/judges'
 import { Route as MakeRoomRouteImport } from './routes/make-room'
 import { Route as PricesRouteImport } from './routes/prices'
 import { Route as PrivacyRouteImport } from './routes/privacy'
@@ -60,6 +61,11 @@ const EmailsRoute = EmailsRouteImport.update({
 const FitCheckRoute = FitCheckRouteImport.update({
   id: '/fit-check',
   path: '/fit-check',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const JudgesRoute = JudgesRouteImport.update({
+  id: '/judges',
+  path: '/judges',
   getParentRoute: () => rootRouteImport,
 } as any)
 const MakeRoomRoute = MakeRoomRouteImport.update({
@@ -125,6 +131,7 @@ export interface FileRoutesByFullPath {
   '/booked': typeof BookedRoute
   '/emails': typeof EmailsRoute
   '/fit-check': typeof FitCheckRoute
+  '/judges': typeof JudgesRoute
   '/make-room': typeof MakeRoomRoute
   '/prices': typeof PricesRoute
   '/privacy': typeof PrivacyRoute
@@ -144,6 +151,7 @@ export interface FileRoutesByTo {
   '/booked': typeof BookedRoute
   '/emails': typeof EmailsRoute
   '/fit-check': typeof FitCheckRoute
+  '/judges': typeof JudgesRoute
   '/make-room': typeof MakeRoomRoute
   '/prices': typeof PricesRoute
   '/privacy': typeof PrivacyRoute
@@ -165,6 +173,7 @@ export interface FileRoutesById {
   '/booked': typeof BookedRoute
   '/emails': typeof EmailsRoute
   '/fit-check': typeof FitCheckRoute
+  '/judges': typeof JudgesRoute
   '/make-room': typeof MakeRoomRoute
   '/prices': typeof PricesRoute
   '/privacy': typeof PrivacyRoute
@@ -186,6 +195,7 @@ export interface FileRouteTypes {
     | '/booked'
     | '/emails'
     | '/fit-check'
+    | '/judges'
     | '/make-room'
     | '/prices'
     | '/privacy'
@@ -205,6 +215,7 @@ export interface FileRouteTypes {
     | '/booked'
     | '/emails'
     | '/fit-check'
+    | '/judges'
     | '/make-room'
     | '/prices'
     | '/privacy'
@@ -225,6 +236,7 @@ export interface FileRouteTypes {
     | '/booked'
     | '/emails'
     | '/fit-check'
+    | '/judges'
     | '/make-room'
     | '/prices'
     | '/privacy'
@@ -246,6 +258,7 @@ export interface RootRouteChildren {
   BookedRoute: typeof BookedRoute
   EmailsRoute: typeof EmailsRoute
   FitCheckRoute: typeof FitCheckRoute
+  JudgesRoute: typeof JudgesRoute
   MakeRoomRoute: typeof MakeRoomRoute
   PricesRoute: typeof PricesRoute
   PrivacyRoute: typeof PrivacyRoute
@@ -307,6 +320,13 @@ declare module '@tanstack/react-router' {
       path: '/fit-check'
       fullPath: '/fit-check'
       preLoaderRoute: typeof FitCheckRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/judges': {
+      id: '/judges'
+      path: '/judges'
+      fullPath: '/judges'
+      preLoaderRoute: typeof JudgesRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/make-room': {
@@ -408,6 +428,7 @@ const rootRouteChildren: RootRouteChildren = {
   BookedRoute: BookedRoute,
   EmailsRoute: EmailsRoute,
   FitCheckRoute: FitCheckRoute,
+  JudgesRoute: JudgesRoute,
   MakeRoomRoute: MakeRoomRoute,
   PricesRoute: PricesRoute,
   PrivacyRoute: PrivacyRoute,
