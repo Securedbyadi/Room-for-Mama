@@ -145,6 +145,21 @@ export type Database = {
           },
         ]
       }
+      cron_keys: {
+        Row: {
+          id: number
+          key: string
+        }
+        Insert: {
+          id?: number
+          key?: string
+        }
+        Update: {
+          id?: number
+          key?: string
+        }
+        Relationships: []
+      }
       email_outbox: {
         Row: {
           action_label: string | null
