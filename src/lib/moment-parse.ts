@@ -17,6 +17,8 @@ export interface ParsedMoment {
   zone: string;
   notBeforeLocal?: string | undefined;
   notAfterLocal?: string | undefined;
+  city?: string | null | undefined;
+  days?: number[] | undefined;
 }
 
 export function parseMoment(text: string, fallbackZone: string): ParsedMoment {

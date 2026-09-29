@@ -1,5 +1,7 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
+import { useServerFn } from "@tanstack/react-start";
+import { bookHello, findTimes, joinWaitlist, readMoment } from "../lib/mother.functions";
 import { ButtonMain, ButtonOutline, Drawing, Page, Slot } from "../components/rfm/brand";
 import { SafetyNote } from "../components/rfm/SafetyNote";
 import { DEMO_BUSY, DEMO_MESSAGE, DEMO_NO_MATCH, DEMO_NOW, DEMO_WAITLIST } from "../lib/demo-data";
@@ -42,8 +44,24 @@ function Book() {
   const [email, setEmail] = useState("");
   const [phone, setPhone] = useState("");
 
-  const slots = useMemo(() => {
-    if (!parsed) return [];
+  const read = useServerFn(readMoment);
+  const find = useServerFn(findTimes);
+  const book = useServerFn(bookHello);
+  const [realSlots, setRealSlots] = useState<SlotT[] | null>(null);
+  const [busy, setBusy] = useState(false);
+  const [err, setErr] = useState<string | null>(null);
+  const isDemo = !!demo || moment === DEMO_MESSAGE || moment === DEMO_NO_MATCH;
+
+  useEffect(() => {
+    if (isDemo || !parsed) return;
+    setRealSlots(null);
+    void find({ data: { zone: parsed.zone, notBeforeLocal: parsed.notBeforeLocal, notAfterLocal: parsed.notAfterLocal, days: parsed.days } })
+      .then((r) => setRealSlots(r.map((x) => ({ start: new Date(x.start), end: new Date(x.end) }))))
+      .catch(() => setRealSlots([]));
+  }, [parsed, isDemo, find]);
+
+  const demoSlots = useMemo(() => {
+    if (!parsed || !isDemo) return [];
     return findSlots({
       from: DEMO_NOW,
       motherZone: parsed.zone,
@@ -53,11 +71,42 @@ function Book() {
       notAfterLocal: parsed.notAfterLocal,
       busy: DEMO_BUSY,
     });
-  }, [parsed]);
+  }, [parsed, isDemo]);
+  const slots = isDemo ? demoSlots : (realSlots ?? []);
 
-  const showTimes = (text: string) => {
-    setParsed(parseMoment(text, Intl.DateTimeFormat().resolvedOptions().timeZone));
+  const showTimes = async (text: string) => {
+    const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
+    if (text === DEMO_MESSAGE || text === DEMO_NO_MATCH) {
+      setParsed(parseMoment(text, tz));
+    } else {
+      setBusy(true);
+      try {
+        const r = await read({ data: { text, fallbackZone: tz } });
+        setParsed({ zone: r.zone, city: r.city, days: r.days, notBeforeLocal: r.notBeforeLocal, notAfterLocal: r.notAfterLocal });
+      } catch {
+        setParsed(parseMoment(text, tz));
+      }
+      setBusy(false);
+    }
     setStep("times");
+  };
+
+  const doBook = async () => {
+    if (!selected || !parsed) return;
+    if (isDemo) {
+      void navigate({ to: "/booked", search: { slot: selected.start.toISOString(), name: name.trim(), zone: parsed.zone } });
+      return;
+    }
+    setBusy(true);
+    setErr(null);
+    try {
+      const r = await book({ data: { start: selected.start.toISOString(), firstName: name.trim(), email: email.trim(), phone: phone.trim() || undefined, zone: parsed.zone, city: parsed.city ?? null, days: parsed.days, notBeforeLocal: parsed.notBeforeLocal, notAfterLocal: parsed.notAfterLocal } });
+      if (r.ok) void navigate({ to: "/manage/$token", params: { token: r.token }, search: { just: "booked" } });
+      else setErr(r.reason === "taken" ? "That time just went. Pick another." : "Lots of bookings just now. Try again in an hour.");
+    } catch {
+      setErr("Something went quiet on my side. Try again in a moment.");
+    }
+    setBusy(false);
   };
 
   return (
@@ -78,7 +127,7 @@ function Book() {
             className="w-full rounded-2xl border border-input bg-paper p-4 text-[17px] text-ink placeholder:text-ink-muted"
           />
           <div className="mt-auto flex flex-col gap-3 pt-4">
-            <ButtonMain disabled={!moment.trim()} onClick={() => showTimes(moment)}>
+            <ButtonMain disabled={!moment.trim() || busy} onClick={() => void showTimes(moment)}>
               Find my times
             </ButtonMain>
             <ButtonOutline onClick={() => { setMoment(DEMO_MESSAGE); showTimes(DEMO_MESSAGE); }}>
@@ -111,8 +160,10 @@ function Book() {
               </button>
             </p>
           </div>
-          {slots.length === 0 ? (
-            <Waitlist parsed={parsed} />
+          {!isDemo && realSlots === null ? (
+            <p className="text-ink-muted">Finding times.</p>
+          ) : slots.length === 0 ? (
+            <Waitlist parsed={parsed} demo={isDemo} />
           ) : (
             <div className="flex flex-col gap-3">
               {slots.map((s) => (
@@ -166,19 +217,8 @@ function Book() {
             />
           </div>
           <div className="mt-auto flex flex-col gap-4 pt-4">
-            <ButtonMain
-              disabled={!name.trim() || !email.includes("@")}
-              onClick={() =>
-                navigate({
-                  to: "/booked",
-                  search: {
-                    slot: selected.start.toISOString(),
-                    name: name.trim(),
-                    zone: parsed.zone,
-                  },
-                })
-              }
-            >
+            {err && <p className="rounded-2xl bg-butter-soft p-4">{err}</p>}
+            <ButtonMain disabled={!name.trim() || !email.includes("@") || busy} onClick={() => void doBook()}>
               Book
             </ButtonMain>
             <SafetyNote zone={parsed.zone} />
@@ -192,7 +232,8 @@ function Book() {
 const inputCls =
   "min-h-12 w-full rounded-2xl border border-input bg-paper px-4 text-[17px] text-ink placeholder:text-ink-muted";
 
-function Waitlist({ parsed }: { parsed: ParsedMoment }) {
+function Waitlist({ parsed, demo }: { parsed: ParsedMoment; demo: boolean }) {
+  const join = useServerFn(joinWaitlist);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [joined, setJoined] = useState(false);
@@ -209,6 +250,10 @@ function Waitlist({ parsed }: { parsed: ParsedMoment }) {
       className="flex flex-col gap-3"
       onSubmit={(e) => {
         e.preventDefault();
+        if (!demo) {
+          void join({ data: { firstName: name.trim(), email: email.trim(), zone: parsed.zone, city: parsed.city ?? null, days: parsed.days, notBeforeLocal: parsed.notBeforeLocal, notAfterLocal: parsed.notAfterLocal } }).then(() => setJoined(true));
+          return;
+        }
         // Demo rows only; only days, times and city are kept, never her words.
         DEMO_WAITLIST.push({
           firstName: name.trim(),
