@@ -87,7 +87,7 @@ function Deck({ deals }: { deals: Deal[] }) {
     <div className="deck">
       <div ref={ref} onScroll={onScroll} className="-mx-5 flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-pl-5 px-5 pt-2 pb-3 [scrollbar-width:none]">
         {deals.map((d) => (
-          <Link key={d.to} to={d.to} viewTransition className="rfm-deal-card block w-[80%] shrink-0 snap-start p-3" style={{ viewTransitionName: d.vt }}>
+          <Link key={d.to} to={d.to} viewTransition className="rfm-deal-card block h-[440px] w-[82%] shrink-0 snap-start p-3 sm:h-[500px] sm:w-[360px]" style={{ viewTransitionName: d.vt }}>
             <CardFace deal={d} alwaysLine />
           </Link>
         ))}
@@ -110,12 +110,12 @@ export function HomeHero() {
   ];
   return (
     <section className="hero-grain relative overflow-hidden">
-      <div className="relative mx-auto grid max-w-[1200px] grid-cols-[minmax(0,1fr)] gap-10 px-5 pt-8 pb-20 lg:grid-cols-[minmax(620px,1fr)_minmax(0,1fr)] lg:items-center lg:gap-0 lg:py-20">
-        <div className="lg:order-2">
-          <div className="hidden lg:block"><Fan deals={deals} /></div>
+      <div className="relative mx-auto grid max-w-[1200px] grid-cols-[minmax(0,1fr)] gap-10 px-5 pt-8 pb-20 sm:px-8 sm:pt-12 xl:grid-cols-[minmax(620px,1fr)_minmax(0,1fr)] xl:items-center xl:gap-0 xl:px-5 xl:py-20">
+        <div className="xl:order-2">
+          <div className="hidden xl:block"><Fan deals={deals} /></div>
         </div>
-        <div className="max-w-[620px] lg:order-1">
-          <h1 className="hero-title"><span className="lg:whitespace-nowrap">A little room</span> <span className="t-italic block">for you.</span></h1>
+        <div className="max-w-[620px] xl:order-1">
+          <h1 className="hero-title"><span className="xl:whitespace-nowrap">A little room</span> <span className="t-italic block">for you.</span></h1>
           <p className="hero-lead mt-5 max-w-[520px] text-ink-muted">Gentle routine coaching for mothers of babies and toddlers. Half an hour a week, with a mother who’s living it too.</p>
           <div id="hero-book" className="mt-7 flex flex-col gap-3 sm:flex-row sm:items-center">
             <ButtonMain to="/fit-check" className="sm:w-auto sm:shrink-0 sm:whitespace-nowrap">Book a free hello call</ButtonMain>
@@ -125,7 +125,7 @@ export function HomeHero() {
             {notes.map(([icon, label]) => <li key={label} className="micro-icon flex items-center gap-2 text-[13px] font-semibold text-ink-muted"><Icon name={icon} size={22} />{label}</li>)}
           </ul>
         </div>
-        <div className="lg:hidden"><Deck deals={deals} /></div>
+        <div className="xl:hidden"><Deck deals={deals} /></div>
       </div>
     </section>
   );
