@@ -4,7 +4,7 @@
  * currentColor. Never redrawn, recoloured or retyped.
  */
 import { Link } from "@tanstack/react-router";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import type { ReactNode } from "react";
 import { DesktopToggle, WebsiteFooter, WebsiteHeader } from "./WebsiteChrome";
 import { ThemeRound } from "./ThemeControl";
@@ -97,17 +97,26 @@ export function Drawing({
   className?: string;
   bare?: boolean;
 }) {
-  const raw = svgFor(drawingModules, "drawings", name);
-  if (!raw) return null;
   return (
     <div
       className={`rfm-drawing rfm-${name} overflow-hidden ${className}`}
       style={bare ? undefined : { background: "#FBF6EE", borderRadius: 22, border: "1px solid var(--line)" }}
     >
-      <div
-        className="flex items-center justify-center p-4 [&>svg]:h-auto [&>svg]:w-full"
-        dangerouslySetInnerHTML={{ __html: raw }}
-      />
+      <div className="flex items-center justify-center p-4">
+        <picture>
+          <source media="(prefers-reduced-motion: reduce)" srcSet={`/brand/drawings/${name}.svg`} />
+          <img
+            src={`/brand/animated/${name}.svg`}
+            alt=""
+            className="h-auto w-full"
+            onError={(event) => {
+              const fallback = `/brand/drawings/${name}.svg`;
+              if (event.currentTarget.src.endsWith(fallback)) return;
+              event.currentTarget.src = fallback;
+            }}
+          />
+        </picture>
+      </div>
     </div>
   );
 }
@@ -180,6 +189,50 @@ export function BackButton({ onClick, label = "Go back" }: { onClick: () => void
     >
       <ArrowLeft aria-hidden size={22} strokeWidth={2} />
     </button>
+  );
+}
+
+export function ForwardButton({
+  onClick,
+  disabled = false,
+  label = "Continue",
+}: {
+  onClick: () => void;
+  disabled?: boolean;
+  label?: string;
+}) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      disabled={disabled}
+      aria-label={label}
+      title={label}
+      className="rfm-button inline-flex size-12 shrink-0 items-center justify-center rounded-full border-2 border-line-strong bg-transparent text-ink disabled:cursor-not-allowed disabled:opacity-35"
+    >
+      <ArrowRight aria-hidden size={22} strokeWidth={2} />
+    </button>
+  );
+}
+
+export function StepArrows({
+  onBack,
+  onForward,
+  forwardDisabled = false,
+  backLabel,
+  forwardLabel,
+}: {
+  onBack: () => void;
+  onForward: () => void;
+  forwardDisabled?: boolean;
+  backLabel?: string;
+  forwardLabel?: string;
+}) {
+  return (
+    <div className="flex items-center justify-between gap-3">
+      <BackButton onClick={onBack} label={backLabel ?? "Go back"} />
+      <ForwardButton onClick={onForward} disabled={forwardDisabled} label={forwardLabel ?? "Continue"} />
+    </div>
   );
 }
 

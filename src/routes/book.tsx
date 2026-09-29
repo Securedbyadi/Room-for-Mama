@@ -2,7 +2,7 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
 import { bookHello, findTimes, joinWaitlist, readMoment } from "../lib/mother.functions";
-import { BackButton, ButtonMain, ButtonOutline, Drawing, Page, Slot } from "../components/rfm/brand";
+import { ButtonMain, ButtonOutline, Drawing, Page, Slot, StepArrows } from "../components/rfm/brand";
 import { SafetyNote } from "../components/rfm/SafetyNote";
 import { DEMO_BUSY, DEMO_MESSAGE, DEMO_NO_MATCH, DEMO_NOW, DEMO_WAITLIST } from "../lib/demo-data";
 import { parseMoment, type ParsedMoment } from "../lib/moment-parse";
@@ -92,6 +92,25 @@ function Book() {
     void navigate({ to: "/fit-check" });
   };
 
+  const canGoForward = step === "moment"
+    ? Boolean(moment.trim()) && !busy
+    : step === "times"
+      ? Boolean(selected)
+      : Boolean(selected && parsed && name.trim() && email.includes("@")) && !busy;
+
+  const goForward = () => {
+    if (!canGoForward) return;
+    if (step === "moment") {
+      void showTimes(moment);
+      return;
+    }
+    if (step === "times") {
+      setStep("details");
+      return;
+    }
+    void doBook();
+  };
+
   const showTimes = async (text: string) => {
     const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
     if (text === DEMO_MESSAGE || text === DEMO_NO_MATCH) {
@@ -129,7 +148,13 @@ function Book() {
 
   return (
     <Page illustration={<Drawing key={`${step}-${illustrationName}`} name={illustrationName} className={`form-illustration ${illustrationName === "illo-her-half-hour" ? "home-steam" : ""}`} bare />}>
-      <BackButton onClick={goBack} label={step === "moment" ? "Back to the fit check" : "Previous step"} />
+      <StepArrows
+        onBack={goBack}
+        onForward={goForward}
+        forwardDisabled={!canGoForward}
+        backLabel={step === "moment" ? "Back to the fit check" : "Previous step"}
+        forwardLabel={step === "details" ? "Book this call" : "Continue"}
+      />
       {step === "moment" && (
         <>
           <div>

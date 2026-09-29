@@ -1,6 +1,6 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
-import { BackButton, ButtonOutline, Drawing, Icon, Page } from "../components/rfm/brand";
+import { BackButton, ButtonOutline, Drawing, Icon, Page, StepArrows } from "../components/rfm/brand";
 import { SafetyNote } from "../components/rfm/SafetyNote";
 import { FIT_QUESTIONS, fitOutcome, type FitChoice } from "../lib/fit-check";
 
@@ -22,6 +22,7 @@ function FitCheck() {
   const navigate = useNavigate();
   const [step, setStep] = useState(0);
   const [notFit, setNotFit] = useState<FitChoice | null>(null);
+  const [answers, setAnswers] = useState<(FitChoice | undefined)[]>([]);
   const question = FIT_QUESTIONS[step];
   const stepIllustrations = [
     <Drawing key="baby" name="illo-baby-up" className="form-illustration" bare />,
@@ -30,7 +31,7 @@ function FitCheck() {
     <Drawing key="video" name="illo-the-chair" className="form-illustration" bare />,
   ];
 
-  const answer = (choice: FitChoice) => {
+  const continueFrom = (choice: FitChoice) => {
     const outcome = fitOutcome(step, choice);
     if (outcome.kind === "not-fit") {
       setNotFit(outcome.choice);
@@ -41,6 +42,12 @@ function FitCheck() {
       return;
     }
     setStep(outcome.step);
+  };
+
+  const choose = (choice: FitChoice) => {
+    const next = [...answers];
+    next[step] = choice;
+    setAnswers(next);
   };
 
   if (notFit) {
@@ -54,7 +61,7 @@ function FitCheck() {
           <p className="mt-3 text-ink-muted">{notFit.pointer}</p>
         </div>
         <div className="mt-auto flex flex-col gap-4 pt-4">
-          <ButtonOutline onClick={() => { setNotFit(null); setStep(0); }}>Start again</ButtonOutline>
+          <ButtonOutline onClick={() => { setNotFit(null); setStep(0); setAnswers([]); }}>Start again</ButtonOutline>
           <SafetyNote />
         </div>
       </Page>
@@ -65,9 +72,15 @@ function FitCheck() {
 
   return (
     <Page illustration={stepIllustrations[step]}>
-      <BackButton
-        onClick={() => step > 0 ? setStep(step - 1) : void navigate({ to: "/" })}
-        label={step > 0 ? "Previous question" : "Back to home"}
+      <StepArrows
+        onBack={() => step > 0 ? setStep(step - 1) : void navigate({ to: "/" })}
+        onForward={() => {
+          const choice = answers[step];
+          if (choice) continueFrom(choice);
+        }}
+        forwardDisabled={!answers[step]}
+        backLabel={step > 0 ? "Previous question" : "Back to home"}
+        forwardLabel={step === FIT_QUESTIONS.length - 1 ? "Continue to booking" : "Next question"}
       />
       <div>
         <p className="t-caption text-ink-muted">{step + 1} of {FIT_QUESTIONS.length}</p>
@@ -78,7 +91,7 @@ function FitCheck() {
       {step === 0 && <p className="mt-4 text-ink-muted">Four quick questions first, so your hello call is time well spent.</p>}
       <h1 className="t-title">{question.question}</h1>
       <div className="mt-auto flex flex-col gap-3 pt-8">
-        {question.choices.map((choice) => <ButtonOutline key={choice.label} onClick={() => answer(choice)} className="min-h-16 justify-start text-left">{choice.label}</ButtonOutline>)}
+        {question.choices.map((choice) => <ButtonOutline key={choice.label} onClick={() => choose(choice)} className={`min-h-16 justify-start text-left ${answers[step] === choice ? "!border-ink bg-butter-soft" : ""}`}>{choice.label}</ButtonOutline>)}
         <SafetyNote />
       </div>
     </Page>
