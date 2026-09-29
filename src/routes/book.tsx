@@ -1,9 +1,9 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useMemo, useState } from "react";
-import { ButtonMain, ButtonOutline, Page, Slot } from "../components/rfm/brand";
+import { ButtonMain, ButtonOutline, Drawing, Page, Slot } from "../components/rfm/brand";
 import { SafetyNote } from "../components/rfm/SafetyNote";
-import { DEMO_BUSY, DEMO_MESSAGE, DEMO_NOW } from "../lib/demo-data";
-import { parseMoment } from "../lib/moment-parse";
+import { DEMO_BUSY, DEMO_MESSAGE, DEMO_NO_MATCH, DEMO_NOW, DEMO_WAITLIST } from "../lib/demo-data";
+import { parseMoment, type ParsedMoment } from "../lib/moment-parse";
 import { findSlots, fmtLong, zoneLabel, type Slot as SlotT } from "../lib/time-engine";
 
 export const Route = createFileRoute("/book")({
@@ -19,6 +19,8 @@ export const Route = createFileRoute("/book")({
         property: "og:description",
         content: "Tell me when you usually get a quiet moment, and pick a time that suits you.",
       },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: Book,
@@ -70,7 +72,6 @@ function Book() {
             rows={4}
             autoFocus
             className="w-full rounded-2xl border border-input bg-paper p-4 text-[17px] text-ink placeholder:text-ink-muted"
-            placeholder="Weekday mornings, after the school run…"
           />
           <div className="mt-auto flex flex-col gap-3 pt-4">
             <ButtonMain disabled={!moment.trim()} onClick={() => showTimes(moment)}>
@@ -79,6 +80,13 @@ function Book() {
             <ButtonOutline onClick={() => { setMoment(DEMO_MESSAGE); showTimes(DEMO_MESSAGE); }}>
               Try it as a mama in Manchester
             </ButtonOutline>
+            <button
+              type="button"
+              className="t-caption min-h-12 underline underline-offset-2"
+              onClick={() => { setMoment(DEMO_NO_MATCH); showTimes(DEMO_NO_MATCH); }}
+            >
+              Try it
+            </button>
             <SafetyNote zone={parsed?.zone} />
           </div>
         </>
@@ -87,9 +95,9 @@ function Book() {
       {step === "times" && parsed && (
         <>
           <div>
-            <h1 className="t-title">Three times that could work</h1>
+            {slots.length > 0 && <h1 className="t-title">Three times that fit</h1>}
             <p className="mt-2 text-ink-muted">
-              All shown in your time ({zoneLabel(parsed.zone)}).{" "}
+              Times in {zoneLabel(parsed.zone)}.{" "}
               <button
                 type="button"
                 className="font-semibold underline underline-offset-2"
@@ -100,9 +108,7 @@ function Book() {
             </p>
           </div>
           {slots.length === 0 ? (
-            <p className="rounded-2xl bg-butter-soft p-4">
-              No times match yet. Join the waitlist and I’ll email you when one opens.
-            </p>
+            <Waitlist parsed={parsed} />
           ) : (
             <div className="flex flex-col gap-3">
               {slots.map((s) => (
@@ -116,19 +122,20 @@ function Book() {
               ))}
             </div>
           )}
-          <div className="mt-auto pt-4">
-            <ButtonMain disabled={!selected} onClick={() => setStep("details")}>
-              Continue
-            </ButtonMain>
-          </div>
+          {slots.length > 0 && (
+            <div className="mt-auto pt-4">
+              <ButtonMain disabled={!selected} onClick={() => setStep("details")}>
+                Continue
+              </ButtonMain>
+            </div>
+          )}
         </>
       )}
 
       {step === "details" && selected && parsed && (
         <>
           <div>
-            <h1 className="t-title">Nearly there</h1>
-            <p className="mt-2 rounded-2xl bg-butter-soft p-4 t-time">
+            <p className="rounded-2xl bg-butter-soft p-4 t-time">
               {fmtLong(selected.start, parsed.zone)}, your time
             </p>
           </div>
@@ -175,5 +182,50 @@ function Book() {
         </>
       )}
     </Page>
+  );
+}
+
+const inputCls =
+  "min-h-12 w-full rounded-2xl border border-input bg-paper px-4 text-[17px] text-ink placeholder:text-ink-muted";
+
+function Waitlist({ parsed }: { parsed: ParsedMoment }) {
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [joined, setJoined] = useState(false);
+
+  if (joined) {
+    return (
+      <p className="anim-fade rounded-2xl bg-sage-soft p-4">
+        You’re on the list. I’ll email you when a time opens.
+      </p>
+    );
+  }
+  return (
+    <form
+      className="flex flex-col gap-3"
+      onSubmit={(e) => {
+        e.preventDefault();
+        // Demo rows only; only days, times and city are kept, never her words.
+        DEMO_WAITLIST.push({
+          firstName: name.trim(),
+          email: email.trim(),
+          zone: parsed.zone,
+          notBeforeLocal: parsed.notBeforeLocal,
+          notAfterLocal: parsed.notAfterLocal,
+          joinedAt: DEMO_NOW,
+        });
+        setJoined(true);
+      }}
+    >
+      <Drawing name="illo-tea-cold" />
+      <p className="rounded-2xl bg-butter-soft p-4">
+        No times match yet. Join the waitlist and I’ll email you when one opens.
+      </p>
+      <input value={name} onChange={(e) => setName(e.target.value)} placeholder="First name" aria-label="First name" className={inputCls} />
+      <input value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" aria-label="Email" type="email" className={inputCls} />
+      <ButtonMain type="submit" disabled={!name.trim() || !email.includes("@")}>
+        Join the waitlist
+      </ButtonMain>
+    </form>
   );
 }

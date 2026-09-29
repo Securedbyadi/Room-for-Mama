@@ -1,25 +1,28 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
-import { ButtonMain, Card, Drawing, Icon, Page } from "../components/rfm/brand";
+import { ButtonMain, Card, Drawing, Page } from "../components/rfm/brand";
+import { MakeRoomPlan } from "../components/rfm/MakeRoomPlan";
 import { SafetyNote } from "../components/rfm/SafetyNote";
 import { PLACEHOLDERS } from "../lib/demo-data";
-import { fmtLong, planWeekly, zonedToUtc } from "../lib/time-engine";
+import { planWeekly, zonedToUtc } from "../lib/time-engine";
 
-const ZONE = "Europe/London";
+// Demo mothers: Sara in Manchester (default), Emily in Toronto (?mama=toronto).
+const DEMO_PLANS = {
+  manchester: { zone: "Europe/London", first: [2026, 10, 14, 11, 30] },
+  toronto: { zone: "America/Toronto", first: [2026, 10, 21, 13, 0] },
+} as const;
 
 export const Route = createFileRoute("/make-room")({
+  validateSearch: (s: Record<string, unknown>): { mama?: "toronto" | undefined } =>
+    s["mama"] === "toronto" ? { mama: "toronto" } : {},
   head: () => ({
     meta: [
       { title: "Make Room — Room for Mama" },
-      {
-        name: "description",
-        content: "Four half hours, one a week, at a time that suits you.",
-      },
+      { name: "description", content: "Four half hours, one a week." },
       { property: "og:title", content: "Make Room — Room for Mama" },
-      {
-        property: "og:description",
-        content: "Four half hours, one a week, at a time that suits you.",
-      },
+      { property: "og:description", content: "Four half hours, one a week." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: MakeRoom,
@@ -28,12 +31,15 @@ export const Route = createFileRoute("/make-room")({
 type Stage = "offer" | "held" | "confirmed";
 
 function MakeRoom() {
+  const { mama } = Route.useSearch();
+  const demo = DEMO_PLANS[mama ?? "manchester"];
+  const ZONE: string = demo.zone;
   const [stage, setStage] = useState<Stage>("offer");
   const [reference, setReference] = useState("");
+  const [y, mo, d, h, mi] = demo.first;
 
-  // Demo: Sara in Manchester, Wednesdays 11:30 her time, from 14 Oct 2026.
   const plan = planWeekly({
-    firstStart: zonedToUtc(ZONE, 2026, 10, 14, 11, 30),
+    firstStart: zonedToUtc(ZONE, y, mo, d, h, mi),
     weeks: 4,
     durationMin: 30,
     motherZone: ZONE,
@@ -43,39 +49,15 @@ function MakeRoom() {
     <Page>
       <div>
         <h1 className="t-title">Make Room</h1>
-        <p className="mt-2 text-ink-muted">
-          Four half hours, one a week. Same time each week, in your time.
-        </p>
+        <p className="mt-2 text-ink-muted">Four half hours, one a week.</p>
       </div>
 
       <Drawing name="illo-the-chair" />
 
-      <div className="flex flex-col gap-3">
-        {plan.map((call, i) => (
-          <div key={call.start.toISOString()} className="flex items-start gap-3">
-            <Icon
-              name={i === 0 ? "icon-mug-next" : "icon-mug-waiting"}
-              size={28}
-              className="mt-3"
-            />
-            <div className="flex-1">
-              <div className="rounded-2xl border border-line bg-paper p-4">
-                <p className="t-time">{fmtLong(call.start, ZONE)}</p>
-                <p className="t-caption text-ink-muted">Call {i + 1} of 4</p>
-              </div>
-              {call.clockNote && (
-                <p className="mt-2 rounded-xl bg-butter-soft p-3 text-[13px] font-semibold">
-                  {call.clockNote}
-                </p>
-              )}
-            </div>
-          </div>
-        ))}
-      </div>
+      <MakeRoomPlan plan={plan} zone={ZONE} />
 
-      <p className="rounded-2xl bg-sunk p-4">
-        £96 for all four — the founding price for the first ten mothers. Your
-        times are held for 48 hours once you book.
+      <p className="rounded-2xl bg-sunk p-4 t-time">
+        {ZONE === "Asia/Karachi" ? "PKR 8,000" : "US$80"}
       </p>
 
       {stage === "offer" && (
@@ -87,9 +69,6 @@ function MakeRoom() {
       {stage === "held" && (
         <Card className="flex flex-col gap-3">
           <h2 className="t-heading">Your four times are held for 48 hours</h2>
-          <p className="text-ink-muted">
-            Pay whichever way is easiest, then tap I’ve paid with your reference.
-          </p>
           <ul className="space-y-1 text-[15px]">
             <li><span className="font-semibold">Bank:</span> {PLACEHOLDERS.payment.bank}</li>
             <li><span className="font-semibold">Raast:</span> {PLACEHOLDERS.payment.raast}</li>
@@ -111,10 +90,6 @@ function MakeRoom() {
       {stage === "confirmed" && (
         <Card offset="peach">
           <h2 className="t-heading">All four are yours.</h2>
-          <p className="mt-2">
-            I’ll confirm your payment and your invites will follow. If the baby
-            wakes, Baby’s up moves any call, free.
-          </p>
         </Card>
       )}
 
