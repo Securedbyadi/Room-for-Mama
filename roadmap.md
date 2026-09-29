@@ -2,7 +2,7 @@
 - [x] Add card-to-page expansion and matching destination openings
 - [x] Add illustrated split layouts to mother forms and outcomes
 - [x] Add reduced-motion-safe micro animations
-- [ ] Verify day/night desktop/phone and working flows
+- [x] Verify day/night desktop/phone and working flows
 - [x] Restore every pictured home section below the full-screen hero
 - [x] Add SafetyNote and country helplines to every public page footer
 - [x] Use the exact assigned brand drawings/icons for each mother-flow step

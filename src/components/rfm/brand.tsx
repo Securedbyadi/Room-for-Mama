@@ -229,7 +229,7 @@ export function Card({
 }) {
   return (
     <div
-      className={`rounded-[22px] p-5 ${
+      className={`micro-card rounded-[22px] p-5 ${
         offset ? `offset-${offset}` : "border border-line bg-paper"
       } ${className}`}
     >
