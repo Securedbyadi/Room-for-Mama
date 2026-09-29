@@ -64,7 +64,7 @@ Calendar titles and email subjects: "Half hour with Room for Mama" (hello calls:
 - After a call: "Thank you for your half hour. Your one small step this week is below."
 
 ## Look (match the attached screens)
-Colours day / night (night follows the phone):
+Colours day / night (night follows the phone; the top-bar toggle overrides it):
 - page #F6EEE3 / #1F2619; paper (cards, slots, sheets) #FBF6EE / #283122; sunk (chips, SafetyNote) #EFE4D3 / #2F3927
 - ink #34402A / #F6EEE3; ink-muted #5B6450 / #C4C9B5; line #E2D6C3 / #3A4531; line-strong #8E8A74 / #7F8A70
 - butter #F5D06F: selected time, next call. peach #F3B08F: warmth. sage #9BAF86: done. butter-soft #FAE8B4 / #4A4424 (held times, clock notes), peach-soft #F9DCCB / #4A3A2E, sage-soft #DDE5D2 / #34422C. clay #A4452B / #F0A08A: errors only, with a word.
