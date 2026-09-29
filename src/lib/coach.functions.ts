@@ -231,3 +231,27 @@ export const runNow = createServerFn({ method: "POST" })
     const { requestOrigin } = await import("./rfm.server");
     return runTick(await requestOrigin());
   });
+
+/** The first missed Make Room call is put back: one more half hour, a week after the last. */
+async function putBackFirstMiss(r: typeof import("./rfm.server"), db: import("./rfm.server").Admin, s: import("./rfm.server").Settings, callId: string) {
+  const te = await import("./time-engine");
+  const { data: call } = await db.from("calls").select("id, mother_id, plan_id, kind, mothers(zone)").eq("id", callId).single();
+  if (!call || call.kind !== "make_room" || !call.plan_id) return;
+  const { count: missed } = await db.from("calls").select("id", { count: "exact", head: true }).eq("plan_id", call.plan_id).eq("status", "missed");
+  const { count: already } = await db.from("calls").select("id", { count: "exact", head: true }).eq("plan_id", call.plan_id).not("replaces_call_id", "is", null);
+  if ((missed ?? 0) !== 1 || (already ?? 0) > 0) return;
+  const zone = (call.mothers as unknown as { zone: string } | null)?.zone ?? s.coach_zone;
+  const { data: last } = await db.from("calls").select("starts_at, week").eq("plan_id", call.plan_id).order("starts_at", { ascending: false }).limit(1).single();
+  if (!last) return;
+  const rules = r.rulesFrom(s);
+  const busy = await r.busyCalls(db);
+  const [next] = te.planWeekly({ firstStart: new Date(new Date(last.starts_at).getTime() + 7 * 86_400_000), weeks: 1, durationMin: 30, motherZone: zone, rules });
+  if (!next || !te.isFree(next.start, next.end, busy, rules.bufferMin)) return; // Needs you already shows the miss.
+  await db.from("calls").insert({
+    mother_id: call.mother_id, plan_id: call.plan_id, kind: "make_room", week: (last.week ?? 4) + 1,
+    starts_at: next.start.toISOString(), ends_at: next.end.toISOString(), blocked_until: next.end.toISOString(),
+    status: "booked", clock_note: next.clockNote ?? null, replaces_call_id: call.id,
+  });
+  const { data: m } = await db.from("mothers").select("email").eq("id", call.mother_id).single();
+  if (m) await r.queueEmail(db, { motherId: call.mother_id, to: m.email, kind: "put-back", subject: r.callTitle("make_room"), lines: ["We missed this week, so I’ve put a half hour back for you.", r.whenLine(next.start, zone)], ics: [{ id: call.id + "-b", start: next.start, end: next.end, kind: "make_room" }] });
+}

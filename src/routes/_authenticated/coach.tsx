@@ -106,7 +106,7 @@ function TodayTab({ d }: { d: Data }) {
   const coachZone = d.settings?.coach_zone ?? "Asia/Karachi";
   const upcoming = d.calls.filter((c) => c.status === "booked" || c.status === "held");
   const past = d.calls.filter((c) => c.status === "done");
-  const label: Record<string, string> = { payment_check: "Payment to check", third_move: "A third move", missed_call: "A missed call" };
+  const label: Record<string, string> = { payment_check: "Payment to check", third_move: "A third move", missed_call: "A missed call", refund: "A refund to send" };
 
   return (
     <div className="flex flex-col gap-6">
