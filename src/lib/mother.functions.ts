@@ -408,26 +408,36 @@ export const keepMySpot = createServerFn({ method: "POST" })
 
 /* ---------- Make Room ---------- */
 
-async function proposePlan(r: typeof import("./rfm.server"), db: import("./rfm.server").Admin, motherZone: string) {
+type PlanMother = { zone: string; moment_days: number[]; moment_not_before: string | null; moment_not_after: string | null };
+
+/** Four weekly times, preferring the days and times she said she's free. */
+async function proposePlan(r: typeof import("./rfm.server"), db: import("./rfm.server").Admin, mother: PlanMother) {
   const te = await import("./time-engine");
   const s = await r.loadSettings(db);
   const rules = r.rulesFrom(s);
   const busy = await r.busyCalls(db);
-  const candidates = te.findSlots({
-    rules,
-    busy,
-    from: new Date(),
-    motherZone,
-    durationMin: 30,
-    noticeH: s.notice_new_h,
-    maxAheadDays: s.weeks_ahead * 7 - 21,
-    count: 40,
-    onePerDay: false,
-  });
-  for (const c of candidates) {
-    const weeks = te.planWeekly({ firstStart: c.start, weeks: 4, durationMin: 30, motherZone, rules });
-    if (weeks.every((w) => te.fitsWindows(rules, w.start, 30) && te.isFree(w.start, w.end, busy, rules.bufferMin))) {
-      return { s, weeks };
+  const motherZone = mother.zone;
+  const search = (withPrefs: boolean) =>
+    te.findSlots({
+      rules,
+      busy,
+      from: new Date(),
+      motherZone,
+      durationMin: 30,
+      noticeH: s.notice_new_h,
+      maxAheadDays: s.weeks_ahead * 7 - 21,
+      count: 80,
+      onePerDay: false,
+      notBeforeLocal: withPrefs ? mother.moment_not_before ?? undefined : undefined,
+      notAfterLocal: withPrefs ? mother.moment_not_after ?? undefined : undefined,
+    }).filter((c) => !withPrefs || !mother.moment_days.length || mother.moment_days.includes(te.localParts(motherZone, c.start).weekday));
+  // Her own days and times first; if nothing fits, any open weekly time.
+  for (const withPrefs of [true, false]) {
+    for (const c of search(withPrefs)) {
+      const weeks = te.planWeekly({ firstStart: c.start, weeks: 4, durationMin: 30, motherZone, rules });
+      if (weeks.every((w) => te.fitsWindows(rules, w.start, 30) && te.isFree(w.start, w.end, busy, rules.bufferMin) && te.callsOnCoachDay(rules, busy, w.start) < rules.maxPerDay)) {
+        return { s, weeks };
+      }
     }
   }
   return { s, weeks: [] as import("./time-engine").WeeklyCall[] };
