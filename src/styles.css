@@ -378,9 +378,9 @@ button[aria-pressed="true"] .theme-icon { opacity: 1; }
   transition: transform 320ms ease-out, box-shadow 160ms ease-out;
   animation: rfm-deal 480ms ease-out both;
 }
-.fan-0 { --r: -6deg; --x: -110px; --apart: -40px; z-index: 1; animation-delay: 0ms; }
+.fan-0 { --r: -6deg; --x: -140px; --apart: -40px; z-index: 1; animation-delay: 0ms; }
 .fan-1 { --r: 0deg; --x: 0px; z-index: 2; animation-delay: 80ms; }
-.fan-2 { --r: 5deg; --x: 110px; --apart: 40px; z-index: 3; animation-delay: 160ms; }
+.fan-2 { --r: 5deg; --x: 140px; --apart: 40px; z-index: 3; animation-delay: 160ms; }
 .fan-more { max-height: 0; opacity: 0; overflow: hidden; transition: max-height 320ms ease-out, opacity 320ms ease-out; }
 .fan-card:hover, .fan-card:focus-visible {
   transform: translateX(var(--x)) translateY(-24px) rotate(0deg);
