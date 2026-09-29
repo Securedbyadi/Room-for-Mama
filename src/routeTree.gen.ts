@@ -12,10 +12,10 @@ import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as BookRouteImport } from './routes/book'
 import { Route as BookedRouteImport } from './routes/booked'
-import { Route as CoachRouteImport } from './routes/coach'
 import { Route as EmailsRouteImport } from './routes/emails'
 import { Route as FitCheckRouteImport } from './routes/fit-check'
 import { Route as MakeRoomRouteImport } from './routes/make-room'
+import { Route as DemoCoachRouteImport } from './routes/demo.coach'
 import { Route as ApiPublicHooksDigestRouteImport } from './routes/api/public/hooks/digest'
 import { Route as ApiPublicHooksTickRouteImport } from './routes/api/public/hooks/tick'
 
@@ -34,11 +34,6 @@ const BookedRoute = BookedRouteImport.update({
   path: '/booked',
   getParentRoute: () => rootRouteImport,
 } as any)
-const CoachRoute = CoachRouteImport.update({
-  id: '/coach',
-  path: '/coach',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const EmailsRoute = EmailsRouteImport.update({
   id: '/emails',
   path: '/emails',
@@ -52,6 +47,11 @@ const FitCheckRoute = FitCheckRouteImport.update({
 const MakeRoomRoute = MakeRoomRouteImport.update({
   id: '/make-room',
   path: '/make-room',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const DemoCoachRoute = DemoCoachRouteImport.update({
+  id: '/demo/coach',
+  path: '/demo/coach',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ApiPublicHooksDigestRoute = ApiPublicHooksDigestRouteImport.update({
@@ -69,10 +69,10 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/book': typeof BookRoute
   '/booked': typeof BookedRoute
-  '/coach': typeof CoachRoute
   '/emails': typeof EmailsRoute
   '/fit-check': typeof FitCheckRoute
   '/make-room': typeof MakeRoomRoute
+  '/demo/coach': typeof DemoCoachRoute
   '/api/public/hooks/digest': typeof ApiPublicHooksDigestRoute
   '/api/public/hooks/tick': typeof ApiPublicHooksTickRoute
 }
@@ -80,10 +80,10 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/book': typeof BookRoute
   '/booked': typeof BookedRoute
-  '/coach': typeof CoachRoute
   '/emails': typeof EmailsRoute
   '/fit-check': typeof FitCheckRoute
   '/make-room': typeof MakeRoomRoute
+  '/demo/coach': typeof DemoCoachRoute
   '/api/public/hooks/digest': typeof ApiPublicHooksDigestRoute
   '/api/public/hooks/tick': typeof ApiPublicHooksTickRoute
 }
@@ -92,10 +92,10 @@ export interface FileRoutesById {
   '/': typeof IndexRoute
   '/book': typeof BookRoute
   '/booked': typeof BookedRoute
-  '/coach': typeof CoachRoute
   '/emails': typeof EmailsRoute
   '/fit-check': typeof FitCheckRoute
   '/make-room': typeof MakeRoomRoute
+  '/demo/coach': typeof DemoCoachRoute
   '/api/public/hooks/digest': typeof ApiPublicHooksDigestRoute
   '/api/public/hooks/tick': typeof ApiPublicHooksTickRoute
 }
@@ -105,10 +105,10 @@ export interface FileRouteTypes {
     | '/'
     | '/book'
     | '/booked'
-    | '/coach'
     | '/emails'
     | '/fit-check'
     | '/make-room'
+    | '/demo/coach'
     | '/api/public/hooks/digest'
     | '/api/public/hooks/tick'
   fileRoutesByTo: FileRoutesByTo
@@ -116,10 +116,10 @@ export interface FileRouteTypes {
     | '/'
     | '/book'
     | '/booked'
-    | '/coach'
     | '/emails'
     | '/fit-check'
     | '/make-room'
+    | '/demo/coach'
     | '/api/public/hooks/digest'
     | '/api/public/hooks/tick'
   id:
@@ -127,10 +127,10 @@ export interface FileRouteTypes {
     | '/'
     | '/book'
     | '/booked'
-    | '/coach'
     | '/emails'
     | '/fit-check'
     | '/make-room'
+    | '/demo/coach'
     | '/api/public/hooks/digest'
     | '/api/public/hooks/tick'
   fileRoutesById: FileRoutesById
@@ -139,10 +139,10 @@ export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   BookRoute: typeof BookRoute
   BookedRoute: typeof BookedRoute
-  CoachRoute: typeof CoachRoute
   EmailsRoute: typeof EmailsRoute
   FitCheckRoute: typeof FitCheckRoute
   MakeRoomRoute: typeof MakeRoomRoute
+  DemoCoachRoute: typeof DemoCoachRoute
   ApiPublicHooksDigestRoute: typeof ApiPublicHooksDigestRoute
   ApiPublicHooksTickRoute: typeof ApiPublicHooksTickRoute
 }
@@ -170,13 +170,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof BookedRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/coach': {
-      id: '/coach'
-      path: '/coach'
-      fullPath: '/coach'
-      preLoaderRoute: typeof CoachRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/emails': {
       id: '/emails'
       path: '/emails'
@@ -196,6 +189,13 @@ declare module '@tanstack/react-router' {
       path: '/make-room'
       fullPath: '/make-room'
       preLoaderRoute: typeof MakeRoomRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/demo/coach': {
+      id: '/demo/coach'
+      path: '/demo/coach'
+      fullPath: '/demo/coach'
+      preLoaderRoute: typeof DemoCoachRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/api/public/hooks/digest': {
@@ -219,10 +219,10 @@ const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   BookRoute: BookRoute,
   BookedRoute: BookedRoute,
-  CoachRoute: CoachRoute,
   EmailsRoute: EmailsRoute,
   FitCheckRoute: FitCheckRoute,
   MakeRoomRoute: MakeRoomRoute,
+  DemoCoachRoute: DemoCoachRoute,
   ApiPublicHooksDigestRoute: ApiPublicHooksDigestRoute,
   ApiPublicHooksTickRoute: ApiPublicHooksTickRoute,
 }
