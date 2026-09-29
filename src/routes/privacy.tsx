@@ -5,9 +5,9 @@ import { SafetyNote } from "../components/rfm/SafetyNote";
 export const Route = createFileRoute("/privacy")({
   head: () => ({
     meta: [
-      { title: "Privacy — Room for Mama" },
+      { title: "Privacy | Room for Mama" },
       { name: "description", content: "What Room for Mama keeps, why, and how to delete it." },
-      { property: "og:title", content: "Privacy — Room for Mama" },
+      { property: "og:title", content: "Privacy | Room for Mama" },
       { property: "og:description", content: "What Room for Mama keeps, why, and how to delete it." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },

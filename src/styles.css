@@ -290,10 +290,12 @@
   animation: rfm-steam 3s ease-in-out infinite;
   transform-origin: center;
 }
-.section-reveal {
-  animation: rfm-reveal 320ms ease-out both;
-  animation-timeline: view();
-  animation-range: entry 10% cover 24%;
+@supports (animation-timeline: view()) {
+  .section-reveal {
+    animation: rfm-reveal 320ms ease-out both;
+    animation-timeline: view();
+    animation-range: entry 10% cover 24%;
+  }
 }
 .slot-selected {
   animation: rfm-shadow-in 160ms ease-out both;

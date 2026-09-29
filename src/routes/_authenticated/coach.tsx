@@ -22,9 +22,9 @@ import { fmtLong, fmtTime, zoneLabel } from "../../lib/time-engine";
 export const Route = createFileRoute("/_authenticated/coach")({
   head: () => ({
     meta: [
-      { title: "Coach — Room for Mama" },
+      { title: "Coach | Room for Mama" },
       { name: "description", content: "Today’s calls, mothers, rules and time given back." },
-      { property: "og:title", content: "Coach — Room for Mama" },
+      { property: "og:title", content: "Coach | Room for Mama" },
       { property: "og:description", content: "Today’s calls, mothers, rules and time given back." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
@@ -68,12 +68,12 @@ function CoachApp() {
   const d = q.data;
 
   return (
-    <Page>
-      <div className="flex items-center justify-between">
+    <Page headerAction={<span className="t-caption uppercase tracking-[0.12em] text-ink-muted">Coach</span>} className="pb-28">
+      <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-4">
         <h1 className="t-title">{TABS.find((t) => t.id === tab)?.label}</h1>
         <button type="button" className="t-caption min-h-12 underline" onClick={signOut}>Sign out</button>
       </div>
-      <nav className="flex flex-wrap gap-2">
+      <nav className="hidden flex-wrap gap-2 md:flex">
         {TABS.map((t) => (
           <Chip key={t.id} active={tab === t.id} onClick={() => setTab(t.id)}>{t.label}</Chip>
         ))}
@@ -82,8 +82,14 @@ function CoachApp() {
       {tab === "mothers" && <MothersTab d={d} />}
       {tab === "rules" && <RulesTab d={d} />}
       {tab === "given-back" && <GivenBackTab d={d} />}
+      <CoachBottomNav tab={tab} setTab={setTab} />
     </Page>
   );
+}
+
+function CoachBottomNav({ tab, setTab }: { tab: Tab; setTab: (tab: Tab) => void }) {
+  const icons = { today: "icon-day", mothers: "icon-email", rules: "icon-notes", "given-back": "icon-time-given-back" } as const;
+  return <nav className="fixed inset-x-0 bottom-0 z-30 mx-auto grid max-w-[480px] grid-cols-4 border-t border-line bg-page px-2 pb-[max(12px,env(safe-area-inset-bottom))] pt-2 md:hidden" aria-label="Coach sections">{TABS.map((t) => <button key={t.id} type="button" onClick={() => setTab(t.id)} className={`flex min-h-14 flex-col items-center justify-center text-[13px] font-semibold ${tab === t.id ? "text-ink" : "text-ink-muted"}`}><Icon name={icons[t.id]} size={26} /><span>{t.label}</span></button>)}</nav>;
 }
 
 function useRefresh() {
@@ -104,32 +110,32 @@ function TodayTab({ d }: { d: Data }) {
 
   return (
     <div className="flex flex-col gap-6">
+      <section className="flex flex-col gap-3">
+        <h2 className="t-heading">Coming up</h2>
+        {upcoming.length === 0 && <p className="text-ink-muted">No calls yet.</p>}
+        {upcoming.map((c) => <CallCard key={c.id} c={c} coachZone={coachZone} />)}
+      </section>
+
       {d.needs.length > 0 && (
-        <Card offset="butter" className="flex flex-col gap-3">
+        <Card offset="peach" className="!bg-paper flex flex-col gap-3 shadow-[6px_6px_0_var(--butter)]">
           <h2 className="t-heading">Needs you</h2>
           {d.needs.map((n) => {
             const m = n.mothers as { first_name: string } | null;
             const p = n.plans as { reference: string; paid_reference: string | null; amount: number; currency: string } | null;
             return (
-              <div key={n.id} className="flex items-center justify-between gap-3">
+              <div key={n.id} className="flex flex-col gap-3">
                 <p>
                   <span className="font-semibold">{label[n.kind]}</span>, {m?.first_name}
                   {p ? ` · ${p.reference} · her ref ${p.paid_reference ?? "—"}` : ""}
                 </p>
-                <ButtonMain className="!w-auto" onClick={async () => { await resolve({ data: { id: n.id } }); void refresh(); }}>
-                  {n.kind === "payment_check" ? "Paid" : n.kind === "third_move" ? "Allow" : "Done"}
+                <ButtonMain onClick={async () => { await resolve({ data: { id: n.id } }); void refresh(); }}>
+                  {n.kind === "payment_check" ? "Confirm payment" : n.kind === "third_move" ? "Allow move" : "Done"}
                 </ButtonMain>
               </div>
             );
           })}
         </Card>
       )}
-
-      <section className="flex flex-col gap-3">
-        <h2 className="t-heading">Coming up</h2>
-        {upcoming.length === 0 && <p className="text-ink-muted">No calls yet.</p>}
-        {upcoming.map((c) => <CallCard key={c.id} c={c} coachZone={coachZone} />)}
-      </section>
 
       {past.length > 0 && (
         <section className="flex flex-col gap-3">
@@ -148,16 +154,16 @@ function CallCard({ c, coachZone }: { c: CallT; coachZone: string }) {
   const start = new Date(c.starts_at);
   return (
     <Card className="flex flex-col gap-2">
-      <p className="t-time">{fmtLong(start, coachZone)}</p>
+      <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-3"><p className="t-heading">{fmtTime(start, coachZone)} · {m?.first_name}</p><Icon name="icon-video-call" size={28} /></div>
       <p>
-        {m?.first_name}, {c.kind === "hello" ? "hello call" : `half hour ${c.week ?? ""} of 4`}
+        {c.kind === "hello" ? "Hello call" : `Make Room ${c.week ?? ""} of 4`}
         {c.status === "held" ? ", held" : ""} · {fmtTime(start, m?.zone ?? coachZone)} {zoneLabel(m?.zone ?? coachZone)}
       </p>
       {c.status === "booked" && (
         sent ? (
           <p className="t-caption text-ink-muted">Three new times sent.</p>
         ) : (
-          <ButtonOutline onClick={async () => { await up({ data: { callId: c.id } }); setSent(true); }}>
+          <ButtonOutline className="!w-auto" onClick={async () => { await up({ data: { callId: c.id } }); setSent(true); }}>
             <Icon name="icon-babys-up" size={22} /> Baby’s up
           </ButtonOutline>
         )

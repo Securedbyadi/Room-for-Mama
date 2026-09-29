@@ -14,9 +14,9 @@ import { fmtLong, fmtTime, zoneLabel } from "../lib/time-engine";
 export const Route = createFileRoute("/demo/coach")({
   head: () => ({
     meta: [
-      { title: "Today — Room for Mama" },
+      { title: "Today | Room for Mama" },
       { name: "description", content: "Your calls today, in your time." },
-      { property: "og:title", content: "Today — Room for Mama" },
+      { property: "og:title", content: "Today | Room for Mama" },
       { property: "og:description", content: "Your calls today, in your time." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
@@ -116,16 +116,23 @@ function TodayTab() {
   return (
     <>
       <section className="flex flex-col gap-3">
+        <h2 className="t-heading">This week’s calls</h2>
+        {DEMO_CALLS.map((c) => (
+          <CallCard key={c.mother.id + c.start.toISOString()} call={c} />
+        ))}
+      </section>
+
+      <section className="flex flex-col gap-3">
         <h2 className="t-heading">Needs you</h2>
         {needsYou
           .filter((n) => !done.has(n.id))
           .map((n) => (
-            <Card key={n.id} offset="butter" className="flex flex-col gap-2">
+            <Card key={n.id} offset="peach" className="!bg-paper flex flex-col gap-3 shadow-[6px_6px_0_var(--butter)]">
               <p className="t-heading">{n.title}</p>
               <p>{n.detail}</p>
-              <ButtonOutline onClick={() => setDone(new Set(done).add(n.id))}>
+              <ButtonMain onClick={() => setDone(new Set(done).add(n.id))}>
                 {n.action}
-              </ButtonOutline>
+              </ButtonMain>
             </Card>
           ))}
         {needsYou.every((n) => done.has(n.id)) && (
@@ -133,13 +140,6 @@ function TodayTab() {
             Nothing needs you. Put the kettle on.
           </p>
         )}
-      </section>
-
-      <section className="flex flex-col gap-3">
-        <h2 className="t-heading">This week’s calls</h2>
-        {DEMO_CALLS.map((c) => (
-          <CallCard key={c.mother.id + c.start.toISOString()} call={c} />
-        ))}
       </section>
 
       <p className="t-caption text-ink-muted">
@@ -270,12 +270,12 @@ function Coach() {
   const [tab, setTab] = useState<Tab>("today");
 
   return (
-    <Page>
+    <Page headerAction={<span className="t-caption uppercase tracking-[0.12em] text-ink-muted">Coach</span>} className="pb-28">
       <div>
         <h1 className="t-title">{TABS.find((t) => t.id === tab)?.label}</h1>
       </div>
 
-      <nav className="flex flex-wrap gap-2" aria-label="Coach sections">
+      <nav className="hidden flex-wrap gap-2 md:flex" aria-label="Coach sections">
         {TABS.map((t) => (
           <Chip key={t.id} active={tab === t.id} onClick={() => setTab(t.id)}>
             {t.label}
@@ -287,6 +287,8 @@ function Coach() {
       {tab === "mothers" && <MothersTab />}
       {tab === "rules" && <RulesTab />}
       {tab === "given-back" && <GivenBackTab />}
+
+      <nav className="fixed inset-x-0 bottom-0 z-30 mx-auto grid max-w-[480px] grid-cols-4 border-t border-line bg-page px-2 pb-[max(12px,env(safe-area-inset-bottom))] pt-2 md:hidden" aria-label="Coach sections">{TABS.map((t) => { const icons = { today: "icon-day", mothers: "icon-email", rules: "icon-notes", "given-back": "icon-time-given-back" } as const; return <button key={t.id} type="button" onClick={() => setTab(t.id)} className={`flex min-h-14 flex-col items-center justify-center text-[13px] font-semibold ${tab === t.id ? "text-ink" : "text-ink-muted"}`}><Icon name={icons[t.id]} size={26} /><span>{t.label}</span></button>; })}</nav>
 
       <div className="mt-auto pt-4">
         <SafetyNote zone={COACH_ZONE} />

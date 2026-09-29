@@ -193,11 +193,13 @@ export function Slot({
   sub,
   selected,
   onClick,
+  marker = false,
 }: {
   label: string;
   sub?: string;
   selected?: boolean;
   onClick?: () => void;
+  marker?: boolean;
 }) {
   return (
     <button
@@ -207,8 +209,11 @@ export function Slot({
         selected ? "offset-peach slot-selected" : "border border-line bg-paper"
       }`}
     >
-      <span className="t-time text-[17px]">{label}</span>
-      {sub ? <span className="t-caption text-ink-muted">{sub}</span> : null}
+      <span className="min-w-0">
+        <span className="t-time block text-[17px]">{label}</span>
+        {sub ? <span className="t-caption block text-ink-muted">{sub}</span> : null}
+      </span>
+      {marker ? <Icon name={selected ? "icon-done" : "icon-time"} size={28} /> : null}
     </button>
   );
 }
@@ -235,11 +240,12 @@ export function Card({
 
 /* ---------- page frame ---------- */
 
-export function Page({ children }: { children: ReactNode }) {
+export function Page({ children, headerAction, className = "" }: { children: ReactNode; headerAction?: ReactNode; className?: string }) {
   return (
-    <div className="anim-fade mx-auto flex min-h-screen w-full max-w-[480px] flex-col px-5 pt-5 pb-10">
-      <header className="mb-8 flex items-center justify-between">
+    <div className={`anim-fade mx-auto flex min-h-screen w-full max-w-[480px] flex-col px-5 pt-5 pb-10 ${className}`}>
+      <header className="mb-8 grid grid-cols-[minmax(0,1fr)_auto] items-center gap-4">
         <Logo />
+        {headerAction ? <div className="shrink-0">{headerAction}</div> : null}
       </header>
       <main className="flex flex-1 flex-col gap-6">{children}</main>
     </div>

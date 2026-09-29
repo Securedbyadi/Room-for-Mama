@@ -7,9 +7,9 @@ import { NOT_A_FIT_NOTE, PLACEHOLDERS } from "../lib/demo-data";
 export const Route = createFileRoute("/emails")({
   head: () => ({
     meta: [
-      { title: "Email previews — Room for Mama" },
+      { title: "Email previews | Room for Mama" },
       { name: "description", content: "The branded email template, one action each." },
-      { property: "og:title", content: "Email previews — Room for Mama" },
+      { property: "og:title", content: "Email previews | Room for Mama" },
       { property: "og:description", content: "The branded email template, one action each." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },

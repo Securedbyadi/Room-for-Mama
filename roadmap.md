@@ -11,3 +11,8 @@
 - [x] Phase 3: Lovable Cloud — real hello call booking, waitlist, manage link, Baby's up, Make Room hold/pay, coach app, automations, privacy
 - [ ] 7-days-ahead clock-change email (the note shows at booking; the reminder email isn't sent yet)
 - [ ] Send real emails once an email domain is set (they show in the coach's Email preview for now)
+- [x] Preserve the desktop website and keep both hero actions on one desktop row.
+- [x] Match You’re in, Baby’s up, Make Room, and Coach Today to the supplied phone screens.
+- [x] Lock coach access to adilmushtaq088@gmail.com and remove coach account creation.
+- [x] Remove em dashes from page titles and guard scroll reveal support.
+
