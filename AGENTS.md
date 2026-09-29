@@ -10,7 +10,7 @@
 <!-- LOVABLE:END -->
 
 - Tests: `bun run test` (vitest) uses its own vitest.config.ts, separate from the app build config, so the app plugins stay out of tests.
-- The public home page uses a wide website shell; booking and coach routes keep the narrow app shell so their established flows remain stable.
+- The public home is a single full-viewport hero; mother flows use a wide illustrated split shell on desktop and retain the stacked app shell on phones. Why: this matches the approved visual references without changing booking behaviour.
 - Theme preference is device-local only, defaults to Auto, and is applied on the root element before paint to avoid a colour flash.
 - Mother actions go through createServerFn in src/lib/mother.functions.ts and check a manage token (hashed on mothers, raw token only in service-only mother_links for email links); visitors never read tables.
 - Coach actions live in src/lib/coach.functions.ts behind requireSupabaseAuth plus has_role('coach'), and server-side access is restricted to the verified email adilmushtaq088@gmail.com. Why: only the named coach may access private practice data.

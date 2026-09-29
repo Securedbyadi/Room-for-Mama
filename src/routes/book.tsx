@@ -110,7 +110,7 @@ function Book() {
   };
 
   return (
-    <Page>
+    <Page illustration={<Drawing key={step} name={step === "moment" ? "illo-her-half-hour" : step === "times" ? "illo-tea-warm" : "illo-the-chair"} className={`form-illustration form-${step}`} />}>
       {step === "moment" && (
         <>
           <div>
@@ -266,7 +266,6 @@ function Waitlist({ parsed, demo }: { parsed: ParsedMoment; demo: boolean }) {
         setJoined(true);
       }}
     >
-      <Drawing name="illo-tea-cold" />
       <p className="rounded-2xl bg-butter-soft p-4">
         No times match yet. Join the waitlist and I’ll email you when one opens.
       </p>

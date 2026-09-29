@@ -1,6 +1,6 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
-import { ButtonOutline, Drawing, Page } from "../components/rfm/brand";
+import { ButtonOutline, Drawing, Page, type DrawingName } from "../components/rfm/brand";
 import { SafetyNote } from "../components/rfm/SafetyNote";
 import { FIT_QUESTIONS, fitOutcome, type FitChoice } from "../lib/fit-check";
 
@@ -23,6 +23,7 @@ function FitCheck() {
   const [step, setStep] = useState(0);
   const [notFit, setNotFit] = useState<FitChoice | null>(null);
   const question = FIT_QUESTIONS[step];
+  const stepDrawings: DrawingName[] = ["illo-her-half-hour", "illo-the-chair", "illo-tea-warm", "illo-baby-up"];
 
   const answer = (choice: FitChoice) => {
     const outcome = fitOutcome(step, choice);
@@ -39,8 +40,7 @@ function FitCheck() {
 
   if (notFit) {
     return (
-      <Page>
-        <Drawing name="illo-tea-cold" />
+      <Page illustration={<Drawing name="illo-tea-cold" className="final-illustration" />}>
         <div>
           <p className="t-caption mb-2 text-ink-muted">Not the right fit just now</p>
           <h1 className="t-title">Thank you for checking.</h1>
@@ -58,7 +58,7 @@ function FitCheck() {
   if (!question) return null;
 
   return (
-    <Page>
+    <Page illustration={<Drawing key={step} name={stepDrawings[step] ?? "illo-her-half-hour"} className={`form-illustration form-illustration-${step}`} />}>
       <div>
         <p className="t-caption text-ink-muted">{step + 1} of {FIT_QUESTIONS.length}</p>
         <div className="mt-3 grid grid-cols-4 gap-2" aria-hidden>
@@ -66,7 +66,7 @@ function FitCheck() {
         </div>
       </div>
       {step === 0 && <p className="mt-4 text-ink-muted">Four quick questions first, so your hello call is time well spent.</p>}
-      <h1 className="t-title">{question.question}</h1>
+      <h1 key={question.id} className="form-step-title t-title">{question.question}</h1>
       <div className="mt-auto flex flex-col gap-3 pt-8">
         {question.choices.map((choice) => <ButtonOutline key={choice.label} onClick={() => answer(choice)} className="min-h-16 justify-start text-left">{choice.label}</ButtonOutline>)}
         <SafetyNote />

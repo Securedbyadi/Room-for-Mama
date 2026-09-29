@@ -86,8 +86,7 @@ function Booked() {
   };
 
   return (
-    <Page headerAction={<a href="#my-call" className="font-semibold underline underline-offset-8">My calls</a>}>
-      <Drawing name="illo-tea-warm" className="youre-in-rise" />
+    <Page illustration={<Drawing name="illo-tea-warm" className="youre-in-rise final-illustration" />} headerAction={<a href="#my-call" className="micro-link font-semibold underline underline-offset-8">My calls</a>}>
       <Card offset="peach" className="!bg-paper flex flex-col gap-3 shadow-[6px_6px_0_var(--peach)]" >
         <div className="flex items-center gap-3"><Icon name="icon-done" size={30} /><h1 className="t-title">You’re in.</h1></div>
         <div id="my-call">

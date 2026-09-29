@@ -130,7 +130,7 @@ type ButtonProps = {
 };
 
 const baseBtn =
-  "inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full px-6 text-[17px] font-semibold transition-opacity disabled:opacity-50";
+  "rfm-button inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full px-6 text-[17px] font-semibold disabled:opacity-50";
 
 export function ButtonMain(props: ButtonProps) {
   const cls = `${baseBtn} bg-primary text-primary-foreground ${props.className ?? ""}`;
@@ -240,7 +240,35 @@ export function Card({
 
 /* ---------- page frame ---------- */
 
-export function Page({ children, headerAction, className = "" }: { children: ReactNode; headerAction?: ReactNode; className?: string }) {
+export function Page({
+  children,
+  headerAction,
+  className = "",
+  illustration,
+}: {
+  children: ReactNode;
+  headerAction?: ReactNode;
+  className?: string;
+  illustration?: ReactNode;
+}) {
+  if (illustration) {
+    return (
+      <div className={`anim-fade mx-auto min-h-screen w-full max-w-[1200px] px-5 pt-5 pb-10 ${className}`}>
+        <header className="mb-6 grid grid-cols-[minmax(0,1fr)_auto] items-center gap-4 lg:mb-10">
+          <Logo />
+          {headerAction ? <div className="shrink-0">{headerAction}</div> : null}
+        </header>
+        <div className="rfm-split-page grid min-h-[calc(100svh-106px)] items-center gap-7 lg:grid-cols-12 lg:gap-10">
+          <aside className="rfm-splash lg:col-span-6" aria-hidden>
+            {illustration}
+          </aside>
+          <main className="flex min-w-0 flex-col gap-6 lg:col-span-5 lg:col-start-8 lg:min-h-[640px] lg:justify-center">
+            {children}
+          </main>
+        </div>
+      </div>
+    );
+  }
   return (
     <div className={`anim-fade mx-auto flex min-h-screen w-full max-w-[480px] flex-col px-5 pt-5 pb-10 ${className}`}>
       <header className="mb-8 grid grid-cols-[minmax(0,1fr)_auto] items-center gap-4">
