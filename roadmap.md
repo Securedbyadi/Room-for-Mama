@@ -7,3 +7,4 @@
 - [x] Add the two-line Meet the coach section after Who it’s for.
 - [x] Add Day, Night, and Auto display modes to the desktop top bar and phone menu; default to Auto and remember the device choice.
 - [x] Add route metadata and focused tests, then verify desktop, phone, and night modes.
+- [ ] Add the approved CSS-only motion, with steam as the only loop and full reduced-motion support.
