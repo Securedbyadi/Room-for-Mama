@@ -1,6 +1,6 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
-import { ButtonOutline, Drawing, Icon, Page } from "../components/rfm/brand";
+import { BackButton, ButtonOutline, Drawing, Icon, Page } from "../components/rfm/brand";
 import { SafetyNote } from "../components/rfm/SafetyNote";
 import { FIT_QUESTIONS, fitOutcome, type FitChoice } from "../lib/fit-check";
 
@@ -46,6 +46,7 @@ function FitCheck() {
   if (notFit) {
     return (
       <Page illustration={<Drawing name="illo-tea-cold" className="final-illustration" bare />}>
+        <BackButton onClick={() => setNotFit(null)} label="Back to the question" />
         <div>
           <p className="t-caption mb-2 text-ink-muted">Not the right fit just now</p>
           <h1 className="t-title">Thank you for checking.</h1>
@@ -64,6 +65,10 @@ function FitCheck() {
 
   return (
     <Page illustration={stepIllustrations[step]}>
+      <BackButton
+        onClick={() => step > 0 ? setStep(step - 1) : void navigate({ to: "/" })}
+        label={step > 0 ? "Previous question" : "Back to home"}
+      />
       <div>
         <p className="t-caption text-ink-muted">{step + 1} of {FIT_QUESTIONS.length}</p>
         <div className="mt-3 grid grid-cols-4 gap-2" aria-hidden>
