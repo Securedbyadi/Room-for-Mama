@@ -222,6 +222,32 @@ export type Database = {
         }
         Relationships: []
       }
+      mother_links: {
+        Row: {
+          created_at: string
+          mother_id: string
+          token: string
+        }
+        Insert: {
+          created_at?: string
+          mother_id: string
+          token: string
+        }
+        Update: {
+          created_at?: string
+          mother_id?: string
+          token?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "mother_links_mother_id_fkey"
+            columns: ["mother_id"]
+            isOneToOne: true
+            referencedRelation: "mothers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       mothers: {
         Row: {
           city: string | null
