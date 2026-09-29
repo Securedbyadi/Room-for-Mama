@@ -6,7 +6,7 @@
 import { Link } from "@tanstack/react-router";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import type { ReactNode } from "react";
-import { DesktopToggle, WebsiteFooter, WebsiteHeader } from "./WebsiteChrome";
+import { DemoNote, DesktopToggle, WebsiteFooter, WebsiteHeader } from "./WebsiteChrome";
 import { ThemeRound } from "./ThemeControl";
 
 const iconModules = import.meta.glob("../../assets/brand/icons/*.svg", {
