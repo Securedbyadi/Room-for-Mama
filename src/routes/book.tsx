@@ -2,7 +2,7 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useEffect, useMemo, useState } from "react";
 import { useServerFn } from "@tanstack/react-start";
 import { bookHello, findTimes, joinWaitlist, readMoment } from "../lib/mother.functions";
-import { ButtonMain, ButtonOutline, Drawing, Page, Slot } from "../components/rfm/brand";
+import { BackButton, ButtonMain, ButtonOutline, Drawing, Page, Slot } from "../components/rfm/brand";
 import { SafetyNote } from "../components/rfm/SafetyNote";
 import { DEMO_BUSY, DEMO_MESSAGE, DEMO_NO_MATCH, DEMO_NOW, DEMO_WAITLIST } from "../lib/demo-data";
 import { parseMoment, type ParsedMoment } from "../lib/moment-parse";
@@ -79,6 +79,19 @@ function Book() {
       ? "illo-the-chair"
       : "illo-her-half-hour";
 
+  const goBack = () => {
+    setErr(null);
+    if (step === "details") {
+      setStep("times");
+      return;
+    }
+    if (step === "times") {
+      setStep("moment");
+      return;
+    }
+    void navigate({ to: "/fit-check" });
+  };
+
   const showTimes = async (text: string) => {
     const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
     if (text === DEMO_MESSAGE || text === DEMO_NO_MATCH) {
@@ -116,6 +129,7 @@ function Book() {
 
   return (
     <Page illustration={<Drawing key={`${step}-${illustrationName}`} name={illustrationName} className={`form-illustration ${illustrationName === "illo-her-half-hour" ? "home-steam" : ""}`} bare />}>
+      <BackButton onClick={goBack} label={step === "moment" ? "Back to the fit check" : "Previous step"} />
       {step === "moment" && (
         <>
           <div>

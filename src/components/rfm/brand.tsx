@@ -4,6 +4,7 @@
  * currentColor. Never redrawn, recoloured or retyped.
  */
 import { Link } from "@tanstack/react-router";
+import { ArrowLeft } from "lucide-react";
 import type { ReactNode } from "react";
 import { DesktopToggle, WebsiteFooter, WebsiteHeader } from "./WebsiteChrome";
 import { ThemeRound } from "./ThemeControl";
@@ -164,6 +165,20 @@ export function ButtonOutline(props: ButtonProps) {
   return (
     <button type={props.type ?? "button"} onClick={props.onClick} disabled={props.disabled} className={cls}>
       {props.children}
+    </button>
+  );
+}
+
+export function BackButton({ onClick, label = "Go back" }: { onClick: () => void; label?: string }) {
+  return (
+    <button
+      type="button"
+      onClick={onClick}
+      aria-label={label}
+      title={label}
+      className="rfm-button inline-flex size-12 shrink-0 items-center justify-center rounded-full border-2 border-line-strong bg-transparent text-ink"
+    >
+      <ArrowLeft aria-hidden size={22} strokeWidth={2} />
     </button>
   );
 }
