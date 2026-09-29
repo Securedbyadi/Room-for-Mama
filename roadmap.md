@@ -8,3 +8,6 @@
 - [x] Add Day, Night, and Auto display modes to the desktop top bar and phone menu; default to Auto and remember the device choice.
 - [x] Add route metadata and focused tests, then verify desktop, phone, and night modes.
 - [x] Add the approved CSS-only motion, with steam as the only loop and full reduced-motion support.
+- [x] Phase 3: Lovable Cloud — real hello call booking, waitlist, manage link, Baby's up, Make Room hold/pay, coach app, automations, privacy
+- [ ] 7-days-ahead clock-change email (the note shows at booking; the reminder email isn't sent yet)
+- [ ] Send real emails once an email domain is set (they show in the coach's Email preview for now)
