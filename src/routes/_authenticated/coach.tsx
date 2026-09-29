@@ -129,7 +129,7 @@ function TodayTab({ d }: { d: Data }) {
                   {p ? ` · ${p.reference} · her ref ${p.paid_reference ?? "—"}` : ""}
                 </p>
                 <ButtonMain onClick={async () => { await resolve({ data: { id: n.id } }); void refresh(); }}>
-                  {n.kind === "payment_check" ? "Confirm payment" : n.kind === "third_move" ? "Allow move" : "Done"}
+                  {n.kind === "payment_check" ? "Confirm payment" : n.kind === "third_move" ? "Allow move" : n.kind === "refund" ? "Refund sent" : "Done"}
                 </ButtonMain>
               </div>
             );

@@ -71,6 +71,7 @@ export type Database = {
         Row: {
           blocked_until: string
           clock_note: string | null
+          coach_move_options: string[]
           coach_move_pending: boolean
           coach_moves_used: number
           created_at: string
@@ -94,6 +95,7 @@ export type Database = {
         Insert: {
           blocked_until: string
           clock_note?: string | null
+          coach_move_options?: string[]
           coach_move_pending?: boolean
           coach_moves_used?: number
           created_at?: string
@@ -117,6 +119,7 @@ export type Database = {
         Update: {
           blocked_until?: string
           clock_note?: string | null
+          coach_move_options?: string[]
           coach_move_pending?: boolean
           coach_moves_used?: number
           created_at?: string
