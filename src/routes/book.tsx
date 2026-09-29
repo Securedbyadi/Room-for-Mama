@@ -32,6 +32,8 @@ export const Route = createFileRoute("/book")({
 
 type Step = "moment" | "times" | "details";
 
+const isEmail = (v: string) => /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim());
+
 function Book() {
   const navigate = useNavigate();
   const { demo } = Route.useSearch();
@@ -96,7 +98,7 @@ function Book() {
     ? Boolean(moment.trim()) && !busy
     : step === "times"
       ? Boolean(selected)
-      : Boolean(selected && parsed && name.trim() && email.includes("@")) && !busy;
+      : Boolean(selected && parsed && name.trim() && isEmail(email)) && !busy;
 
   const goForward = () => {
     if (!canGoForward) return;
@@ -255,7 +257,7 @@ function Book() {
           </div>
           <div className="mt-auto flex flex-col gap-4 pt-4">
             {err && <p className="rounded-2xl bg-butter-soft p-4">{err}</p>}
-            <ButtonMain disabled={!name.trim() || !email.includes("@") || busy} onClick={() => void doBook()}>
+            <ButtonMain disabled={!name.trim() || !isEmail(email) || busy} onClick={() => void doBook()}>
               Book
             </ButtonMain>
             <SafetyNote zone={parsed.zone} />
@@ -308,7 +310,7 @@ function Waitlist({ parsed, demo }: { parsed: ParsedMoment; demo: boolean }) {
       </p>
       <input value={name} onChange={(e) => setName(e.target.value)} placeholder="First name" aria-label="First name" className={inputCls} />
       <input value={email} onChange={(e) => setEmail(e.target.value)} placeholder="Email" aria-label="Email" type="email" className={inputCls} />
-      <ButtonMain type="submit" disabled={!name.trim() || !email.includes("@")}>
+      <ButtonMain type="submit" disabled={!name.trim() || !isEmail(email)}>
         Join the waitlist
       </ButtonMain>
     </form>
