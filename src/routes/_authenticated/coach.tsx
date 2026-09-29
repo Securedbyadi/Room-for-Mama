@@ -232,13 +232,22 @@ function MothersTab({ d }: { d: Data }) {
   );
 }
 
+type RulesForm = {
+  windows: { days: number[]; start: string; end: string }[];
+  max_per_day: number; buffer_min: number; notice_new_h: number; notice_move_h: number; weeks_ahead: number;
+  meet_link: string; coach_email: string;
+  payment: { bank: string; raast: string; jazzcash: string; wise: string };
+  prices: { pkr: number; usd: number; founding_pkr: number; founding_usd: number; founding_spots: number };
+  not_a_fit_note: string; minutes: Record<string, number>;
+};
+
 const inputCls = "min-h-12 w-full rounded-2xl border border-input bg-paper px-4 text-[17px] text-ink";
 
 function RulesTab({ d }: { d: Data }) {
   const refresh = useRefresh();
   const save = useServerFn(saveRules);
   const saveLine = useServerFn(saveHelpline);
-  const s = d.settings as unknown as Parameters<typeof save>[0]["data"];
+  const s = d.settings as unknown as RulesForm;
   const [form, setForm] = useState(() => JSON.parse(JSON.stringify(s)) as typeof s);
   const [msg, setMsg] = useState<string | null>(null);
   const set = <K extends keyof typeof form>(k: K, v: (typeof form)[K]) => setForm({ ...form, [k]: v });
@@ -292,7 +301,7 @@ function RulesTab({ d }: { d: Data }) {
       </Card>
 
       {msg && <p className="rounded-2xl bg-sage-soft p-4">{msg}</p>}
-      <ButtonMain onClick={async () => { try { await save({ data: form }); setMsg("Saved."); void refresh(); } catch { setMsg("That didn’t save. Check the Meet link and email."); } }}>Save rules</ButtonMain>
+      <ButtonMain onClick={async () => { try { const { windows, max_per_day, buffer_min, notice_new_h, notice_move_h, weeks_ahead, meet_link, coach_email, payment, prices, not_a_fit_note, minutes } = form; await save({ data: { windows, max_per_day, buffer_min, notice_new_h, notice_move_h, weeks_ahead, meet_link, coach_email, payment, prices, not_a_fit_note, minutes } }); setMsg("Saved."); void refresh(); } catch { setMsg("That didn’t save. Check the Meet link and email."); } }}>Save rules</ButtonMain>
 
       <Card className="flex flex-col gap-3">
         <h2 className="t-heading">Helplines</h2>
