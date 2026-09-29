@@ -322,7 +322,7 @@ function NeedCard({ c, n }: { c: Ctx; n: Need }) {
     : n.kind === "missed" ? [["Mark missed", `Marked missed. Her first missed Make Room call is put back.`], ["Offer a new time", `Sent ${m.name} three new times.`]]
     : [["Offer new times", `Sent ${m.name} three new times away from your day off.`]];
   return (
-    <div className="offset-butter rounded-[22px] !bg-[#FBF6EE] p-5 text-[#34402A] [&_.text-ink-muted]:!text-[#5B6450] [&_.rfm-button]:!border-[#34402A] [&_.rfm-button]:!text-[#34402A] [&_.bg-primary]:!bg-[#34402A] [&_.bg-primary]:!text-[#F6EEE3]">
+    <div className="offset-butter rounded-[22px] !bg-[#FBF6EE] p-5 text-[#34402A] [&_.text-ink-muted]:!text-[#5B6450] [&_.rfm-button:not(.bg-primary)]:!border-[#34402A] [&_.rfm-button:not(.bg-primary)]:!text-[#34402A] [&_.bg-primary]:!bg-[#34402A] [&_.bg-primary]:!text-[#F6EEE3]">
       <p className="t-heading">{n.title}</p>
       <p className="mt-1 text-ink-muted">{n.reason}</p>
       <div className="mt-4 grid gap-3 sm:grid-cols-2">
