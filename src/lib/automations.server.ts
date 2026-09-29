@@ -21,7 +21,7 @@ export async function runTick(origin: string, now = new Date()) {
   for (const p of expired ?? []) {
     await db.from("calls").update({ status: "released" }).eq("plan_id", p.id).eq("status", "held");
     await db.from("plans").update({ status: "released" }).eq("id", p.id);
-    await db.from("mothers").update({ status: "offered" }).eq("id", p.mother_id);
+    if (p.mother_id) await db.from("mothers").update({ status: "offered" }).eq("id", p.mother_id);
     bump("hold_ended");
   }
 

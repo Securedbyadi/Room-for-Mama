@@ -459,7 +459,7 @@ export const makeRoomPreview = createServerFn({ method: "POST" })
   .handler(async ({ data }) => {
     const { r, db, mother } = await motherByToken(data.token);
     if (mother.status !== "offered") return { calls: [], price: null };
-    const { s, weeks } = await proposePlan(r, db, mother.zone);
+    const { s, weeks } = await proposePlan(r, db, mother);
     return {
       calls: weeks.map((w) => ({ start: w.start.toISOString(), end: w.end.toISOString(), clockNote: w.clockNote ?? null })),
       price: await priceFor(db, s, mother.zone),
@@ -471,7 +471,7 @@ export const holdMakeRoom = createServerFn({ method: "POST" })
   .handler(async ({ data }) => {
     const { r, db, mother } = await motherByToken(data.token);
     if (mother.status !== "offered") return { ok: false as const };
-    const { s, weeks } = await proposePlan(r, db, mother.zone);
+    const { s, weeks } = await proposePlan(r, db, mother);
     if (weeks.length !== 4) return { ok: false as const };
     const price = await priceFor(db, s, mother.zone);
     const reference = `RM${Math.floor(100000 + Math.random() * 900000)}`;
