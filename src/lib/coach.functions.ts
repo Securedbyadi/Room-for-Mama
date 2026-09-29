@@ -5,24 +5,36 @@ import { requireSupabaseAuth } from "@/integrations/supabase/auth-middleware";
 
 type Ctx = { supabase: { rpc: (fn: "has_role", args: { _user_id: string; _role: "coach" }) => PromiseLike<{ data: boolean | null }> }; userId: string };
 
-async function mustBeCoach(ctx: Ctx) {
+const COACH_EMAIL = "adilmushtaq088@gmail.com";
+
+type CoachCtx = Ctx & {
+  supabase: Ctx["supabase"] & {
+    auth: { getUser: () => Promise<{ data: { user: { email?: string; email_confirmed_at?: string | null } | null }; error: unknown }> };
+  };
+};
+
+async function isAllowedCoach(ctx: CoachCtx) {
+  const { data, error } = await ctx.supabase.auth.getUser();
+  return !error && data.user?.email?.toLowerCase() === COACH_EMAIL && Boolean(data.user.email_confirmed_at);
+}
+
+async function mustBeCoach(ctx: CoachCtx) {
+  if (!(await isAllowedCoach(ctx))) throw new Error("Forbidden");
   const { data } = await ctx.supabase.rpc("has_role", { _user_id: ctx.userId, _role: "coach" });
   if (!data) throw new Error("Forbidden");
 }
 
-/** The first person to sign in becomes the coach; after that, nobody else can. */
+/** Only the named, verified coach account can claim and use the coach role. */
 export const whoAmI = createServerFn({ method: "POST" })
   .middleware([requireSupabaseAuth])
   .handler(async ({ context }) => {
+    if (!(await isAllowedCoach(context))) return { coach: false };
     const { data } = await context.supabase.rpc("has_role", { _user_id: context.userId, _role: "coach" });
     if (data) return { coach: true };
     const { supabaseAdmin } = await import("@/integrations/supabase/client.server");
-    const { count } = await supabaseAdmin.from("user_roles").select("id", { count: "exact", head: true }).eq("role", "coach");
-    if ((count ?? 0) === 0) {
-      await supabaseAdmin.from("user_roles").insert({ user_id: context.userId, role: "coach" });
-      return { coach: true };
-    }
-    return { coach: false };
+    await supabaseAdmin.from("user_roles").delete().eq("role", "coach").neq("user_id", context.userId);
+    await supabaseAdmin.from("user_roles").upsert({ user_id: context.userId, role: "coach" }, { onConflict: "user_id,role" });
+    return { coach: true };
   });
 
 export const coachData = createServerFn({ method: "POST" })
