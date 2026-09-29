@@ -73,6 +73,11 @@ function Book() {
     });
   }, [parsed, isDemo]);
   const slots = isDemo ? demoSlots : (realSlots ?? []);
+  const illustrationName = step === "times" && parsed && realSlots !== null && slots.length === 0
+    ? "illo-tea-cold"
+    : step === "details"
+      ? "illo-the-chair"
+      : "illo-her-half-hour";
 
   const showTimes = async (text: string) => {
     const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
@@ -110,7 +115,7 @@ function Book() {
   };
 
   return (
-    <Page>
+    <Page illustration={<Drawing key={`${step}-${illustrationName}`} name={illustrationName} className={`form-illustration ${illustrationName === "illo-her-half-hour" ? "home-steam" : ""}`} />}>
       {step === "moment" && (
         <>
           <div>
@@ -266,7 +271,6 @@ function Waitlist({ parsed, demo }: { parsed: ParsedMoment; demo: boolean }) {
         setJoined(true);
       }}
     >
-      <Drawing name="illo-tea-cold" />
       <p className="rounded-2xl bg-butter-soft p-4">
         No times match yet. Join the waitlist and I’ll email you when one opens.
       </p>

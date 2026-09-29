@@ -1,6 +1,6 @@
 import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
-import { ButtonOutline, Drawing, Page } from "../components/rfm/brand";
+import { ButtonOutline, Drawing, Icon, Page } from "../components/rfm/brand";
 import { SafetyNote } from "../components/rfm/SafetyNote";
 import { FIT_QUESTIONS, fitOutcome, type FitChoice } from "../lib/fit-check";
 
@@ -23,6 +23,12 @@ function FitCheck() {
   const [step, setStep] = useState(0);
   const [notFit, setNotFit] = useState<FitChoice | null>(null);
   const question = FIT_QUESTIONS[step];
+  const stepIllustrations = [
+    <Drawing key="baby" name="illo-baby-up" className="form-illustration" />,
+    <Drawing key="day" name="illo-her-half-hour" className="form-illustration home-steam" />,
+    <div key="language" className="language-icon-card grid aspect-square place-items-center rounded-[22px] bg-paper"><Icon name="icon-hello-call" size={96} /></div>,
+    <Drawing key="video" name="illo-the-chair" className="form-illustration" />,
+  ];
 
   const answer = (choice: FitChoice) => {
     const outcome = fitOutcome(step, choice);
@@ -39,8 +45,7 @@ function FitCheck() {
 
   if (notFit) {
     return (
-      <Page>
-        <Drawing name="illo-tea-cold" />
+      <Page illustration={<Drawing name="illo-tea-cold" className="final-illustration" />}>
         <div>
           <p className="t-caption mb-2 text-ink-muted">Not the right fit just now</p>
           <h1 className="t-title">Thank you for checking.</h1>
@@ -58,7 +63,7 @@ function FitCheck() {
   if (!question) return null;
 
   return (
-    <Page>
+    <Page illustration={stepIllustrations[step]}>
       <div>
         <p className="t-caption text-ink-muted">{step + 1} of {FIT_QUESTIONS.length}</p>
         <div className="mt-3 grid grid-cols-4 gap-2" aria-hidden>

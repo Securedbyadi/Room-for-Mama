@@ -1,5 +1,10 @@
-- [ ] Rebuild home as the single full-screen reference hero
-- [ ] Add card-to-page expansion and matching destination openings
-- [ ] Add illustrated split layouts to mother forms and outcomes
-- [ ] Add reduced-motion-safe micro animations
-- [ ] Verify day/night desktop/phone and working flows
+- [x] Rebuild home as the single full-screen reference hero
+- [x] Add card-to-page expansion and matching destination openings
+- [x] Add illustrated split layouts to mother forms and outcomes
+- [x] Add reduced-motion-safe micro animations
+- [x] Verify day/night desktop/phone and working flows
+- [x] Restore every pictured home section below the full-screen hero
+- [x] Add SafetyNote and country helplines to every public page footer
+- [x] Use the exact assigned brand drawings/icons for each mother-flow step
+- [x] Limit micro-interactions to the approved motion list
+- [x] Keep approved plan context in docs and rely on connected GitHub auto-sync for every change

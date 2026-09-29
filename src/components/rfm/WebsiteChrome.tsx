@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { useState, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { SafetyNote } from "./SafetyNote";
 import { ButtonMain, Logo } from "./brand";
 import { ThemeControl, ThemeRound } from "./ThemeControl";
@@ -59,9 +59,14 @@ export function WebsiteHeader() {
 function HomeHeader() {
   return (
     <header className="relative z-30">
-      <div className="mx-auto grid min-h-20 max-w-[1120px] grid-cols-[minmax(0,1fr)_auto] items-center gap-4 px-5">
+      <div className="mx-auto grid min-h-20 max-w-[1200px] grid-cols-[minmax(0,1fr)_auto] items-center gap-4 px-5">
         <Logo height={32} className="logo-rise" />
-        <Link to="/fit-check" className="hidden min-h-12 items-center rounded-full border-2 border-ink px-5 text-[15px] font-semibold whitespace-nowrap lg:inline-flex">Book a free hello call</Link>
+        <div className="hidden items-center gap-8 lg:flex">
+          <nav className="flex items-center gap-7" aria-label="Main navigation">
+            {LINKS.slice(0, 3).map(([label, to]) => <Link key={label} to={to} viewTransition className="micro-link text-[14px] font-semibold text-ink-muted">{label}</Link>)}
+          </nav>
+          <Link to="/fit-check" className="rfm-button inline-flex min-h-12 items-center rounded-full border-2 border-ink px-5 text-[15px] font-semibold whitespace-nowrap">Book a free hello call</Link>
+        </div>
         <ThemeRound className="relative !h-12 !w-12 lg:hidden" />
       </div>
     </header>
@@ -69,11 +74,15 @@ function HomeHeader() {
 }
 
 export function WebsiteFooter() {
+  const [zone, setZone] = useState<string>();
+  useEffect(() => {
+    try { setZone(Intl.DateTimeFormat().resolvedOptions().timeZone); } catch { /* show anywhere-else line */ }
+  }, []);
   return (
     <footer className="band-ink">
       <div className="mx-auto grid max-w-[1120px] gap-6 px-5 py-10 md:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] md:items-start">
         <div><Logo height={30} /><p className="mt-3 text-ink-muted">A little room for you.</p></div>
-        <SafetyNote />
+        <SafetyNote zone={zone} />
       </div>
     </footer>
   );
@@ -94,10 +103,10 @@ export function WebsitePage({ children, home = false }: { children: ReactNode; h
 /** Header of a card's own page. Shares its view-transition name with the home card it grows from. */
 export function CardPageHeader({ vt, title, children }: { vt: string; title: string; children: ReactNode }) {
   return (
-    <div className="anim-fade mx-auto max-w-[1120px] px-5 pt-8">
-      <Link to="/" viewTransition className="inline-flex min-h-12 items-center font-semibold underline underline-offset-4">Back</Link>
-      <div className="rfm-deal-card mt-4 grid gap-6 p-5 md:grid-cols-[minmax(0,1fr)_320px] md:items-center" style={{ viewTransitionName: vt }}>
-        <h1 className="t-display md:text-[56px] md:leading-[60px]">{title}</h1>
+    <div className="anim-fade mx-auto max-w-[1200px] px-5 pt-8">
+      <Link to="/" viewTransition className="micro-link inline-flex min-h-12 items-center font-semibold underline underline-offset-4">Back to the cards</Link>
+      <div className="card-expanded-page mt-4 grid gap-8 p-6 md:grid-cols-[minmax(0,1fr)_400px] md:items-center md:p-10" style={{ viewTransitionName: vt }}>
+        <h1 className="page-reveal-title t-display md:text-[72px] md:leading-[76px]">{title}</h1>
         {children}
       </div>
     </div>

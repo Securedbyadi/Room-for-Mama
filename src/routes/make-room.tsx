@@ -46,8 +46,7 @@ function MakeRoom() {
   });
 
   return (
-    <Page headerAction={<span className="t-caption uppercase tracking-[0.12em] text-ink-muted">Make Room</span>}>
-      <Drawing name="illo-the-chair" />
+    <Page illustration={<Drawing name="illo-the-chair" className="form-illustration" />} headerAction={<span className="t-caption uppercase tracking-[0.12em] text-ink-muted">Make Room</span>}>
 
       <div>
         <h1 className="t-display">Four half hours,<br />one a week</h1>
