@@ -73,6 +73,11 @@ function Book() {
     });
   }, [parsed, isDemo]);
   const slots = isDemo ? demoSlots : (realSlots ?? []);
+  const illustrationName = step === "times" && parsed && realSlots !== null && slots.length === 0
+    ? "illo-tea-cold"
+    : step === "details"
+      ? "illo-the-chair"
+      : "illo-her-half-hour";
 
   const showTimes = async (text: string) => {
     const tz = Intl.DateTimeFormat().resolvedOptions().timeZone;
@@ -110,7 +115,7 @@ function Book() {
   };
 
   return (
-    <Page illustration={<Drawing key={step} name={step === "details" ? "illo-the-chair" : "illo-her-half-hour"} className={`form-illustration ${step !== "details" ? "home-steam" : ""}`} />}>
+    <Page illustration={<Drawing key={`${step}-${illustrationName}`} name={illustrationName} className={`form-illustration ${illustrationName === "illo-her-half-hour" ? "home-steam" : ""}`} />}>
       {step === "moment" && (
         <>
           <div>

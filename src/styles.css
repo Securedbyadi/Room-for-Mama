@@ -341,33 +341,6 @@
 .slot-selected {
   animation: rfm-shadow-in 160ms ease-out both;
 }
-.mug-next-motion::after {
-  content: "";
-  width: 8px;
-  height: 8px;
-  margin-left: -8px;
-  margin-top: -24px;
-  border-left: 2px solid currentColor;
-  border-radius: 50%;
-  animation: rfm-rise-once 400ms ease-out both;
-}
-.rfm-icon-mug-done {
-  background: linear-gradient(to top, var(--sage) 0 50%, transparent 50% 100%);
-  background-size: 100% 200%;
-  background-position: 0 100%;
-  animation: rfm-mug-fill 400ms ease-out both;
-}
-@keyframes rfm-mug-fill {
-  from { background-position: 0 0; }
-  to { background-position: 0 100%; }
-}
-.baby-awake-once svg > g:last-child {
-  transform-origin: center;
-  animation: rfm-sway-once 380ms ease-out both;
-}
-.youre-in-rise svg > g:last-child {
-  animation: rfm-rise-once 380ms ease-out both;
-}
 .theme-icon {
   opacity: 0.55;
   transition: opacity 320ms ease-out;
@@ -468,7 +441,6 @@ button[aria-pressed="true"] .theme-icon { opacity: 1; }
   aspect-ratio: 1;
   border-radius: 999px;
   background: var(--sun-disc);
-  animation: rfm-splash-arrive 520ms ease-out both;
 }
 .rfm-splash > * { position: relative; width: min(78vw, 460px); border: 2px solid #34402a !important; box-shadow: 6px 6px 0 var(--peach); }
 .form-illustration, .final-illustration, .language-icon-card { animation: rfm-illustration-arrive 320ms ease-out both; }
@@ -478,7 +450,6 @@ button[aria-pressed="true"] .theme-icon { opacity: 1; }
 .micro-link:hover { color: var(--ink); text-underline-offset: 7px; }
 .micro-card { transition: transform 160ms ease-out; }
 .micro-card:hover { transform: translateY(-4px); }
-@keyframes rfm-splash-arrive { from { opacity: 0; transform: scale(.94) rotate(-3deg); } to { opacity: 1; transform: scale(1) rotate(0); } }
 @keyframes rfm-illustration-arrive { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
 
 @media (max-width: 1023px) {
@@ -492,7 +463,7 @@ button[aria-pressed="true"] .theme-icon { opacity: 1; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .fan-card, .logo-rise, .theme-swap, .fan-more, .rfm-button, .micro-link, .micro-card, .rfm-splash::before, .form-illustration, .final-illustration, .language-icon-card { animation: none; transition: none; }
+  .fan-card, .logo-rise, .theme-swap, .fan-more, .rfm-button, .micro-link, .micro-card, .form-illustration, .final-illustration, .language-icon-card { animation: none; transition: none; }
   ::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*) { animation: none !important; }
 }
 
