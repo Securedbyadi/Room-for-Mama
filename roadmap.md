@@ -16,3 +16,4 @@
 - [x] Lock coach access to adilmushtaq088@gmail.com and remove coach account creation.
 - [x] Remove em dashes from page titles and guard scroll reveal support.
 
+- [x] Redo the home hero as a fanned card stack with its own pages (/what-i-offer, /who-its-for, /prices), night band, How it works and ink footer.
