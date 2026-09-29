@@ -62,7 +62,7 @@ const ZONE_COUNTRY: Record<string, string> = {
 
 export function helplinesFor(zone: string): Helpline[] {
   const country = ZONE_COUNTRY[zone];
-  return country ? BY_COUNTRY[country] : [];
+  return (country ? BY_COUNTRY[country] : undefined) ?? [];
 }
 
 export const ANYWHERE_ELSE =

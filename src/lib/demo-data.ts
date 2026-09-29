@@ -35,21 +35,21 @@ export interface DemoCall {
 /** The coach's demo calendar for the week of Mon 12 Oct 2026. */
 export const DEMO_CALLS: DemoCall[] = [
   {
-    mother: DEMO_MOTHERS[0],
+    mother: DEMO_MOTHERS[0]!,
     start: zonedToUtc(KHI, 2026, 10, 14, 14, 30),
     end: zonedToUtc(KHI, 2026, 10, 14, 15, 0),
     kind: "make-room",
     moves: 0,
   },
   {
-    mother: DEMO_MOTHERS[1],
+    mother: DEMO_MOTHERS[1]!,
     start: zonedToUtc(KHI, 2026, 10, 13, 21, 0),
     end: zonedToUtc(KHI, 2026, 10, 13, 21, 20),
     kind: "hello",
     moves: 1,
   },
   {
-    mother: DEMO_MOTHERS[3],
+    mother: DEMO_MOTHERS[3]!,
     start: zonedToUtc(KHI, 2026, 10, 15, 21, 30),
     end: zonedToUtc(KHI, 2026, 10, 15, 22, 0),
     kind: "make-room",

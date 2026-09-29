@@ -15,8 +15,8 @@ const CITY_ZONES: [RegExp, string][] = [
 
 export interface ParsedMoment {
   zone: string;
-  notBeforeLocal?: string;
-  notAfterLocal?: string;
+  notBeforeLocal?: string | undefined;
+  notAfterLocal?: string | undefined;
 }
 
 export function parseMoment(text: string, fallbackZone: string): ParsedMoment {
