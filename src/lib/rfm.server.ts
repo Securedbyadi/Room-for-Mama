@@ -62,9 +62,13 @@ export async function logAutomation(db: Admin, s: Settings, type: string, mother
   await db.from("automation_log").insert({ type, mother_id: motherId, minutes_saved: s.minutes[type] ?? 0 });
 }
 
-export function siteOrigin(): string {
-  const req = (globalThis as { __rfmOrigin?: string }).__rfmOrigin;
-  return req ?? "https://project--8231fb8c-ff69-494f-8d74-3b09d1464059.lovable.app";
+export async function requestOrigin(): Promise<string> {
+  try {
+    const { getRequest } = await import("@tanstack/react-start/server");
+    return new URL(getRequest().url).origin;
+  } catch {
+    return "https://project--8231fb8c-ff69-494f-8d74-3b09d1464059.lovable.app";
+  }
 }
 
 /** One branded template, one action each. Stored for the email preview page. */
@@ -107,6 +111,6 @@ export async function helplinesForZone(db: Admin, zone: string) {
   return (data ?? []).map((h) => ({ name: h.name, number: h.number, hours: h.hours ?? "" }));
 }
 
-export function manageUrl(token: string): string {
-  return `${siteOrigin()}/manage/${token}`;
+export function manageUrl(origin: string, token: string): string {
+  return `${origin}/manage/${token}`;
 }
