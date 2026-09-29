@@ -16,7 +16,6 @@ Coach zone Asia/Karachi. Every time shows in the mother’s zone (detected, with
 Coach windows Mon–Fri 14:00–17:00 and 21:00–23:00; max 3 calls a day; 10 min buffer; calls start on :00 or :30. Video: her own Google Meet link.
 - Hello call: 20 min, free.
 - Make Room: 4 half hours, one a week. PKR 12,000 if her zone is Asia/Karachi, else US$120; founding price for the first 10 mothers PKR 8,000 / US$80.
-- Top-up half hour (coach offers it after Make Room): PKR 3,500 / US$35.
 Notice: 6 h for new calls, 1 h for moves; up to 6 weeks ahead.
 Keep my spot: a link 24 h before each hello call (none if booked later). Not tapped by 3 h before: the time goes to the first on the waitlist; nobody waiting, it stays.
 Payment: times are held 48 h; the hold screen shows payment details (bank, Raast, JazzCash, Wise); she taps "I’ve paid" with a reference; the coach confirms in one tap; unpaid holds release.
@@ -25,7 +24,7 @@ Cancelling: full refund before the first call; after that, the rest can pause up
 Clock changes: keep the mother’s local time if it still fits both windows; otherwise keep the coach’s time and tell her the new time when she books, or 7 days ahead.
 
 ## Mother’s flow (mobile-first, no account)
-1. Lands on roomformama.com, taps "Book a free hello call".
+1. A website: home, what I offer, who it’s for, prices, FAQ. "Book a free hello call" opens 4 tap questions; all fit: booking; any no: a kind not-a-fit page. Answers aren’t stored.
 2. "When do you usually get a quiet moment?" in her words, any language (helper: "Write it your way, in any language. Only days, times and your city are kept."). Lovable AI extracts only those; store them, not her words. Offer the 3 earliest open times, one per day, inside both windows, in her time. None fit: "No times match yet. Join the waitlist and I’ll email you when one opens."
 3. Tap a time, add first name, email, optional phone, then Book → "You’re in" → confirmation email and calendar invite with the video link. The coach gets the same invite for every booking and move.
 4. After the hello call, if offered: the Make Room page shows all 4 calls at one weekly time inside both windows, in her time, with clock-change notes. "Book all four" → held → paid → confirmed → invites.
@@ -76,7 +75,7 @@ Type (Google Fonts): Fraunces, SOFT 100, WONK 1, for headings: display 40/44 700
 Brand files in public/brand (or attached), used as they are, never redrawn, recoloured or retyped. Logo: rfm-logo-horizontal (night: -night) in the header; rfm-favicon; rfm-app-icon (home-screen icon).
 Drawings, on light #FBF6EE cards even at night: illo-her-half-hour (home), illo-tea-warm (You’re in), illo-baby-up (Baby’s up), illo-the-chair (Make Room), illo-tea-cold (empty states).
 Icons: the 23 SVGs, inlined, 22–48 px; ink is currentColor, details on colour blocks stay #34402A. MakeRoomTimeline: icon-mug-done (finished), icon-mug-next, icon-mug-waiting (later).
-Layout: home is a website (full-width sections to 1120 px on desktop, one column on phones); booking pages one centred column, max 480 px, 20 px gutter; one full-width main button per screen, low on app screens; 48 px tap targets; 64 px slots. Radius: slots and inputs 16, cards 22, buttons pill, sheet top 28. Focus: 2 px page gap, 2 px ink.
+Layout: a website on desktop (sections to 1120 px); app-style on phones (one column, sticky main button, bottom sheets); booking pages one column, max 480 px, 20 px gutter; one full-width main button per screen, low on app screens; 48 px tap targets; 64 px slots. Radius: slots and inputs 16, cards 22, buttons pill, sheet top 28. Focus: 2 px page gap, 2 px ink.
 Motion: 320 ms fades; the Baby’s up sheet rises 24 px in 380 ms; the home drawing’s #steam drifts up on a slow 3 s loop; nothing bounces; honour reduced motion.
 
 ## Integrity and security
@@ -86,7 +85,6 @@ Motion: 320 ms fades; the Baby’s up sheet rises 24 px in 380 ms; the home draw
 - Rate limit: 5 bookings per email, 20 per IP, per hour.
 
 ## Demo
-- Demo data: 5 weeks of sample calls in Lahore, Dubai, Manchester and Toronto.
 - "Try it as a mama in Manchester" fills in the sample message. Demo bookings and the demo coach login use demo rows only, never the real calendar or email. No real people or children.
 
 ## Out of scope
