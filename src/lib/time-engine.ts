@@ -153,8 +153,8 @@ function callsOnCoachDay(rules: CoachRules, busy: BusyInterval[], day: Date): nu
 }
 
 export interface FindSlotsOptions {
-  rules?: CoachRules;
-  busy?: BusyInterval[];
+  rules?: CoachRules | undefined;
+  busy?: BusyInterval[] | undefined;
   /** Earliest bookable instant (the engine adds the notice period itself). */
   from: Date;
   motherZone: string;
