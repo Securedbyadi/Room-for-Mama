@@ -43,7 +43,7 @@ describe("Sara in Manchester books a hello call", () => {
       [15, 11, 30],
     ]);
     // Wednesday's offer sits clear of Hina's call plus the 10-minute buffer.
-    expect(fmtLong(slots[1].start, LONDON)).toBe("Wednesday 14 October, 11:30 am");
+    expect(fmtLong(slots[1]!.start, LONDON)).toBe("Wednesday 14 October, 11:30 am");
   });
 });
 
@@ -64,8 +64,8 @@ describe("Make Room across the UK clock change (25 Oct 2026)", () => {
       expect(fitsWindows(COACH_DEFAULT, call.start, 30)).toBe(true);
     }
     // The call after 25 October carries a clock-change note.
-    expect(plan[2].clockNote).toMatch(/Clocks change/);
-    expect(plan[0].clockNote).toBeUndefined();
+    expect(plan[2]!.clockNote).toMatch(/Clocks change/);
+    expect(plan[0]!.clockNote).toBeUndefined();
   });
 });
 
@@ -79,13 +79,13 @@ describe("Toronto when the clocks move the call out of the window", () => {
       durationMin: 30,
       motherZone: TORONTO,
     });
-    expect(localParts(TORONTO, plan[0].start).h).toBe(13);
-    expect(localParts(TORONTO, plan[1].start).h).toBe(13);
+    expect(localParts(TORONTO, plan[0]!.start).h).toBe(13);
+    expect(localParts(TORONTO, plan[1]!.start).h).toBe(13);
     // Week 3 (4 Nov, EST): coach's 22:00 kept, mother sees 12:00.
-    const p2 = localParts(TORONTO, plan[2].start);
+    const p2 = localParts(TORONTO, plan[2]!.start);
     expect([p2.h, p2.mi]).toEqual([12, 0]);
-    expect(localParts(KHI, plan[2].start).h).toBe(22);
-    expect(plan[2].clockNote).toMatch(/moves to 12:00 pm, your time/);
+    expect(localParts(KHI, plan[2]!.start).h).toBe(22);
+    expect(plan[2]!.clockNote).toMatch(/moves to 12:00 pm, your time/);
   });
 });
 
