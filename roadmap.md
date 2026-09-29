@@ -15,3 +15,4 @@
 - [x] Home drawings sit on the bottom edge of their light cards
 - [x] Night mode issues on the home page
 - [x] Hero card drawings sit at the top of each card
+- [x] Less empty space above and below the hero
