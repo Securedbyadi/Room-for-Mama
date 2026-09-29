@@ -45,7 +45,7 @@ const WD: Record<string, number> = { Mon: 1, Tue: 2, Wed: 3, Thu: 4, Fri: 5, Sat
 export function localParts(t: number, zone: string): Parts {
   const o: Record<string, string> = {};
   for (const p of dtf(zone).formatToParts(new Date(t))) o[p.type] = p.value;
-  return { y: +o.year, m: +o.month, d: +o.day, h: +o.hour, min: +o.minute, wd: WD[o.weekday] };
+  return { y: +o["year"], m: +o["month"], d: +o["day"], h: +o["hour"], min: +o["minute"], wd: WD[o["weekday"]!]! };
 }
 
 /** Local wall time in a zone to a UTC instant. */
@@ -168,7 +168,7 @@ export function babysUpOptions(o: {
 }): MoveResult {
   if (o.movesBySide >= 2) return { kind: "needs-you" };
   const busy = o.busy.filter((b) => !(b.start === o.call.start && b.end === o.call.end));
-  return { kind: "options", times: findSlots({ now: o.now, durMin: o.durMin, noticeMin: 60, mother: o.mother, busy, coach: o.coach }) };
+  return { kind: "options", times: findSlots({ now: o.now, durMin: o.durMin, noticeMin: 60, mother: o.mother, busy, ...(o.coach ? { coach: o.coach } : {}) }) };
 }
 
 // Formatting helpers (mother's zone, labelled).
