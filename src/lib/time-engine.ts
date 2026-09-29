@@ -167,6 +167,8 @@ export interface FindSlotsOptions {
   onePerDay?: boolean;
   /** Mother's preference: not before this wall-clock time in HER zone, "HH:MM". */
   notBeforeLocal?: string;
+  /** Mother's preference: not after this wall-clock time in HER zone, "HH:MM". */
+  notAfterLocal?: string;
 }
 
 /**
@@ -204,10 +206,17 @@ export function findSlots(opts: FindSlotsOptions): Slot[] {
         const start = new Date(t);
         const end = new Date(t + opts.durationMin * MIN);
         if (t < earliest || t > latest) continue;
-        if (opts.notBeforeLocal) {
+        if (opts.notBeforeLocal || opts.notAfterLocal) {
           const mp = localParts(opts.motherZone, start);
-          const [bh, bm] = parseHM(opts.notBeforeLocal);
-          if (mp.h * 60 + mp.mi < bh * 60 + bm) continue;
+          const mins = mp.h * 60 + mp.mi;
+          if (opts.notBeforeLocal) {
+            const [bh, bm] = parseHM(opts.notBeforeLocal);
+            if (mins < bh * 60 + bm) continue;
+          }
+          if (opts.notAfterLocal) {
+            const [ah, am] = parseHM(opts.notAfterLocal);
+            if (mins > ah * 60 + am) continue;
+          }
         }
         if (onePerDay) {
           const key = `${dp.y}-${dp.mo}-${dp.d}`;
