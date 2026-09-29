@@ -1,10 +1,20 @@
 import { describe, expect, it } from "vitest";
-import { FIT_QUESTIONS } from "./fit-check";
+import { FIT_QUESTIONS, fitOutcome } from "./fit-check";
 
 describe("the four-tap fit check", () => {
   it("has one fitting answer on every screen", () => {
     expect(FIT_QUESTIONS).toHaveLength(4);
     expect(FIT_QUESTIONS.map((question) => question.choices.filter((choice) => choice.fits).length)).toEqual([1, 1, 1, 1]);
+  });
+
+  it("moves through every fitting answer and then books", () => {
+    FIT_QUESTIONS.forEach((question, step) => {
+      const fitting = question.choices.find((choice) => choice.fits);
+      expect(fitting).toBeTruthy();
+      expect(fitOutcome(step, fitting!)).toEqual(
+        step === FIT_QUESTIONS.length - 1 ? { kind: "book" } : { kind: "next", step: step + 1 },
+      );
+    });
   });
 
   it("gives a reason and pointer for every non-fitting answer", () => {
@@ -13,6 +23,7 @@ describe("the four-tap fit check", () => {
     for (const choice of nonFitting) {
       expect(choice.reason).toBeTruthy();
       expect(choice.pointer).toBeTruthy();
+      expect(fitOutcome(0, choice)).toEqual({ kind: "not-fit", choice });
     }
   });
 
@@ -25,5 +36,6 @@ describe("the four-tap fit check", () => {
     const serialised = JSON.stringify(FIT_QUESTIONS);
     expect(serialised).not.toContain("email");
     expect(serialised).not.toContain("name\"");
+    expect(fitOutcome.toString()).not.toContain("Storage");
   });
 });

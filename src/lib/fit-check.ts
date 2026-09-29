@@ -67,3 +67,15 @@ export const FIT_QUESTIONS: FitQuestion[] = [
     ],
   },
 ];
+
+export type FitOutcome =
+  | { kind: "next"; step: number }
+  | { kind: "book" }
+  | { kind: "not-fit"; choice: FitChoice };
+
+/** Pure transition: answers live only in the current screen and are never collected. */
+export function fitOutcome(step: number, choice: FitChoice): FitOutcome {
+  if (!choice.fits) return { kind: "not-fit", choice };
+  if (step >= FIT_QUESTIONS.length - 1) return { kind: "book" };
+  return { kind: "next", step: step + 1 };
+}

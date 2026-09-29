@@ -2,7 +2,7 @@ import { createFileRoute, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { ButtonOutline, Drawing, Page } from "../components/rfm/brand";
 import { SafetyNote } from "../components/rfm/SafetyNote";
-import { FIT_QUESTIONS, type FitChoice } from "../lib/fit-check";
+import { FIT_QUESTIONS, fitOutcome, type FitChoice } from "../lib/fit-check";
 
 export const Route = createFileRoute("/fit-check")({
   head: () => ({
@@ -25,15 +25,16 @@ function FitCheck() {
   const question = FIT_QUESTIONS[step];
 
   const answer = (choice: FitChoice) => {
-    if (!choice.fits) {
-      setNotFit(choice);
+    const outcome = fitOutcome(step, choice);
+    if (outcome.kind === "not-fit") {
+      setNotFit(outcome.choice);
       return;
     }
-    if (step === FIT_QUESTIONS.length - 1) {
+    if (outcome.kind === "book") {
       void navigate({ to: "/book" });
       return;
     }
-    setStep((current) => current + 1);
+    setStep(outcome.step);
   };
 
   if (notFit) {

@@ -16,6 +16,10 @@ export const Route = createFileRoute("/coach")({
     meta: [
       { title: "Today — Room for Mama" },
       { name: "description", content: "Your calls today, in your time." },
+      { property: "og:title", content: "Today — Room for Mama" },
+      { property: "og:description", content: "Your calls today, in your time." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
       { name: "robots", content: "noindex" },
     ],
   }),
