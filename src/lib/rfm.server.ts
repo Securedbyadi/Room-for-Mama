@@ -89,7 +89,7 @@ export async function queueEmail(
   if (opts.ics?.length) {
     const { buildIcs } = await import("./ics");
     const { data: st } = await db.from("settings").select("meet_link").eq("id", 1).maybeSingle();
-    ics = buildIcs(opts.ics.map((c) => ({ uid: c.id, start: c.start, end: c.end, title: callTitle(c.kind), url: st?.meet_link })));
+    ics = buildIcs(opts.ics.map((c) => ({ uid: c.id, start: c.start, end: c.end, title: callTitle(c.kind), ...(st?.meet_link ? { url: st.meet_link } : {}) })));
   }
   await db.from("email_outbox").insert({
     mother_id: opts.motherId,
