@@ -24,6 +24,7 @@
   --peach-soft: #f9dccb;
   --sage-soft: #dde5d2;
   --clay: #a4452b;
+  --sun-disc: #f5d06f;
 
   /* shadcn mapping: primary = main button, secondary/muted/accent = sunk */
   --background: var(--page);
@@ -61,6 +62,7 @@
     --peach-soft: #4a3a2e;
     --sage-soft: #34422c;
     --clay: #f0a08a;
+    --sun-disc: #4a4424;
 
     /* main button at night: butter with page text */
     --primary: #f5d06f;
@@ -80,6 +82,7 @@
   --peach-soft: #4a3a2e;
   --sage-soft: #34422c;
   --clay: #f0a08a;
+  --sun-disc: #4a4424;
   --primary: #f5d06f;
   --primary-foreground: #1f2619;
 }
@@ -251,7 +254,7 @@
   }
 }
 @keyframes rfm-reveal {
-  from { opacity: 0; transform: translateY(8px); }
+  from { opacity: 0; transform: translateY(12px); }
   to { opacity: 1; transform: translateY(0); }
 }
 @keyframes rfm-shadow-in {
@@ -350,6 +353,53 @@ button[aria-pressed="true"] .theme-icon { opacity: 1; }
 .count-50 { --rfm-count-to: 50; }
 .count-185 { --rfm-count-to: 185; }
 .count-740 { --rfm-count-to: 740; }
+
+/* ---------- Home: card stack ---------- */
+.band-night, .band-ink {
+  --page: #1f2619; --paper: #283122; --sunk: #2f3927; --ink: #f6eee3; --ink-muted: #c4c9b5;
+  --line: #3a4531; --line-strong: #7f8a70; --primary: #f5d06f; --primary-foreground: #1f2619;
+  background: #1f2619; color: var(--ink);
+}
+.band-ink { background: #34402a; }
+.band-night .rfm-logo-day, .band-ink .rfm-logo-day { display: none !important; }
+.band-night .rfm-logo-night, .band-ink .rfm-logo-night { display: block !important; }
+.hero-sun { background: var(--sun-disc); }
+.hero-grain::before {
+  content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0.04;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+.fan-card, .rfm-deal-card {
+  --ink: #34402a; --ink-muted: #5b6450; --line: #e2d6c3;
+  background: #fbf6ee; color: #34402a; border: 2px solid #34402a; border-radius: 22px; display: block;
+}
+.fan-card {
+  --r: 0deg; --x: 0px; --apart: 0px;
+  transform: translateX(var(--x)) rotate(var(--r));
+  transition: transform 320ms ease-out, box-shadow 160ms ease-out;
+  animation: rfm-deal 480ms ease-out both;
+}
+.fan-0 { --r: -6deg; --x: -110px; --apart: -40px; z-index: 1; animation-delay: 0ms; }
+.fan-1 { --r: 0deg; --x: 0px; z-index: 2; animation-delay: 80ms; }
+.fan-2 { --r: 5deg; --x: 110px; --apart: 40px; z-index: 3; animation-delay: 160ms; }
+.fan-more { max-height: 0; opacity: 0; overflow: hidden; transition: max-height 320ms ease-out, opacity 320ms ease-out; }
+.fan-card:hover, .fan-card:focus-visible {
+  transform: translateX(var(--x)) translateY(-24px) rotate(0deg);
+  z-index: 10; box-shadow: 4px 4px 0 0 var(--peach); outline-offset: 4px;
+}
+.fan-card:hover .fan-more, .fan-card:focus-visible .fan-more { max-height: 120px; opacity: 1; }
+.fan:has(.fan-card:hover, .fan-card:focus-visible) .fan-card:not(:hover):not(:focus-visible) {
+  transform: translateX(calc(var(--x) + var(--apart))) rotate(var(--r));
+}
+@keyframes rfm-deal { from { opacity: 0; translate: 0 16px; } to { opacity: 1; translate: 0 0; } }
+.logo-rise { animation: rfm-logo-rise 600ms ease-out both; }
+@keyframes rfm-logo-rise { from { opacity: 0; translate: 0 6px; } to { opacity: 1; translate: 0 0; } }
+.theme-swap { transition: opacity 320ms ease-out; }
+::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*) { animation-duration: 380ms; }
+
+@media (prefers-reduced-motion: reduce) {
+  .fan-card, .logo-rise, .theme-swap, .fan-more { animation: none; transition: none; }
+  ::view-transition-group(*), ::view-transition-old(*), ::view-transition-new(*) { animation: none !important; }
+}
 
 @media (prefers-reduced-motion: reduce) {
   .anim-fade,

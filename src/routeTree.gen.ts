@@ -17,7 +17,10 @@ import { Route as BookedRouteImport } from './routes/booked'
 import { Route as EmailsRouteImport } from './routes/emails'
 import { Route as FitCheckRouteImport } from './routes/fit-check'
 import { Route as MakeRoomRouteImport } from './routes/make-room'
+import { Route as PricesRouteImport } from './routes/prices'
 import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as WhatIOfferRouteImport } from './routes/what-i-offer'
+import { Route as WhoItsForRouteImport } from './routes/who-its-for'
 import { Route as AuthenticatedCoachRouteImport } from './routes/_authenticated/coach'
 import { Route as DemoCoachRouteImport } from './routes/demo.coach'
 import { Route as ManageTokenRouteImport } from './routes/manage.$token'
@@ -63,9 +66,24 @@ const MakeRoomRoute = MakeRoomRouteImport.update({
   path: '/make-room',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PricesRoute = PricesRouteImport.update({
+  id: '/prices',
+  path: '/prices',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PrivacyRoute = PrivacyRouteImport.update({
   id: '/privacy',
   path: '/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WhatIOfferRoute = WhatIOfferRouteImport.update({
+  id: '/what-i-offer',
+  path: '/what-i-offer',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const WhoItsForRoute = WhoItsForRouteImport.update({
+  id: '/who-its-for',
+  path: '/who-its-for',
   getParentRoute: () => rootRouteImport,
 } as any)
 const AuthenticatedCoachRoute = AuthenticatedCoachRouteImport.update({
@@ -102,7 +120,10 @@ export interface FileRoutesByFullPath {
   '/emails': typeof EmailsRoute
   '/fit-check': typeof FitCheckRoute
   '/make-room': typeof MakeRoomRoute
+  '/prices': typeof PricesRoute
   '/privacy': typeof PrivacyRoute
+  '/what-i-offer': typeof WhatIOfferRoute
+  '/who-its-for': typeof WhoItsForRoute
   '/coach': typeof AuthenticatedCoachRoute
   '/demo/coach': typeof DemoCoachRoute
   '/manage/$token': typeof ManageTokenRoute
@@ -117,7 +138,10 @@ export interface FileRoutesByTo {
   '/emails': typeof EmailsRoute
   '/fit-check': typeof FitCheckRoute
   '/make-room': typeof MakeRoomRoute
+  '/prices': typeof PricesRoute
   '/privacy': typeof PrivacyRoute
+  '/what-i-offer': typeof WhatIOfferRoute
+  '/who-its-for': typeof WhoItsForRoute
   '/coach': typeof AuthenticatedCoachRoute
   '/demo/coach': typeof DemoCoachRoute
   '/manage/$token': typeof ManageTokenRoute
@@ -134,7 +158,10 @@ export interface FileRoutesById {
   '/emails': typeof EmailsRoute
   '/fit-check': typeof FitCheckRoute
   '/make-room': typeof MakeRoomRoute
+  '/prices': typeof PricesRoute
   '/privacy': typeof PrivacyRoute
+  '/what-i-offer': typeof WhatIOfferRoute
+  '/who-its-for': typeof WhoItsForRoute
   '/_authenticated/coach': typeof AuthenticatedCoachRoute
   '/demo/coach': typeof DemoCoachRoute
   '/manage/$token': typeof ManageTokenRoute
@@ -151,7 +178,10 @@ export interface FileRouteTypes {
     | '/emails'
     | '/fit-check'
     | '/make-room'
+    | '/prices'
     | '/privacy'
+    | '/what-i-offer'
+    | '/who-its-for'
     | '/coach'
     | '/demo/coach'
     | '/manage/$token'
@@ -166,7 +196,10 @@ export interface FileRouteTypes {
     | '/emails'
     | '/fit-check'
     | '/make-room'
+    | '/prices'
     | '/privacy'
+    | '/what-i-offer'
+    | '/who-its-for'
     | '/coach'
     | '/demo/coach'
     | '/manage/$token'
@@ -182,7 +215,10 @@ export interface FileRouteTypes {
     | '/emails'
     | '/fit-check'
     | '/make-room'
+    | '/prices'
     | '/privacy'
+    | '/what-i-offer'
+    | '/who-its-for'
     | '/_authenticated/coach'
     | '/demo/coach'
     | '/manage/$token'
@@ -199,7 +235,10 @@ export interface RootRouteChildren {
   EmailsRoute: typeof EmailsRoute
   FitCheckRoute: typeof FitCheckRoute
   MakeRoomRoute: typeof MakeRoomRoute
+  PricesRoute: typeof PricesRoute
   PrivacyRoute: typeof PrivacyRoute
+  WhatIOfferRoute: typeof WhatIOfferRoute
+  WhoItsForRoute: typeof WhoItsForRoute
   DemoCoachRoute: typeof DemoCoachRoute
   ManageTokenRoute: typeof ManageTokenRoute
   ApiPublicHooksDigestRoute: typeof ApiPublicHooksDigestRoute
@@ -264,11 +303,32 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MakeRoomRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/prices': {
+      id: '/prices'
+      path: '/prices'
+      fullPath: '/prices'
+      preLoaderRoute: typeof PricesRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/privacy': {
       id: '/privacy'
       path: '/privacy'
       fullPath: '/privacy'
       preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/what-i-offer': {
+      id: '/what-i-offer'
+      path: '/what-i-offer'
+      fullPath: '/what-i-offer'
+      preLoaderRoute: typeof WhatIOfferRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/who-its-for': {
+      id: '/who-its-for'
+      path: '/who-its-for'
+      fullPath: '/who-its-for'
+      preLoaderRoute: typeof WhoItsForRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/_authenticated/coach': {
@@ -329,7 +389,10 @@ const rootRouteChildren: RootRouteChildren = {
   EmailsRoute: EmailsRoute,
   FitCheckRoute: FitCheckRoute,
   MakeRoomRoute: MakeRoomRoute,
+  PricesRoute: PricesRoute,
   PrivacyRoute: PrivacyRoute,
+  WhatIOfferRoute: WhatIOfferRoute,
+  WhoItsForRoute: WhoItsForRoute,
   DemoCoachRoute: DemoCoachRoute,
   ManageTokenRoute: ManageTokenRoute,
   ApiPublicHooksDigestRoute: ApiPublicHooksDigestRoute,
