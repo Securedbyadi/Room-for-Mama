@@ -106,17 +106,17 @@ export function Drawing({
 }) {
   return (
     <div
-      className={`rfm-drawing rfm-${name} overflow-hidden ${className}`}
+      className={`rfm-drawing rfm-${name} flex flex-col overflow-hidden ${className}`}
       style={bare ? undefined : { background: "#FBF6EE", borderRadius: 22, border: "1px solid var(--line)" }}
     >
-      <div className="flex items-center justify-center p-4">
+      <div className={bare ? "flex items-center justify-center p-4" : "flex flex-1 items-end justify-center px-4 pt-4 pb-0"}>
         {ANIMATED.has(name) ? (
           <picture>
             <source media="(prefers-reduced-motion: reduce)" srcSet={`/brand/drawings/${name}.svg`} />
-            <img src={`/brand/animated/${name}.svg`} alt="" className="h-auto w-full" />
+            <img src={`/brand/animated/${name}.svg`} alt="" className="block h-auto w-full" />
           </picture>
         ) : (
-          <img src={`/brand/drawings/${name}.svg`} alt="" className="h-auto w-full" />
+          <img src={`/brand/drawings/${name}.svg`} alt="" className="block h-auto w-full" />
         )}
       </div>
     </div>
