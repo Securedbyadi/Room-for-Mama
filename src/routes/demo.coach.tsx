@@ -11,7 +11,7 @@ import {
 } from "../lib/demo-data";
 import { fmtLong, fmtTime, zoneLabel } from "../lib/time-engine";
 
-export const Route = createFileRoute("/coach")({
+export const Route = createFileRoute("/demo/coach")({
   head: () => ({
     meta: [
       { title: "Today — Room for Mama" },

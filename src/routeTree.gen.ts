@@ -10,16 +10,32 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
+import { Route as AuthRouteImport } from './routes/auth'
 import { Route as BookRouteImport } from './routes/book'
 import { Route as BookedRouteImport } from './routes/booked'
-import { Route as CoachRouteImport } from './routes/coach'
 import { Route as EmailsRouteImport } from './routes/emails'
 import { Route as FitCheckRouteImport } from './routes/fit-check'
 import { Route as MakeRoomRouteImport } from './routes/make-room'
+import { Route as PrivacyRouteImport } from './routes/privacy'
+import { Route as AuthenticatedCoachRouteImport } from './routes/_authenticated/coach'
+import { Route as DemoCoachRouteImport } from './routes/demo.coach'
+import { Route as ManageTokenRouteImport } from './routes/manage.$token'
+import { Route as ApiPublicHooksDigestRouteImport } from './routes/api/public/hooks/digest'
+import { Route as ApiPublicHooksTickRouteImport } from './routes/api/public/hooks/tick'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
   getParentRoute: () => rootRouteImport,
 } as any)
 const BookRoute = BookRouteImport.update({
@@ -30,11 +46,6 @@ const BookRoute = BookRouteImport.update({
 const BookedRoute = BookedRouteImport.update({
   id: '/booked',
   path: '/booked',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const CoachRoute = CoachRouteImport.update({
-  id: '/coach',
-  path: '/coach',
   getParentRoute: () => rootRouteImport,
 } as any)
 const EmailsRoute = EmailsRouteImport.update({
@@ -52,73 +63,147 @@ const MakeRoomRoute = MakeRoomRouteImport.update({
   path: '/make-room',
   getParentRoute: () => rootRouteImport,
 } as any)
+const PrivacyRoute = PrivacyRouteImport.update({
+  id: '/privacy',
+  path: '/privacy',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedCoachRoute = AuthenticatedCoachRouteImport.update({
+  id: '/coach',
+  path: '/coach',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const DemoCoachRoute = DemoCoachRouteImport.update({
+  id: '/demo/coach',
+  path: '/demo/coach',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ManageTokenRoute = ManageTokenRouteImport.update({
+  id: '/manage/$token',
+  path: '/manage/$token',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiPublicHooksDigestRoute = ApiPublicHooksDigestRouteImport.update({
+  id: '/api/public/hooks/digest',
+  path: '/api/public/hooks/digest',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiPublicHooksTickRoute = ApiPublicHooksTickRouteImport.update({
+  id: '/api/public/hooks/tick',
+  path: '/api/public/hooks/tick',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
   '/book': typeof BookRoute
   '/booked': typeof BookedRoute
-  '/coach': typeof CoachRoute
   '/emails': typeof EmailsRoute
   '/fit-check': typeof FitCheckRoute
   '/make-room': typeof MakeRoomRoute
+  '/privacy': typeof PrivacyRoute
+  '/coach': typeof AuthenticatedCoachRoute
+  '/demo/coach': typeof DemoCoachRoute
+  '/manage/$token': typeof ManageTokenRoute
+  '/api/public/hooks/digest': typeof ApiPublicHooksDigestRoute
+  '/api/public/hooks/tick': typeof ApiPublicHooksTickRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
   '/book': typeof BookRoute
   '/booked': typeof BookedRoute
-  '/coach': typeof CoachRoute
   '/emails': typeof EmailsRoute
   '/fit-check': typeof FitCheckRoute
   '/make-room': typeof MakeRoomRoute
+  '/privacy': typeof PrivacyRoute
+  '/coach': typeof AuthenticatedCoachRoute
+  '/demo/coach': typeof DemoCoachRoute
+  '/manage/$token': typeof ManageTokenRoute
+  '/api/public/hooks/digest': typeof ApiPublicHooksDigestRoute
+  '/api/public/hooks/tick': typeof ApiPublicHooksTickRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/auth': typeof AuthRoute
   '/book': typeof BookRoute
   '/booked': typeof BookedRoute
-  '/coach': typeof CoachRoute
   '/emails': typeof EmailsRoute
   '/fit-check': typeof FitCheckRoute
   '/make-room': typeof MakeRoomRoute
+  '/privacy': typeof PrivacyRoute
+  '/_authenticated/coach': typeof AuthenticatedCoachRoute
+  '/demo/coach': typeof DemoCoachRoute
+  '/manage/$token': typeof ManageTokenRoute
+  '/api/public/hooks/digest': typeof ApiPublicHooksDigestRoute
+  '/api/public/hooks/tick': typeof ApiPublicHooksTickRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/auth'
     | '/book'
     | '/booked'
-    | '/coach'
     | '/emails'
     | '/fit-check'
     | '/make-room'
+    | '/privacy'
+    | '/coach'
+    | '/demo/coach'
+    | '/manage/$token'
+    | '/api/public/hooks/digest'
+    | '/api/public/hooks/tick'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/auth'
     | '/book'
     | '/booked'
-    | '/coach'
     | '/emails'
     | '/fit-check'
     | '/make-room'
+    | '/privacy'
+    | '/coach'
+    | '/demo/coach'
+    | '/manage/$token'
+    | '/api/public/hooks/digest'
+    | '/api/public/hooks/tick'
   id:
     | '__root__'
     | '/'
+    | '/_authenticated'
+    | '/auth'
     | '/book'
     | '/booked'
-    | '/coach'
     | '/emails'
     | '/fit-check'
     | '/make-room'
+    | '/privacy'
+    | '/_authenticated/coach'
+    | '/demo/coach'
+    | '/manage/$token'
+    | '/api/public/hooks/digest'
+    | '/api/public/hooks/tick'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  AuthRoute: typeof AuthRoute
   BookRoute: typeof BookRoute
   BookedRoute: typeof BookedRoute
-  CoachRoute: typeof CoachRoute
   EmailsRoute: typeof EmailsRoute
   FitCheckRoute: typeof FitCheckRoute
   MakeRoomRoute: typeof MakeRoomRoute
+  PrivacyRoute: typeof PrivacyRoute
+  DemoCoachRoute: typeof DemoCoachRoute
+  ManageTokenRoute: typeof ManageTokenRoute
+  ApiPublicHooksDigestRoute: typeof ApiPublicHooksDigestRoute
+  ApiPublicHooksTickRoute: typeof ApiPublicHooksTickRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -128,6 +213,20 @@ declare module '@tanstack/react-router' {
       path: '/'
       fullPath: '/'
       preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/book': {
@@ -142,13 +241,6 @@ declare module '@tanstack/react-router' {
       path: '/booked'
       fullPath: '/booked'
       preLoaderRoute: typeof BookedRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/coach': {
-      id: '/coach'
-      path: '/coach'
-      fullPath: '/coach'
-      preLoaderRoute: typeof CoachRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/emails': {
@@ -172,17 +264,76 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MakeRoomRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/privacy': {
+      id: '/privacy'
+      path: '/privacy'
+      fullPath: '/privacy'
+      preLoaderRoute: typeof PrivacyRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/coach': {
+      id: '/_authenticated/coach'
+      path: '/coach'
+      fullPath: '/coach'
+      preLoaderRoute: typeof AuthenticatedCoachRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/demo/coach': {
+      id: '/demo/coach'
+      path: '/demo/coach'
+      fullPath: '/demo/coach'
+      preLoaderRoute: typeof DemoCoachRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/manage/$token': {
+      id: '/manage/$token'
+      path: '/manage/$token'
+      fullPath: '/manage/$token'
+      preLoaderRoute: typeof ManageTokenRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/hooks/digest': {
+      id: '/api/public/hooks/digest'
+      path: '/api/public/hooks/digest'
+      fullPath: '/api/public/hooks/digest'
+      preLoaderRoute: typeof ApiPublicHooksDigestRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/hooks/tick': {
+      id: '/api/public/hooks/tick'
+      path: '/api/public/hooks/tick'
+      fullPath: '/api/public/hooks/tick'
+      preLoaderRoute: typeof ApiPublicHooksTickRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedCoachRoute: typeof AuthenticatedCoachRoute
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedCoachRoute: AuthenticatedCoachRoute,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  AuthRoute: AuthRoute,
   BookRoute: BookRoute,
   BookedRoute: BookedRoute,
-  CoachRoute: CoachRoute,
   EmailsRoute: EmailsRoute,
   FitCheckRoute: FitCheckRoute,
   MakeRoomRoute: MakeRoomRoute,
+  PrivacyRoute: PrivacyRoute,
+  DemoCoachRoute: DemoCoachRoute,
+  ManageTokenRoute: ManageTokenRoute,
+  ApiPublicHooksDigestRoute: ApiPublicHooksDigestRoute,
+  ApiPublicHooksTickRoute: ApiPublicHooksTickRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
