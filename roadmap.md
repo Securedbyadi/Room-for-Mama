@@ -6,4 +6,4 @@
 - [x] Let “Try it as a mama in Manchester” bypass the fit check and open `/book` with the sample message.
 - [x] Add the two-line Meet the coach section after Who it’s for.
 - [x] Add Day, Night, and Auto display modes to the desktop top bar and phone menu; default to Auto and remember the device choice.
-- [ ] Add route metadata and focused tests, then verify desktop, phone, and night modes.
+- [x] Add route metadata and focused tests, then verify desktop, phone, and night modes.

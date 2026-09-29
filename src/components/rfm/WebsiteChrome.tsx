@@ -17,12 +17,12 @@ export function WebsiteHeader() {
       <header className="sticky top-0 z-30 border-b border-line bg-page/95 backdrop-blur">
         <div className="mx-auto grid min-h-20 max-w-[1120px] grid-cols-[minmax(0,1fr)_auto] items-center gap-4 px-5">
           <Logo height={32} />
-          <div className="hidden items-center gap-5 lg:flex">
-            <nav className="flex items-center gap-5" aria-label="Main navigation">
-              {LINKS.map(([label, href]) => <a key={href} href={href} className="text-[15px] font-semibold text-ink-muted hover:text-ink">{label}</a>)}
+          <div className="hidden items-center gap-4 lg:flex">
+            <nav className="flex items-center gap-4" aria-label="Main navigation">
+              {LINKS.map(([label, href]) => <a key={href} href={href} className="whitespace-nowrap text-[14px] font-semibold text-ink-muted hover:text-ink">{label}</a>)}
             </nav>
             <ThemeControl compact />
-            <ButtonMain to="/fit-check" className="w-auto whitespace-nowrap px-5">Book a free hello call</ButtonMain>
+            <ButtonMain to="/fit-check" className="!w-auto whitespace-nowrap !px-5">Book a free hello call</ButtonMain>
           </div>
           <button
             type="button"
@@ -38,7 +38,7 @@ export function WebsiteHeader() {
 
       {menuOpen && (
         <div className="fixed inset-0 z-50 bg-ink/30 lg:hidden" role="presentation" onClick={() => setMenuOpen(false)}>
-          <div className="anim-sheet absolute inset-x-0 bottom-0 rounded-t-[28px] bg-paper px-5 pt-5 pb-8" role="dialog" aria-label="Menu" onClick={(event) => event.stopPropagation()}>
+          <div className="anim-sheet absolute inset-x-0 bottom-0 max-h-[90svh] overflow-y-auto rounded-t-[28px] bg-paper px-5 pt-5 pb-8" role="dialog" aria-label="Menu" onClick={(event) => event.stopPropagation()}>
             <div className="mb-5 grid grid-cols-[minmax(0,1fr)_auto] items-center gap-4">
               <h2 className="t-title">Menu</h2>
               <button type="button" onClick={() => setMenuOpen(false)} className="min-h-12 min-w-12 rounded-full border-2 border-line-strong text-2xl" aria-label="Close menu">×</button>
