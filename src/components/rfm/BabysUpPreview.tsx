@@ -24,7 +24,7 @@ export function BabysUpPreview() {
           <p className="t-heading mb-2 text-[18px]">Pick a new time</p>
           <div className="flex flex-col gap-2">
             {options.map((o, i) => (
-              <div key={o.start.toISOString()} className={`flex min-h-12 items-center justify-between rounded-2xl px-4 ${i === 0 ? "offset-peach" : "border border-line bg-paper"}`}>
+              <div key={o.start.toISOString()} className={`flex min-h-12 items-center justify-between rounded-2xl px-4 ${i === 0 ? "border-2 border-ink bg-butter text-[#34402A] shadow-[4px_4px_0_0_var(--peach)]" : "border border-line bg-paper"}`}>
                 <span className="t-time text-[14px]">{fmtLong(o.start, zone)}</span>
                 <Icon name={i === 0 ? "icon-done" : "icon-time"} size={22} />
               </div>

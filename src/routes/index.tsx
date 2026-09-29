@@ -1,8 +1,8 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import { BabysUpPreview } from "../components/rfm/BabysUpPreview";
-import { ButtonMain, Card, Drawing, Icon, type IconName } from "../components/rfm/brand";
-import { HomeHero } from "../components/rfm/HomeHero";
+import { ButtonMain, ButtonOutline, Card, Drawing, Icon, type IconName } from "../components/rfm/brand";
+import { HomeHero, usePkr } from "../components/rfm/HomeHero";
 import { WebsitePage } from "../components/rfm/WebsiteChrome";
 
 const desc = "Gentle routine coaching for mothers of babies and toddlers. Half an hour a week, with a mother who’s living it too.";
@@ -23,6 +23,11 @@ export const Route = createFileRoute("/")({
 
 function Home() {
   const [openFaq, setOpenFaq] = useState(0);
+  const pkr = usePkr();
+  const offers = [
+    { icon: "icon-hello-call" as IconName, chip: "Start here", title: "Hello call", copy: "20 minutes to meet and see if this feels right.", price: "Free", under: "Nothing to pay, nothing to prepare.", ticks: ["20 minutes on video", "In your time zone", "Move it free if the baby wakes"], to: "/fit-check" as const, button: "Book a free hello call", main: true },
+    { icon: "icon-make-room" as IconName, chip: "Founding price", title: "Make Room", copy: "Four half hours, one a week, at one steady time.", price: pkr ? "PKR 12,000" : "US$120", under: pkr ? "PKR 8,000 for the first 10 mothers. Elsewhere, US$120 or US$80." : "US$80 for the first 10 mothers. In Pakistan, PKR 12,000 or PKR 8,000.", ticks: ["Four half hours, one a week", "One steady time, in your time", "Baby’s up moves are free"], to: "/make-room" as const, button: "How Make Room works", main: false },
+  ];
   const steps: [IconName, string, string][] = [
     ["icon-hello-call", "Hello call", "20 minutes, free, to see if this feels right."],
     ["icon-make-room", "Make Room", "Four half hours, one a week, at one steady time."],
@@ -57,14 +62,23 @@ function Home() {
           <h2 className="section-title mt-3">A hello call, then Make Room.</h2>
           <p className="hero-lead mt-4 max-w-[650px] text-ink-muted">Start with a free 20-minute hello call. If it feels right, Make Room gives you four half hours, one a week.</p>
           <div className="mt-10 grid gap-6 md:grid-cols-2">
-            <Card className="micro-card flex min-h-[330px] flex-col p-7"><Icon name="icon-hello-call" size={44} /><h3 className="t-title mt-8">Hello call</h3><p className="mt-2 text-ink-muted">20 minutes to meet and see if this feels right.</p><p className="t-display mt-5">Free</p><div className="mt-auto pt-7"><ButtonMain to="/fit-check" className="md:w-auto">Book a free hello call</ButtonMain></div></Card>
-            <Card offset="peach" className="micro-card flex min-h-[330px] flex-col !bg-paper p-7"><Icon name="icon-make-room" size={44} /><h3 className="t-title mt-8">Make Room</h3><p className="mt-2 text-ink-muted">Four half hours, one a week, at one steady time.</p><p className="t-display mt-5">US$120</p><div className="mt-auto pt-7"><ButtonMain to="/make-room" className="md:w-auto">How Make Room works</ButtonMain></div></Card>
+            {offers.map((o) => (
+              <Card key={o.title} className="micro-card flex min-h-[330px] flex-col !bg-paper !text-ink p-7">
+                <div className="flex items-center justify-between gap-3"><Icon name={o.icon} size={44} /><span className="t-caption rounded-full bg-sunk px-3 py-1">{o.chip}</span></div>
+                <h3 className="t-title mt-8 text-ink">{o.title}</h3>
+                <p className="mt-2 text-ink-muted">{o.copy}</p>
+                <p className="t-display mt-5 text-ink">{o.price}</p>
+                <p className="t-caption mt-1 text-ink-muted">{o.under}</p>
+                <ul className="mt-5 flex flex-col gap-2">{o.ticks.map((t) => <li key={t} className="flex items-center gap-2"><Icon name="icon-done" size={22} />{t}</li>)}</ul>
+                <div className="mt-auto pt-7">{o.main ? <ButtonMain to={o.to} className="md:w-auto">{o.button}</ButtonMain> : <ButtonOutline to={o.to} className="md:w-auto">{o.button}</ButtonOutline>}</div>
+              </Card>
+            ))}
           </div>
         </section>
 
         <section className="home-night-band">
           <div className="section-reveal mx-auto grid max-w-[1200px] items-center gap-10 px-5 py-16 lg:grid-cols-2 lg:py-24">
-            <div><p className="eyebrow">Book at 3 a.m.</p><h2 className="three-am-title mt-3">Awake at 3 a.m.?<br />Book then.</h2><p className="hero-lead mt-5 max-w-[520px] text-ink-muted">You’ll have a time in a minute.</p><div className="mt-8 max-w-[300px]"><ButtonMain to="/fit-check">Book a free hello call</ButtonMain></div></div>
+            <div><p className="eyebrow">Book at 3 a.m.</p><h2 className="three-am-title mt-3"><span className="lg:whitespace-nowrap">Awake at 3 a.m.?</span><br />Book then.</h2><p className="hero-lead mt-5 max-w-[520px] text-ink-muted">You’ll have a time in a minute.</p><div className="mt-8 max-w-[300px]"><ButtonMain to="/fit-check">Book a free hello call</ButtonMain></div></div>
             <BabysUpPreview />
           </div>
         </section>

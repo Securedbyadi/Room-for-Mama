@@ -5,6 +5,7 @@
  */
 import { Link } from "@tanstack/react-router";
 import type { ReactNode } from "react";
+import { DesktopToggle, WebsiteFooter, WebsiteHeader } from "./WebsiteChrome";
 
 const iconModules = import.meta.glob("../../assets/brand/icons/*.svg", {
   query: "?raw",
@@ -245,37 +246,48 @@ export function Page({
   headerAction,
   className = "",
   illustration,
+  chrome = true,
 }: {
   children: ReactNode;
   headerAction?: ReactNode;
   className?: string;
   illustration?: ReactNode;
+  /** Website header and footer. Off only in the coach app. */
+  chrome?: boolean;
 }) {
-  if (illustration) {
-    return (
-      <div className={`anim-fade mx-auto min-h-screen w-full max-w-[1200px] px-5 pt-5 pb-10 ${className}`}>
-        <header className="mb-6 grid grid-cols-[minmax(0,1fr)_auto] items-center gap-4 lg:mb-10">
-          <Logo />
-          {headerAction ? <div className="shrink-0">{headerAction}</div> : null}
-        </header>
-        <div className="rfm-split-page grid min-h-[calc(100svh-106px)] items-center gap-7 lg:grid-cols-12 lg:gap-10">
-          <aside className="rfm-splash rounded-[24px] bg-sunk p-5 lg:col-span-6 lg:p-10" aria-hidden>
-            {illustration}
-          </aside>
-          <main className="flex min-w-0 flex-col gap-6 lg:col-span-5 lg:col-start-8 lg:min-h-[640px] lg:justify-center">
-            {children}
-          </main>
-        </div>
+  const top = chrome ? (
+    headerAction ? <div className="mb-4 flex justify-end">{headerAction}</div> : null
+  ) : (
+    <header className="mb-8 grid grid-cols-[minmax(0,1fr)_auto] items-center gap-4">
+      <Logo />
+      {headerAction ? <div className="shrink-0">{headerAction}</div> : null}
+    </header>
+  );
+  const body = illustration ? (
+    <div className={`anim-fade mx-auto w-full max-w-[1200px] px-5 pt-5 pb-10 ${className}`}>
+      {top}
+      <div className="rfm-split-page grid min-h-[calc(100svh-160px)] items-center gap-7 lg:grid-cols-12 lg:gap-10">
+        <aside className="rfm-splash rounded-[24px] bg-sunk p-5 lg:col-span-6 lg:p-10" aria-hidden>
+          {illustration}
+        </aside>
+        <main className="flex min-w-0 flex-col gap-6 lg:col-span-5 lg:col-start-8 lg:min-h-[640px] lg:justify-center">
+          {children}
+        </main>
       </div>
-    );
-  }
-  return (
-    <div className={`anim-fade mx-auto flex min-h-screen w-full max-w-[480px] flex-col px-5 pt-5 pb-10 ${className}`}>
-      <header className="mb-8 grid grid-cols-[minmax(0,1fr)_auto] items-center gap-4">
-        <Logo />
-        {headerAction ? <div className="shrink-0">{headerAction}</div> : null}
-      </header>
+    </div>
+  ) : (
+    <div className={`anim-fade mx-auto flex w-full max-w-[480px] flex-col px-5 pt-5 pb-10 ${chrome ? "min-h-[60svh]" : "min-h-screen"} ${className}`}>
+      {top}
       <main className="flex flex-1 flex-col gap-6">{children}</main>
+    </div>
+  );
+  if (!chrome) return body;
+  return (
+    <div className="min-h-screen bg-page">
+      <WebsiteHeader />
+      {body}
+      <WebsiteFooter />
+      <DesktopToggle />
     </div>
   );
 }

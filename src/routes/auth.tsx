@@ -49,7 +49,7 @@ function AuthPage() {
   };
 
   return (
-    <Page>
+    <Page chrome={false}>
       <h1 className="t-title">Coach sign in</h1>
       <form onSubmit={submit} className="flex flex-col gap-3">
         <input className={inputCls} type="email" aria-label="Email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />

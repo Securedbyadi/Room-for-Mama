@@ -270,7 +270,7 @@ function Coach() {
   const [tab, setTab] = useState<Tab>("today");
 
   return (
-    <Page headerAction={<span className="t-caption uppercase tracking-[0.12em] text-ink-muted">Coach</span>} className="pb-28">
+    <Page chrome={false} headerAction={<span className="t-caption uppercase tracking-[0.12em] text-ink-muted">Coach</span>} className="pb-28">
       <div>
         <h1 className="t-title">{TABS.find((t) => t.id === tab)?.label}</h1>
       </div>

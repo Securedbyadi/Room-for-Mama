@@ -23,6 +23,7 @@ import { Route as WhatIOfferRouteImport } from './routes/what-i-offer'
 import { Route as WhoItsForRouteImport } from './routes/who-its-for'
 import { Route as AuthenticatedCoachRouteImport } from './routes/_authenticated/coach'
 import { Route as DemoCoachRouteImport } from './routes/demo.coach'
+import { Route as ManageIndexRouteImport } from './routes/manage.index'
 import { Route as ManageTokenRouteImport } from './routes/manage.$token'
 import { Route as ApiPublicHooksDigestRouteImport } from './routes/api/public/hooks/digest'
 import { Route as ApiPublicHooksTickRouteImport } from './routes/api/public/hooks/tick'
@@ -96,6 +97,11 @@ const DemoCoachRoute = DemoCoachRouteImport.update({
   path: '/demo/coach',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ManageIndexRoute = ManageIndexRouteImport.update({
+  id: '/manage/',
+  path: '/manage/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ManageTokenRoute = ManageTokenRouteImport.update({
   id: '/manage/$token',
   path: '/manage/$token',
@@ -127,6 +133,7 @@ export interface FileRoutesByFullPath {
   '/coach': typeof AuthenticatedCoachRoute
   '/demo/coach': typeof DemoCoachRoute
   '/manage/$token': typeof ManageTokenRoute
+  '/manage/': typeof ManageIndexRoute
   '/api/public/hooks/digest': typeof ApiPublicHooksDigestRoute
   '/api/public/hooks/tick': typeof ApiPublicHooksTickRoute
 }
@@ -145,6 +152,7 @@ export interface FileRoutesByTo {
   '/coach': typeof AuthenticatedCoachRoute
   '/demo/coach': typeof DemoCoachRoute
   '/manage/$token': typeof ManageTokenRoute
+  '/manage': typeof ManageIndexRoute
   '/api/public/hooks/digest': typeof ApiPublicHooksDigestRoute
   '/api/public/hooks/tick': typeof ApiPublicHooksTickRoute
 }
@@ -165,6 +173,7 @@ export interface FileRoutesById {
   '/_authenticated/coach': typeof AuthenticatedCoachRoute
   '/demo/coach': typeof DemoCoachRoute
   '/manage/$token': typeof ManageTokenRoute
+  '/manage/': typeof ManageIndexRoute
   '/api/public/hooks/digest': typeof ApiPublicHooksDigestRoute
   '/api/public/hooks/tick': typeof ApiPublicHooksTickRoute
 }
@@ -185,6 +194,7 @@ export interface FileRouteTypes {
     | '/coach'
     | '/demo/coach'
     | '/manage/$token'
+    | '/manage/'
     | '/api/public/hooks/digest'
     | '/api/public/hooks/tick'
   fileRoutesByTo: FileRoutesByTo
@@ -203,6 +213,7 @@ export interface FileRouteTypes {
     | '/coach'
     | '/demo/coach'
     | '/manage/$token'
+    | '/manage'
     | '/api/public/hooks/digest'
     | '/api/public/hooks/tick'
   id:
@@ -222,6 +233,7 @@ export interface FileRouteTypes {
     | '/_authenticated/coach'
     | '/demo/coach'
     | '/manage/$token'
+    | '/manage/'
     | '/api/public/hooks/digest'
     | '/api/public/hooks/tick'
   fileRoutesById: FileRoutesById
@@ -241,6 +253,7 @@ export interface RootRouteChildren {
   WhoItsForRoute: typeof WhoItsForRoute
   DemoCoachRoute: typeof DemoCoachRoute
   ManageTokenRoute: typeof ManageTokenRoute
+  ManageIndexRoute: typeof ManageIndexRoute
   ApiPublicHooksDigestRoute: typeof ApiPublicHooksDigestRoute
   ApiPublicHooksTickRoute: typeof ApiPublicHooksTickRoute
 }
@@ -345,6 +358,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof DemoCoachRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/manage/': {
+      id: '/manage/'
+      path: '/manage'
+      fullPath: '/manage/'
+      preLoaderRoute: typeof ManageIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/manage/$token': {
       id: '/manage/$token'
       path: '/manage/$token'
@@ -395,6 +415,7 @@ const rootRouteChildren: RootRouteChildren = {
   WhoItsForRoute: WhoItsForRoute,
   DemoCoachRoute: DemoCoachRoute,
   ManageTokenRoute: ManageTokenRoute,
+  ManageIndexRoute: ManageIndexRoute,
   ApiPublicHooksDigestRoute: ApiPublicHooksDigestRoute,
   ApiPublicHooksTickRoute: ApiPublicHooksTickRoute,
 }

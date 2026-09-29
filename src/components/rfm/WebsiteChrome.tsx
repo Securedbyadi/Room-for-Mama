@@ -2,38 +2,40 @@ import { Link } from "@tanstack/react-router";
 import { useEffect, useState, type ReactNode } from "react";
 import { SafetyNote } from "./SafetyNote";
 import { ButtonMain, Logo } from "./brand";
-import { ThemeControl, ThemeRound } from "./ThemeControl";
+import { ThemeRound } from "./ThemeControl";
 
 const LINKS = [
   ["What I offer", "/what-i-offer"],
   ["Who it’s for", "/who-its-for"],
-  ["Prices", "/prices"],
-  ["FAQ", "/prices"],
+  ["Prices and FAQ", "/prices"],
 ] as const;
 
-export function WebsiteHeader() {
+/** The one header, on every page: logo, three links, the main button; the round toggle sits in it on phones. */
+export function WebsiteHeader({ home = false }: { home?: boolean }) {
   const [menuOpen, setMenuOpen] = useState(false);
   return (
     <>
-      <header className="sticky top-0 z-30 border-b border-line bg-page/95 backdrop-blur">
-        <div className="mx-auto grid min-h-20 max-w-[1120px] grid-cols-[minmax(0,1fr)_auto] items-center gap-4 px-5">
-          <Logo height={32} />
-          <div className="hidden items-center gap-4 lg:flex">
-            <nav className="flex items-center gap-4" aria-label="Main navigation">
-              {LINKS.map(([label, to]) => <Link key={label} to={to} viewTransition className="whitespace-nowrap text-[14px] font-semibold text-ink-muted hover:text-ink">{label}</Link>)}
+      <header className={`z-30 ${home ? "relative" : "sticky top-0 border-b border-line bg-page/95 backdrop-blur"}`}>
+        <div className="mx-auto grid min-h-20 max-w-[1200px] grid-cols-[minmax(0,1fr)_auto] items-center gap-4 px-5">
+          <Logo height={32} className={home ? "logo-rise" : ""} />
+          <div className="hidden items-center gap-8 lg:flex">
+            <nav className="flex items-center gap-7" aria-label="Main navigation">
+              {LINKS.map(([label, to]) => <Link key={label} to={to} viewTransition className="micro-link whitespace-nowrap text-[14px] font-semibold text-ink-muted">{label}</Link>)}
             </nav>
-            <ThemeControl compact />
-            <ButtonMain to="/fit-check" className="!w-auto whitespace-nowrap !px-5">Book a free hello call</ButtonMain>
+            <Link to="/fit-check" className="rfm-button inline-flex min-h-12 items-center rounded-full border-2 border-ink px-5 text-[15px] font-semibold whitespace-nowrap">Book a free hello call</Link>
           </div>
-          <button
-            type="button"
-            aria-label="Open menu"
-            aria-expanded={menuOpen}
-            onClick={() => setMenuOpen(true)}
-            className="grid min-h-12 min-w-12 place-items-center rounded-full border-2 border-line-strong text-2xl lg:hidden"
-          >
-            <span aria-hidden>☰</span>
-          </button>
+          <div className="flex items-center gap-2 lg:hidden">
+            <ThemeRound className="relative !h-12 !w-12" />
+            <button
+              type="button"
+              aria-label="Open menu"
+              aria-expanded={menuOpen}
+              onClick={() => setMenuOpen(true)}
+              className="grid min-h-12 min-w-12 place-items-center rounded-full border-2 border-line-strong text-2xl"
+            >
+              <span aria-hidden>☰</span>
+            </button>
+          </div>
         </div>
       </header>
 
@@ -44,11 +46,9 @@ export function WebsiteHeader() {
               <h2 className="t-title">Menu</h2>
               <button type="button" onClick={() => setMenuOpen(false)} className="min-h-12 min-w-12 rounded-full border-2 border-line-strong text-2xl" aria-label="Close menu">×</button>
             </div>
-            <nav className="mb-6 flex flex-col border-y border-line" aria-label="Phone navigation">
+            <nav className="flex flex-col border-y border-line" aria-label="Phone navigation">
               {LINKS.map(([label, to]) => <Link key={label} to={to} onClick={() => setMenuOpen(false)} className="flex min-h-14 items-center border-b border-line font-semibold last:border-b-0">{label}</Link>)}
             </nav>
-            <p className="t-caption mb-2 text-ink-muted">Display</p>
-            <ThemeControl />
           </div>
         </div>
       )}
@@ -56,21 +56,9 @@ export function WebsiteHeader() {
   );
 }
 
-function HomeHeader() {
-  return (
-    <header className="relative z-30">
-      <div className="mx-auto grid min-h-20 max-w-[1200px] grid-cols-[minmax(0,1fr)_auto] items-center gap-4 px-5">
-        <Logo height={32} className="logo-rise" />
-        <div className="hidden items-center gap-8 lg:flex">
-          <nav className="flex items-center gap-7" aria-label="Main navigation">
-            {LINKS.slice(0, 3).map(([label, to]) => <Link key={label} to={to} viewTransition className="micro-link text-[14px] font-semibold text-ink-muted">{label}</Link>)}
-          </nav>
-          <Link to="/fit-check" className="rfm-button inline-flex min-h-12 items-center rounded-full border-2 border-ink px-5 text-[15px] font-semibold whitespace-nowrap">Book a free hello call</Link>
-        </div>
-        <ThemeRound className="relative !h-12 !w-12 lg:hidden" />
-      </div>
-    </header>
-  );
+/** Round toggle, fixed bottom-right on desktop. */
+export function DesktopToggle() {
+  return <div className="fixed right-6 bottom-6 z-30 hidden lg:block"><ThemeRound className="relative" /></div>;
 }
 
 export function WebsiteFooter() {
@@ -78,24 +66,56 @@ export function WebsiteFooter() {
   useEffect(() => {
     try { setZone(Intl.DateTimeFormat().resolvedOptions().timeZone); } catch { /* show anywhere-else line */ }
   }, []);
+  const link = "micro-link flex min-h-10 items-center";
   return (
     <footer className="band-ink">
-      <div className="mx-auto grid max-w-[1120px] gap-6 px-5 py-10 md:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] md:items-start">
-        <div><Logo height={30} /><p className="mt-3 text-ink-muted">A little room for you.</p></div>
-        <SafetyNote zone={zone} />
+      <div className="mx-auto max-w-[1200px] px-5 py-12">
+        <div className="grid gap-8 md:grid-cols-[minmax(0,2fr)_minmax(0,1fr)_minmax(0,1fr)]">
+          <div><Logo height={30} /><p className="mt-3 text-ink-muted">A little room for you.</p></div>
+          <nav aria-label="Explore">
+            <p className="eyebrow mb-2">Explore</p>
+            <Link to="/what-i-offer" className={link}>What I offer</Link>
+            <Link to="/who-its-for" className={link}>Who it’s for</Link>
+            <Link to="/prices" className={link}>Prices and FAQ</Link>
+            <Link to="/privacy" className={link}>Privacy</Link>
+          </nav>
+          <nav aria-label="Your calls">
+            <p className="eyebrow mb-2">Your calls</p>
+            <Link to="/fit-check" className={link}>Book a free hello call</Link>
+            <Link to="/manage" className={link}>Manage my calls</Link>
+            <Link to="/demo/coach" className={link}>See the coach’s side (demo)</Link>
+          </nav>
+        </div>
+        <div className="mt-10"><SafetyNote zone={zone} /></div>
+        <p className="t-caption mt-8 text-ink-muted">© 2026 Room for Mama · Lahore, Pakistan</p>
       </div>
     </footer>
   );
 }
 
+/** Phone sticky button. On home it waits until the hero button (#hero-book) has scrolled away. */
+function StickyBook({ home }: { home: boolean }) {
+  const [show, setShow] = useState(!home);
+  useEffect(() => {
+    if (!home) return;
+    const el = document.getElementById("hero-book");
+    if (!el) { setShow(true); return; }
+    const io = new IntersectionObserver(([e]) => setShow(!e!.isIntersecting && e!.boundingClientRect.top < 0));
+    io.observe(el);
+    return () => io.disconnect();
+  }, [home]);
+  if (!show) return null;
+  return <div className="anim-fade fixed inset-x-0 bottom-0 z-20 border-t border-line bg-page/95 p-3 backdrop-blur lg:hidden"><div className="mx-auto max-w-[480px]"><ButtonMain to="/fit-check">Book a free hello call</ButtonMain></div></div>;
+}
+
 export function WebsitePage({ children, home = false }: { children: ReactNode; home?: boolean }) {
   return (
     <div className="min-h-screen bg-page pb-24 lg:pb-0">
-      {home ? <HomeHeader /> : <WebsiteHeader />}
+      <WebsiteHeader home={home} />
       {children}
       <WebsiteFooter />
-      {home && <div className="fixed right-6 bottom-6 z-30 hidden lg:block"><ThemeRound className="relative" /></div>}
-      <div className="fixed inset-x-0 bottom-0 z-20 border-t border-line bg-page/95 p-3 backdrop-blur lg:hidden"><div className="mx-auto max-w-[480px]"><ButtonMain to="/fit-check">Book a free hello call</ButtonMain></div></div>
+      <DesktopToggle />
+      <StickyBook home={home} />
     </div>
   );
 }

@@ -138,13 +138,6 @@ function Book() {
             <ButtonOutline onClick={() => { setMoment(DEMO_MESSAGE); showTimes(DEMO_MESSAGE); }}>
               Try it as a mama in Manchester
             </ButtonOutline>
-            <button
-              type="button"
-              className="t-caption min-h-12 underline underline-offset-2"
-              onClick={() => { setMoment(DEMO_NO_MATCH); showTimes(DEMO_NO_MATCH); }}
-            >
-              Try it
-            </button>
             <SafetyNote zone={parsed?.zone} />
           </div>
         </>

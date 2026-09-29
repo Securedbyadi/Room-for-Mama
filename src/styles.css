@@ -215,8 +215,9 @@
 .hero-lead { font-size: 17px; line-height: 27px; }
 .home-card-title {
   font-family: var(--font-display);
-  font-size: 28px;
-  line-height: 34px;
+  font-size: 27px;
+  line-height: 32px;
+  letter-spacing: -0.01em;
   font-weight: 700;
   font-variation-settings: "SOFT" 100, "WONK" 1;
 }
@@ -238,7 +239,7 @@
 @media (min-width: 1024px) {
   .hero-title { font-size: 88px; line-height: 90px; }
   .hero-lead { font-size: 20px; line-height: 31px; }
-  .home-card-title { font-size: 36px; line-height: 42px; }
+  .home-card-title { font-size: 27px; line-height: 32px; }
   .section-title { font-size: 56px; line-height: 62px; }
   .three-am-title { font-size: 72px; line-height: 76px; }
 }
@@ -374,7 +375,7 @@ button[aria-pressed="true"] .theme-icon { opacity: 1; }
 .band-ink { background: #34402a; }
 .band-night .rfm-logo-day, .band-ink .rfm-logo-day { display: none !important; }
 .band-night .rfm-logo-night, .band-ink .rfm-logo-night { display: block !important; }
-.hero-sun { background: var(--sun-disc); }
+.hero-sun { background: #f5d06f; }
 .hero-grain::before {
   content: ""; position: absolute; inset: 0; pointer-events: none; opacity: 0.04;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
@@ -414,7 +415,7 @@ button[aria-pressed="true"] .theme-icon { opacity: 1; }
   z-index: 10; box-shadow: 4px 4px 0 0 var(--peach); outline-offset: 4px;
 }
 .fan-card:hover .fan-more, .fan-card:focus-visible .fan-more { max-height: 120px; opacity: 1; }
-.fan-card:hover .fan-art, .fan-card:focus-visible .fan-art { height: 170px; }
+.fan-card:hover .fan-art, .fan-card:focus-visible .fan-art { height: 150px; }
 .fan:has(.fan-card:hover, .fan-card:focus-visible) .fan-card:not(:hover):not(:focus-visible) {
   transform: translateX(calc(var(--x) + var(--apart))) rotate(var(--r));
 }
@@ -445,7 +446,7 @@ button[aria-pressed="true"] .theme-icon { opacity: 1; }
   border-radius: 999px;
   background: var(--sun-disc);
 }
-.rfm-splash > * { position: relative; width: min(78vw, 460px); border: 2px solid #34402a !important; box-shadow: 6px 6px 0 var(--peach); }
+.rfm-splash > * { position: relative; width: min(78vw, 460px); border: 0 !important; box-shadow: none !important; }
 .form-illustration, .final-illustration, .language-icon-card { animation: rfm-illustration-arrive 320ms ease-out both; }
 .rfm-button { transition: transform 120ms ease-out, opacity 120ms ease-out; }
 .rfm-button:active:not(:disabled) { transform: scale(.98); }
