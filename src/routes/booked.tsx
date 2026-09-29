@@ -19,6 +19,8 @@ export const Route = createFileRoute("/booked")({
       { name: "description", content: "Your hello call is booked." },
       { property: "og:title", content: "You’re in — Room for Mama" },
       { property: "og:description", content: "Your hello call is booked." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
     ],
   }),
   component: Booked,
@@ -58,7 +60,8 @@ function Booked() {
         now: DEMO_NOW,
         motherZone: zone,
         durationMin: 20,
-        busy: DEMO_BUSY,
+        // The call she is leaving stays taken, so it is never offered back.
+        busy: [...DEMO_BUSY, { start: current, end: new Date(current.getTime() + 20 * 60 * 1000) }],
       }),
     [current, zone],
   );
@@ -95,7 +98,7 @@ function Booked() {
 
       {needsCoach && (
         <p className="rounded-2xl bg-butter-soft p-4">
-          This one needs a human — I’ve made a note and I’ll be in touch, {name}.
+          I’ll be in touch about this move, {name}.
         </p>
       )}
 
@@ -103,7 +106,7 @@ function Booked() {
         <a href={icsUrl(current, name)} download="hello-call.ics" className="block">
           <ButtonOutline>Add to my calendar</ButtonOutline>
         </a>
-        <ButtonMain onClick={() => setSheetOpen(true)}>
+        <ButtonMain onClick={() => { setPicked(options[0] ?? null); setSheetOpen(true); }}>
           <Icon name="icon-babys-up" size={22} /> Baby’s up
         </ButtonMain>
         <SafetyNote zone={zone} />
@@ -111,7 +114,7 @@ function Booked() {
 
       {sheetOpen && (
         <div
-          className="fixed inset-0 z-40 bg-black/30"
+          className="fixed inset-0 z-40 bg-ink/30"
           onClick={() => setSheetOpen(false)}
           role="presentation"
         >
@@ -125,9 +128,10 @@ function Booked() {
               <Drawing name="illo-baby-up" className="w-20 shrink-0" />
               <div>
                 <h2 className="t-heading">No problem.</h2>
-                <p className="text-ink-muted">Babies don’t read calendars. Moving is always free.</p>
+                <p className="text-ink-muted">Babies don’t read calendars.</p>
               </div>
             </div>
+            <h3 className="t-heading mb-3">Pick a new time</h3>
             <div className="flex flex-col gap-3">
               {options.map((o) => (
                 <Slot
@@ -142,6 +146,7 @@ function Booked() {
               <ButtonMain disabled={!picked} onClick={move}>
                 Move my call
               </ButtonMain>
+              <p className="t-caption mt-3 text-center text-ink-muted">Moving is always free.</p>
             </div>
           </div>
         </div>
