@@ -352,4 +352,7 @@
   .count-up {
     animation: none;
   }
+  .count-up {
+    --rfm-count: var(--rfm-count-to);
+  }
 }
