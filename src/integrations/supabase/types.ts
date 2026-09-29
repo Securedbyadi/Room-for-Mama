@@ -77,6 +77,7 @@ export type Database = {
           created_at: string
           ends_at: string
           id: string
+          is_demo: boolean
           keep_spot_confirmed_at: string | null
           keep_spot_sent_at: string | null
           kind: string
@@ -101,6 +102,7 @@ export type Database = {
           created_at?: string
           ends_at: string
           id?: string
+          is_demo?: boolean
           keep_spot_confirmed_at?: string | null
           keep_spot_sent_at?: string | null
           kind: string
@@ -125,6 +127,7 @@ export type Database = {
           created_at?: string
           ends_at?: string
           id?: string
+          is_demo?: boolean
           keep_spot_confirmed_at?: string | null
           keep_spot_sent_at?: string | null
           kind?: string
@@ -292,6 +295,7 @@ export type Database = {
           email: string
           first_name: string
           id: string
+          is_demo: boolean
           moment_days: number[]
           moment_not_after: string | null
           moment_not_before: string | null
@@ -307,6 +311,7 @@ export type Database = {
           email: string
           first_name: string
           id?: string
+          is_demo?: boolean
           moment_days?: number[]
           moment_not_after?: string | null
           moment_not_before?: string | null
@@ -322,6 +327,7 @@ export type Database = {
           email?: string
           first_name?: string
           id?: string
+          is_demo?: boolean
           moment_days?: number[]
           moment_not_after?: string | null
           moment_not_before?: string | null
@@ -429,6 +435,7 @@ export type Database = {
           founding: boolean
           hold_expires_at: string
           id: string
+          is_demo: boolean
           mother_id: string | null
           paid_at: string | null
           paid_reference: string | null
@@ -444,6 +451,7 @@ export type Database = {
           founding?: boolean
           hold_expires_at: string
           id?: string
+          is_demo?: boolean
           mother_id?: string | null
           paid_at?: string | null
           paid_reference?: string | null
@@ -459,6 +467,7 @@ export type Database = {
           founding?: boolean
           hold_expires_at?: string
           id?: string
+          is_demo?: boolean
           mother_id?: string | null
           paid_at?: string | null
           paid_reference?: string | null
@@ -588,6 +597,7 @@ export type Database = {
           email: string
           first_name: string
           id: string
+          is_demo: boolean
           not_after: string | null
           not_before: string | null
           status: string
@@ -600,6 +610,7 @@ export type Database = {
           email: string
           first_name: string
           id?: string
+          is_demo?: boolean
           not_after?: string | null
           not_before?: string | null
           status?: string
@@ -612,6 +623,7 @@ export type Database = {
           email?: string
           first_name?: string
           id?: string
+          is_demo?: boolean
           not_after?: string | null
           not_before?: string | null
           status?: string
@@ -632,6 +644,7 @@ export type Database = {
         Returns: boolean
       }
       next_payment_ref: { Args: never; Returns: string }
+      purge_demo_bookings: { Args: never; Returns: undefined }
     }
     Enums: {
       app_role: "coach"
