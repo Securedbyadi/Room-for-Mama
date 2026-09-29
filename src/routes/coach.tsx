@@ -270,7 +270,6 @@ function Coach() {
       <div>
         <h1 className="t-title">{TABS.find((t) => t.id === tab)?.label}</h1>
         {tab === "today" && (
-          <p className="mt-1 text-ink-muted">Your calls, your time — hers alongside.</p>
         )}
       </div>
 

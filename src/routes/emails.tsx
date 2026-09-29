@@ -85,9 +85,6 @@ function Emails() {
     <Page>
       <div>
         <h1 className="t-title">Emails</h1>
-        <p className="mt-2 text-ink-muted">
-          A preview of each email while sending is being set up. One template, one action each.
-        </p>
       </div>
 
       <div className="flex flex-wrap gap-2">
