@@ -146,3 +146,67 @@ describe("moving a call", () => {
     expect(moveCall({ call, movesSoFar: 0, now, newSlot }).kind).toBe("too-late");
   });
 });
+
+describe("notice and reach", () => {
+  const all = (noticeH: number, extra = {}) =>
+    findSlots({ from: NOW, motherZone: KHI, durationMin: 20, noticeH, count: 100, onePerDay: false, ...extra });
+
+  it("new calls need 6 h notice", () => {
+    const slots = all(6);
+    for (const s of slots) expect(s.start.getTime() - NOW.getTime()).toBeGreaterThanOrEqual(6 * 3600e3);
+    // 13:30 Lahore now: the 14:00–17:00 window today is too soon, 21:00 is the first.
+    const p = localParts(KHI, slots[0]!.start);
+    expect([p.d, p.h, p.mi]).toEqual([12, 21, 0]);
+  });
+
+  it("offers nothing more than 6 weeks ahead", () => {
+    const slots = all(6);
+    const last = slots[slots.length - 1]!;
+    expect(last.start.getTime() - NOW.getTime()).toBeLessThanOrEqual(42 * 86400e3);
+    expect(last.start.getTime() - NOW.getTime()).toBeGreaterThan(40 * 86400e3);
+  });
+
+  it("offers one time per day", () => {
+    const slots = findSlots({ from: NOW, motherZone: KHI, durationMin: 20, noticeH: 6 });
+    const days = slots.map((s) => localParts(KHI, s.start).d);
+    expect(new Set(days).size).toBe(slots.length);
+    expect(slots).toHaveLength(3);
+  });
+
+  it("Baby's up times are at least 1 h away", () => {
+    const call = { start: zonedToUtc(KHI, 2026, 10, 12, 14, 0), end: zonedToUtc(KHI, 2026, 10, 12, 14, 20) };
+    const now = zonedToUtc(KHI, 2026, 10, 12, 13, 50);
+    const opts = babysUpOptions({ call, now, motherZone: KHI, durationMin: 20, busy: [call] });
+    expect(opts.length).toBeGreaterThan(0);
+    for (const o of opts) expect(o.start.getTime() - now.getTime()).toBeGreaterThanOrEqual(3600e3);
+    expect(opts.some((o) => o.start.getTime() === call.start.getTime())).toBe(false);
+  });
+});
+
+describe("buffers and the daily cap", () => {
+  const monAfternoon = (from: Date, busy: { start: Date; end: Date }[]) =>
+    findSlots({ from, motherZone: KHI, durationMin: 30, noticeH: 0, count: 10, onePerDay: false, busy })
+      .filter((s) => localParts(KHI, s.start).d === 19 && localParts(KHI, s.start).h < 17)
+      .map((s) => { const p = localParts(KHI, s.start); return `${p.h}:${String(p.mi).padStart(2, "0")}`; });
+  const from = zonedToUtc(KHI, 2026, 10, 19, 13, 0);
+
+  it("keeps 10 min clear before and after another call", () => {
+    // Busy 15:00–15:30: 14:30 ends at 15:00 (no buffer), 15:30 starts with no gap.
+    const busy = [{ start: zonedToUtc(KHI, 2026, 10, 19, 15, 0), end: zonedToUtc(KHI, 2026, 10, 19, 15, 30) }];
+    const times = monAfternoon(from, busy);
+    expect(times).not.toContain("14:30");
+    expect(times).not.toContain("15:00");
+    expect(times).not.toContain("15:30");
+    expect(times).toContain("14:00");
+    expect(times).toContain("16:00");
+  });
+
+  it("a day with 3 calls offers nothing more", () => {
+    const busy = [14, 15, 16].map((h) => ({
+      start: zonedToUtc(KHI, 2026, 10, 19, h, 0),
+      end: zonedToUtc(KHI, 2026, 10, 19, h, 20),
+    }));
+    const slots = findSlots({ from, motherZone: KHI, durationMin: 20, noticeH: 0, count: 20, onePerDay: false, busy });
+    expect(slots.some((s) => localParts(KHI, s.start).d === 19)).toBe(false);
+  });
+});
