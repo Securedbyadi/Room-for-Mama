@@ -425,7 +425,7 @@ button[aria-pressed="true"] .theme-icon { opacity: 1; }
 .rfm-splash::before {
   content: "";
   position: absolute;
-  width: min(82vw, 500px);
+  width: min(64vw, 340px);
   aspect-ratio: 1;
   border-radius: 999px;
   background: #FAE8B4;
