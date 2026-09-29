@@ -240,7 +240,7 @@ function GivenBackTab() {
           ] as const
         ).map(([label, mins]) => (
           <Card key={label} className="flex flex-col items-center gap-1 text-center">
-            <p className="t-time">{mins} min</p>
+            <p className={`t-time count-up count-${mins}`} aria-label={`${mins} minutes`}> min</p>
             <p className="t-caption text-ink-muted">{label}, estimated</p>
           </Card>
         ))}

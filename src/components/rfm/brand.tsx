@@ -64,7 +64,7 @@ export function Icon({
   if (!raw) return null;
   return (
     <span
-      className={`inline-flex shrink-0 items-center justify-center ${className}`}
+      className={`rfm-icon rfm-${name} inline-flex shrink-0 items-center justify-center ${className}`}
       style={{ width: size, height: size, color: "var(--ink)" }}
       aria-hidden
       dangerouslySetInnerHTML={{
@@ -96,7 +96,7 @@ export function Drawing({
   if (!raw) return null;
   return (
     <div
-      className={`rfm-drawing overflow-hidden ${className}`}
+      className={`rfm-drawing rfm-${name} overflow-hidden ${className}`}
       style={{ background: "#FBF6EE", borderRadius: 22, border: "1px solid var(--line)" }}
     >
       <div
@@ -207,7 +207,7 @@ export function Slot({
       type="button"
       onClick={onClick}
       className={`flex min-h-16 w-full items-center justify-between gap-3 rounded-2xl px-5 text-left ${
-        selected ? "offset-peach" : "border border-line bg-paper"
+        selected ? "offset-peach slot-selected" : "border border-line bg-paper"
       }`}
     >
       <span className="t-time text-[17px]">{label}</span>

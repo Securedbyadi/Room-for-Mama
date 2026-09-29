@@ -88,7 +88,7 @@ function Booked() {
   return (
     <Page>
       <Card offset="peach" className="flex flex-col gap-3">
-        <Drawing name="illo-tea-warm" />
+        <Drawing name="illo-tea-warm" className="youre-in-rise" />
         <h1 className="t-title">You’re in.</h1>
         <p className="t-time text-[17px]">{fmtLong(current, zone)}, your time.</p>
         <p>
@@ -125,7 +125,7 @@ function Booked() {
             aria-label="Baby’s up"
           >
             <div className="mb-4 flex items-start gap-3">
-              <Drawing name="illo-baby-up" className="w-20 shrink-0" />
+               <Drawing name="illo-baby-up" className="baby-awake-once w-20 shrink-0" />
               <div>
                 <h2 className="t-heading">No problem.</h2>
                 <p className="text-ink-muted">Babies don’t read calendars.</p>

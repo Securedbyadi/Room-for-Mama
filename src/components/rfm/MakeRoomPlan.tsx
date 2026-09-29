@@ -9,7 +9,7 @@ export function MakeRoomPlan({ plan, zone }: { plan: WeeklyCall[]; zone: string 
           <Icon
             name={i === 0 ? "icon-mug-next" : "icon-mug-waiting"}
             size={28}
-            className="mt-3"
+            className={`mt-3 ${i === 0 ? "mug-next-motion" : ""}`}
           />
           <div className="flex-1">
             <div className="rounded-2xl border border-line bg-paper p-4">

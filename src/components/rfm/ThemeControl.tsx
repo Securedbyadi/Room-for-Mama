@@ -45,8 +45,8 @@ export function ThemeControl({ compact = false }: { compact?: boolean | undefine
               mode === value ? "bg-paper text-ink" : "text-ink-muted"
             }`}
           >
-            {value === "day" && <Icon name="icon-day" size={22} />}
-            {value === "night" && <Icon name="icon-night" size={22} />}
+            {value === "day" && <Icon name="icon-day" size={22} className="theme-icon" />}
+            {value === "night" && <Icon name="icon-night" size={22} className="theme-icon" />}
             <span>{value === "day" ? "Day" : value === "night" ? "Night" : "Auto"}</span>
           </button>
         ))}
