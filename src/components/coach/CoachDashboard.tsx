@@ -322,7 +322,7 @@ function NeedCard({ c, n }: { c: Ctx; n: Need }) {
     : n.kind === "missed" ? [["Mark missed", `Marked missed. Her first missed Make Room call is put back.`], ["Offer a new time", `Sent ${m.name} three new times.`]]
     : [["Offer new times", `Sent ${m.name} three new times away from your day off.`]];
   return (
-    <div className="offset-butter rounded-[22px] bg-paper p-5">
+    <div className="offset-butter rounded-[22px] !bg-[#FBF6EE] p-5 text-[#34402A] [&_.text-ink-muted]:!text-[#5B6450] [&_.rfm-button]:!border-[#34402A] [&_.rfm-button]:!text-[#34402A] [&_.bg-primary]:!bg-[#34402A] [&_.bg-primary]:!text-[#F6EEE3]">
       <p className="t-heading">{n.title}</p>
       <p className="mt-1 text-ink-muted">{n.reason}</p>
       <div className="mt-4 grid gap-3 sm:grid-cols-2">
@@ -433,7 +433,7 @@ function WeekGrid({ c, days, next }: { c: Ctx; days: number[]; next: Call | unde
                 const p = localParts(KHI, x.start); const m = c.mom(x.momId); const isNext = x.id === next?.id;
                 const top = ((p.h - H0) + p.mi / 60) * ROW;
                 const h = Math.max(((+x.end - +x.start) / MIN / 60) * ROW, 44);
-                const tone = isNext ? "offset-butter bg-butter" : x.held ? "border-2 border-dashed border-line-strong bg-butter-soft" : x.kind === "hello" ? "bg-sage-soft" : "bg-butter-soft";
+                const tone = isNext ? "offset-butter bg-butter" : x.held ? "border-2 border-dashed border-[#8E8A74] bg-[#FAE8B4]" : x.kind === "hello" ? "bg-[#DDE5D2]" : "bg-[#FAE8B4]";
                 return (
                   <button key={x.id} type="button" onClick={() => c.setOpenCall(x.id)} style={{ top, height: h }}
                     className={`coach-slot absolute inset-x-1 z-[5] overflow-hidden rounded-xl px-2 py-1 text-left text-[12px] leading-[15px] text-[#34402A] ${tone} ${x.state === "done" ? "opacity-70" : ""}`}>
