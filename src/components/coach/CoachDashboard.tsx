@@ -14,7 +14,10 @@ import { fmtTime, localParts, zonedToUtc } from "../../lib/time-engine";
 
 const KHI = "Asia/Karachi";
 const at = (d: number, h: number, m: number) => zonedToUtc(KHI, 2026, 10, d, h, m);
-const NOW = at(14, 14, 35);
+const NOW = at(14, 14, 5);
+/* Her time, only when it differs from Lahore time, so no time shows twice. */
+const sameTime = (d: Date, zone: string) => fmtTime(d, zone) === fmtTime(d, KHI);
+const herTime = (d: Date, m: { zone: string; city: string }, sep = " · ") => (sameTime(d, m.zone) ? "" : `${sep}${fmtTime(d, m.zone)}, ${m.city}`);
 const MIN = 60_000;
 
 type Kind = "hello" | "make-room";
@@ -33,12 +36,12 @@ interface Pay { ref: string; momId: string; amount: string; method: string; stat
 const MOMS: Mom[] = [
   { id: "hina", name: "Hina", email: "hina@example.com", city: "Lahore", zone: KHI, status: "Make Room", gave: "Weekday afternoons, around 3 pm · Lahore", notes: [], moves: { mother: 0, coach: 0 } },
   { id: "ayesha", name: "Ayesha", email: "ayesha@example.com", phone: "+971 50 000 0000", city: "Dubai", zone: "Asia/Dubai", status: "Hello call booked", gave: "Wednesdays, early afternoon · Dubai", notes: [], moves: { mother: 1, coach: 0 } },
-  { id: "sara", name: "Sara", email: "sara@example.com", city: "Manchester", zone: "Europe/London", status: "Payment waiting", gave: "Weekdays, late morning · Manchester", notes: [], moves: { mother: 0, coach: 0 } },
-  { id: "emily", name: "Emily", email: "emily@example.com", city: "Toronto", zone: "America/Toronto", status: "Make Room", gave: "Weekday mornings, around noon · Toronto", notes: [], moves: { mother: 1, coach: 0 } },
+  { id: "sara", name: "Sara", email: "sara@example.com", city: "Manchester", zone: "Europe/London", status: "Hello call booked", gave: "Weekdays, late morning · Manchester", notes: [], moves: { mother: 0, coach: 0 } },
+  { id: "emily", name: "Emily", email: "emily@example.com", city: "Toronto", zone: "America/Toronto", status: "Payment waiting", gave: "Weekday mornings, around noon · Toronto", notes: [], moves: { mother: 0, coach: 0 } },
   { id: "fatima", name: "Fatima", email: "fatima@example.com", city: "Riyadh", zone: "Asia/Riyadh", status: "Hello call booked", gave: "Thursdays, after lunch · Riyadh", notes: [], moves: { mother: 2, coach: 0 } },
   { id: "zara", name: "Zara", email: "zara@example.com", city: "Karachi", zone: KHI, status: "Make Room", gave: "Evenings after 9 pm · Karachi", notes: [], moves: { mother: 0, coach: 0 } },
   { id: "noor", name: "Noor", email: "noor@example.com", city: "Karachi", zone: KHI, status: "Finished", gave: "Monday afternoons · Karachi", notes: [], moves: { mother: 0, coach: 0 } },
-  { id: "maryam", name: "Maryam", email: "maryam@example.com", city: "London", zone: "Europe/London", status: "Waitlist", gave: "Sunday mornings · London", notes: [], moves: { mother: 0, coach: 0 } },
+  { id: "maryam", name: "Maryam", email: "maryam@example.com", city: "London", zone: "Europe/London", status: "Make Room", gave: "Weekday evenings, after bath time · London", notes: [], moves: { mother: 1, coach: 0 } },
   { id: "aiman", name: "Aiman", email: "aiman@example.com", city: "Toronto", zone: "America/Toronto", status: "Paused", gave: "Weekday lunchtimes · Toronto", notes: [], moves: { mother: 0, coach: 0 } },
 ];
 
@@ -48,25 +51,26 @@ const mk = (id: string, momId: string, kind: Kind, d: number, h: number, m: numb
 };
 const CALLS: Call[] = [
   mk("c10", "noor", "hello", 12, 14, 0, { state: "done", moved: true }),
+  mk("c1", "ayesha", "hello", 13, 16, 0, { state: "done" }),
   mk("c5", "zara", "make-room", 13, 21, 0, { n: 1, state: "missed" }),
-  mk("c1", "ayesha", "hello", 14, 14, 0, { state: "done" }),
-  mk("c2", "hina", "make-room", 14, 15, 0, { n: 2 }),
-  mk("c3", "emily", "make-room", 14, 21, 30, { n: 3, moved: true }),
+  // Wednesday 14 October, as in the brief: Hina 14:30, Sara 15:30, Maryam 21:00 (moved).
+  mk("c2", "hina", "make-room", 14, 14, 30, { n: 2 }),
+  mk("c7", "sara", "hello", 14, 15, 30),
+  mk("c3", "maryam", "make-room", 14, 21, 0, { n: 2, moved: true }),
   mk("c4", "fatima", "hello", 15, 16, 0, { moved: true }),
-  mk("c6", "sara", "make-room", 16, 14, 30, { n: 1, held: true }),
-  mk("c9", "hina", "make-room", 21, 15, 0, { n: 3 }),
-  mk("c8", "emily", "make-room", 21, 21, 30, { n: 4 }),
-  mk("c11", "sara", "make-room", 23, 14, 30, { n: 2, held: true }),
+  mk("c6", "emily", "make-room", 16, 21, 30, { n: 1, held: true }),
+  mk("c9", "hina", "make-room", 21, 14, 30, { n: 3 }),
+  mk("c11", "emily", "make-room", 23, 21, 30, { n: 2, held: true }),
 ];
 const NEEDS: Need[] = [
-  { id: "n1", kind: "payment", momId: "sara", title: "A payment to check", reason: "Sara tapped I’ve paid. RM-1042, US$80, Wise. Held until Friday 16 October, 2:30 pm." },
+  { id: "n1", kind: "payment", momId: "emily", title: "A payment to check", reason: "Emily tapped I’ve paid. RM1047, US$80, Wise. Held until Friday 16 October, 2:30 pm." },
   { id: "n2", kind: "third-move", momId: "fatima", callId: "c4", title: "A third move", reason: "Fatima has moved this call twice. A third move needs you." },
   { id: "n3", kind: "missed", momId: "zara", callId: "c5", title: "A missed call", reason: "Zara didn’t join on Tuesday at 9:00 pm. It’s her first missed Make Room call, so it will be put back." },
 ];
 const PAYS: Pay[] = [
-  { ref: "RM-1042", momId: "sara", amount: "US$80", method: "Wise", status: "Waiting", heldUntil: "Fri 16 Oct, 2:30 pm" },
-  { ref: "RM-1031", momId: "hina", amount: "PKR 8,000", method: "Raast", status: "Confirmed", heldUntil: "" },
-  { ref: "RM-1027", momId: "emily", amount: "US$80", method: "Wise", status: "Confirmed", heldUntil: "" },
+  { ref: "RM1047", momId: "emily", amount: "US$80", method: "Wise", status: "Waiting", heldUntil: "Fri 16 Oct, 2:30 pm" },
+  { ref: "RM1031", momId: "hina", amount: "PKR 8,000", method: "Raast", status: "Confirmed", heldUntil: "" },
+  { ref: "RM1039", momId: "maryam", amount: "US$80", method: "Wise", status: "Confirmed", heldUntil: "" },
 ];
 
 type Tab = "today" | "calendar" | "mothers" | "rules" | "given-back";
@@ -233,7 +237,7 @@ function TodayView({ c }: { c: Ctx }) {
   const today = c.calls.filter((x) => lahoreDay(x.start) === lahoreDay(NOW)).sort((a, b) => +a.start - +b.start);
   const next = today.find((x) => x.state === "booked" && x.start > NOW);
   const [bup, setBup] = useState(false);
-  const afterHello = today.find((x) => x.kind === "hello" && x.state === "done");
+  const afterHello = [...c.calls].filter((x) => x.kind === "hello" && x.state === "done" && x.start < NOW).sort((a, b) => +b.start - +a.start)[0];
   const [decided, setDecided] = useState<"offer" | "no" | null>(null);
   const [step, setStep] = useState("");
   const [stepSaved, setStepSaved] = useState(false);
@@ -251,7 +255,7 @@ function TodayView({ c }: { c: Ctx }) {
           <p className="t-caption uppercase tracking-[0.12em]">Next call · in {inMin} min</p>
           <p className="t-title mt-2">{m.name}</p>
           <p className="font-semibold">{callLabel(next)}</p>
-          <p className="t-time mt-2">{fmtTime(next.start, KHI)} Lahore · {fmtTime(next.start, m.zone)}, {m.city}</p>
+          <p className="t-time mt-2">{fmtTime(next.start, KHI)} Lahore{herTime(next.start, m)}</p>
           <div className="mt-5 grid gap-3 sm:grid-cols-2">
             <a href={PLACEHOLDERS.meetLink} target="_blank" rel="noreferrer" className="rfm-button inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[#34402A] px-6 font-semibold text-[#F6EEE3]">
               <Icon name="icon-video-call" size={22} /> Join
@@ -296,7 +300,7 @@ function TodayView({ c }: { c: Ctx }) {
             <button key={x.id} type="button" onClick={() => c.setOpenCall(x.id)} className="flex min-h-16 w-full items-center gap-4 border-b border-line px-5 py-3 text-left last:border-b-0">
               <Icon name={x.state === "done" ? "icon-done" : isNext ? "icon-mug-next" : "icon-mug-waiting"} size={28} />
               <span className="t-time w-20 shrink-0">{fmtTime(x.start, KHI)}</span>
-              <span className="min-w-0 flex-1"><span className="block font-semibold">{m.name} · {callLabel(x)}</span><span className="t-caption text-ink-muted">{fmtTime(x.start, m.zone)}, {m.city}</span></span>
+              <span className="min-w-0 flex-1"><span className="block font-semibold">{m.name} · {callLabel(x)}</span><span className="t-caption text-ink-muted">{sameTime(x.start, m.zone) ? m.city : `${fmtTime(x.start, m.zone)}, ${m.city}`}</span></span>
               <span className="t-caption text-ink-muted">{x.state === "done" ? "Done" : isNext ? "Next" : "Later"}</span>
             </button>
           ); })}
@@ -438,7 +442,7 @@ function WeekGrid({ c, days, next }: { c: Ctx; days: number[]; next: Call | unde
                   <button key={x.id} type="button" onClick={() => c.setOpenCall(x.id)} style={{ top, height: h }}
                     className={`coach-slot absolute inset-x-1 z-[5] overflow-hidden rounded-xl px-2 py-1 text-left text-[12px] leading-[15px] text-[#34402A] ${tone} ${x.state === "done" ? "opacity-70" : ""}`}>
                     <span className="flex items-center gap-1 font-bold">{m.name}{x.moved && <Icon name="icon-move" size={14} />}{x.held && <span className="font-semibold">· Held</span>}{x.state === "done" && <Icon name="icon-done" size={14} />}</span>
-                    <span className="block truncate">{callLabel(x)} · {fmtTime(x.start, m.zone)}, {m.city}</span>
+                    <span className="block truncate">{callLabel(x)}{herTime(x.start, m)}</span>
                   </button>
                 );
               })}
@@ -547,7 +551,7 @@ function CallSheet({ c, call, onClose }: { c: Ctx; call: Call; onClose: () => vo
   const plan = c.calls.filter((x) => x.momId === m.id && x.kind === "make-room").sort((a, b) => +a.start - +b.start);
   return (
     <Sheet onClose={onClose} title={`${m.name} · ${callLabel(call)}`}>
-      <p className="t-time">{dayLabel(call.start, { weekday: "long", day: "numeric", month: "long" })}, {fmtTime(call.start, KHI)} Lahore · {fmtTime(call.start, m.zone)}, {m.city}</p>
+      <p className="t-time">{dayLabel(call.start, { weekday: "long", day: "numeric", month: "long" })}, {fmtTime(call.start, KHI)} Lahore{herTime(call.start, m)}</p>
       <div className="grid gap-3">
         <a href={PLACEHOLDERS.meetLink} target="_blank" rel="noreferrer" className="rfm-button inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-primary px-6 font-semibold text-primary-foreground"><Icon name="icon-video-call" size={22} /> Join</a>
         {!bup ? <ButtonOutline onClick={() => setBup(true)}><Icon name="icon-babys-up" size={22} /> Baby’s up</ButtonOutline> : <Done>Sent {m.name} three new times.</Done>}
@@ -633,7 +637,7 @@ function MotherPage({ c, id }: { c: Ctx; id: string }) {
         </Panel>
         <Panel className="flex flex-col gap-2">
           <p className="t-caption text-ink-muted">Upcoming calls</p>
-          {up.length === 0 ? <p>None booked.</p> : up.map((x) => <button key={x.id} type="button" onClick={() => c.setOpenCall(x.id)} className="text-left"><span className="font-semibold">{callLabel(x)}</span> · {dayLabel(x.start)}, {fmtTime(x.start, KHI)} Lahore · {fmtTime(x.start, m.zone)} hers</button>)}
+          {up.length === 0 ? <p>None booked.</p> : up.map((x) => <button key={x.id} type="button" onClick={() => c.setOpenCall(x.id)} className="text-left"><span className="font-semibold">{callLabel(x)}</span> · {dayLabel(x.start)}, {fmtTime(x.start, KHI)} Lahore{sameTime(x.start, m.zone) ? "" : ` · ${fmtTime(x.start, m.zone)} hers`}</button>)}
           <p className="t-caption mt-2 text-ink-muted">Past calls</p>
           {past.length === 0 ? <p>None yet.</p> : past.map((x) => <p key={x.id}>{callLabel(x)} · {dayLabel(x.start)} · {x.state === "missed" ? "Missed" : "Done"}</p>)}
         </Panel>
@@ -765,7 +769,7 @@ function GivenBackView({ c }: { c: Ctx }) {
         ))}
       </Panel>
       {!c.ran ? (
-        <ButtonMain className="sm:!w-auto" onClick={() => { c.setRan(true); c.setLog((l) => [...l, ["14:35", "Sent Emily her Keep my spot link", 10], ["14:35", "Sent Hina her 30-minute reminder", 5]]); }}>Run today’s automations now</ButtonMain>
+        <ButtonMain className="sm:!w-auto" onClick={() => { c.setRan(true); c.setLog((l) => [...l, ["14:05", "Sent Sara her Keep my spot link", 10], ["14:05", "Sent Hina her 30-minute reminder", 5]]); }}>Run today’s automations now</ButtonMain>
       ) : <Done>Done. 1 reminder and 1 Keep my spot sent. 15 minutes given back, estimated.</Done>}
     </>
   );
