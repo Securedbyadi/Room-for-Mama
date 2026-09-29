@@ -176,6 +176,7 @@ export const bookHello = createServerFn({ method: "POST" })
       .select("id")
       .single();
     if (mErr || !mother) throw new Error("Could not save");
+    await db.from("mother_links").insert({ mother_id: mother.id, token: tok });
 
     const { error: cErr } = await db.from("calls").insert({
       mother_id: mother.id,
@@ -375,7 +376,7 @@ export const keepMySpot = createServerFn({ method: "POST" })
       .update({ keep_spot_confirmed_at: new Date().toISOString() })
       .eq("id", data.callId)
       .eq("mother_id", mother.id);
-    await r.logAutomation(db, s, "keep_spot", mother.id);
+    void s;
     return { ok: true };
   });
 
