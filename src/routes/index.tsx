@@ -77,7 +77,7 @@ function Home() {
         </section>
 
         <section className="home-night-band">
-          <div className="section-reveal mx-auto grid max-w-[1200px] items-center gap-10 px-5 py-16 md:grid-cols-2 md:gap-8 xl:gap-16 xl:py-24">
+          <div className="section-reveal mx-auto grid max-w-[1200px] items-center gap-10 px-5 py-16 min-[720px]:grid-cols-2 min-[720px]:gap-8 xl:gap-16 xl:py-24">
             <div className="min-w-0"><p className="eyebrow">Book at 3 a.m.</p><h2 className="three-am-title mt-3"><span className="inline-block whitespace-nowrap">Awake at 3 a.m.?</span><br /><span className="inline-block whitespace-nowrap">Book then.</span></h2><p className="hero-lead mt-5 max-w-[520px] text-ink-muted">You’ll have a time in a minute.</p><div className="mt-8 max-w-[300px]"><ButtonMain to="/fit-check">Book a free hello call</ButtonMain></div></div>
             <BabysUpPreview />
           </div>
