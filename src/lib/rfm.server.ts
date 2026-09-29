@@ -81,8 +81,16 @@ export async function queueEmail(
     subject: string;
     lines: string[];
     action?: { label: string; url: string } | undefined;
+    /** Calls to attach as a calendar invite. */
+    ics?: { id: string; start: Date; end: Date; kind: string }[] | undefined;
   },
 ) {
+  let ics: string | null = null;
+  if (opts.ics?.length) {
+    const { buildIcs } = await import("./ics");
+    const { data: st } = await db.from("settings").select("meet_link").eq("id", 1).maybeSingle();
+    ics = buildIcs(opts.ics.map((c) => ({ uid: c.id, start: c.start, end: c.end, title: callTitle(c.kind), ...(st?.meet_link ? { url: st.meet_link } : {}) })));
+  }
   await db.from("email_outbox").insert({
     mother_id: opts.motherId,
     to_email: opts.to,
@@ -91,7 +99,15 @@ export async function queueEmail(
     body: [...opts.lines, "", SAFETY_NOTE].join("\n"),
     action_label: opts.action?.label ?? null,
     action_url: opts.action?.url ?? null,
+    ics,
   });
+}
+
+/** RM1047-style payment reference from the database sequence. */
+export async function nextReference(db: Admin): Promise<string> {
+  const { data, error } = await db.rpc("next_payment_ref");
+  if (error || !data) throw new Error("Could not make a reference");
+  return data as string;
 }
 
 export function callTitle(kind: string): string {

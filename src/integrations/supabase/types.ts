@@ -71,6 +71,8 @@ export type Database = {
         Row: {
           blocked_until: string
           clock_note: string | null
+          coach_move_pending: boolean
+          coach_moves_used: number
           created_at: string
           ends_at: string
           id: string
@@ -81,6 +83,7 @@ export type Database = {
           moves_used: number
           plan_id: string | null
           reminder_sent_at: string | null
+          replaces_call_id: string | null
           small_step: string | null
           starts_at: string
           status: string
@@ -91,6 +94,8 @@ export type Database = {
         Insert: {
           blocked_until: string
           clock_note?: string | null
+          coach_move_pending?: boolean
+          coach_moves_used?: number
           created_at?: string
           ends_at: string
           id?: string
@@ -101,6 +106,7 @@ export type Database = {
           moves_used?: number
           plan_id?: string | null
           reminder_sent_at?: string | null
+          replaces_call_id?: string | null
           small_step?: string | null
           starts_at: string
           status?: string
@@ -111,6 +117,8 @@ export type Database = {
         Update: {
           blocked_until?: string
           clock_note?: string | null
+          coach_move_pending?: boolean
+          coach_moves_used?: number
           created_at?: string
           ends_at?: string
           id?: string
@@ -121,6 +129,7 @@ export type Database = {
           moves_used?: number
           plan_id?: string | null
           reminder_sent_at?: string | null
+          replaces_call_id?: string | null
           small_step?: string | null
           starts_at?: string
           status?: string
@@ -141,6 +150,13 @@ export type Database = {
             columns: ["plan_id"]
             isOneToOne: false
             referencedRelation: "plans"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "calls_replaces_call_id_fkey"
+            columns: ["replaces_call_id"]
+            isOneToOne: false
+            referencedRelation: "calls"
             referencedColumns: ["id"]
           },
         ]
@@ -166,6 +182,7 @@ export type Database = {
           action_url: string | null
           body: string
           created_at: string
+          ics: string | null
           id: string
           kind: string
           mother_id: string | null
@@ -177,6 +194,7 @@ export type Database = {
           action_url?: string | null
           body: string
           created_at?: string
+          ics?: string | null
           id?: string
           kind: string
           mother_id?: string | null
@@ -188,6 +206,7 @@ export type Database = {
           action_url?: string | null
           body?: string
           created_at?: string
+          ics?: string | null
           id?: string
           kind?: string
           mother_id?: string | null
@@ -407,7 +426,7 @@ export type Database = {
           founding: boolean
           hold_expires_at: string
           id: string
-          mother_id: string
+          mother_id: string | null
           paid_at: string | null
           paid_reference: string | null
           reference: string
@@ -422,7 +441,7 @@ export type Database = {
           founding?: boolean
           hold_expires_at: string
           id?: string
-          mother_id: string
+          mother_id?: string | null
           paid_at?: string | null
           paid_reference?: string | null
           reference: string
@@ -437,7 +456,7 @@ export type Database = {
           founding?: boolean
           hold_expires_at?: string
           id?: string
-          mother_id?: string
+          mother_id?: string | null
           paid_at?: string | null
           paid_reference?: string | null
           reference?: string
@@ -609,6 +628,7 @@ export type Database = {
         }
         Returns: boolean
       }
+      next_payment_ref: { Args: never; Returns: string }
     }
     Enums: {
       app_role: "coach"
