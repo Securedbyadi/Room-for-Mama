@@ -87,6 +87,13 @@ export type DrawingName =
   | "illo-the-chair"
   | "illo-tea-cold";
 
+/** Animated drawings that actually exist in public/brand/animated (checked at build time). */
+const ANIMATED = new Set(
+  Object.keys(import.meta.glob("/public/brand/animated/*.svg", { query: "?url", import: "default" })).map((p) =>
+    p.replace(/^.*\//, "").replace(/\.svg$/, ""),
+  ),
+);
+
 /** Drawings always sit on a light #FBF6EE card, even at night. */
 export function Drawing({
   name,
@@ -103,19 +110,14 @@ export function Drawing({
       style={bare ? undefined : { background: "#FBF6EE", borderRadius: 22, border: "1px solid var(--line)" }}
     >
       <div className="flex items-center justify-center p-4">
-        <picture>
-          <source media="(prefers-reduced-motion: reduce)" srcSet={`/brand/drawings/${name}.svg`} />
-          <img
-            src={`/brand/animated/${name}.svg`}
-            alt=""
-            className="h-auto w-full"
-            onError={(event) => {
-              const fallback = `/brand/drawings/${name}.svg`;
-              if (event.currentTarget.src.endsWith(fallback)) return;
-              event.currentTarget.src = fallback;
-            }}
-          />
-        </picture>
+        {ANIMATED.has(name) ? (
+          <picture>
+            <source media="(prefers-reduced-motion: reduce)" srcSet={`/brand/drawings/${name}.svg`} />
+            <img src={`/brand/animated/${name}.svg`} alt="" className="h-auto w-full" />
+          </picture>
+        ) : (
+          <img src={`/brand/drawings/${name}.svg`} alt="" className="h-auto w-full" />
+        )}
       </div>
     </div>
   );
