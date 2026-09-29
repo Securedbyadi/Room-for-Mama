@@ -7,9 +7,9 @@ import { FIT_QUESTIONS, fitOutcome, type FitChoice } from "../lib/fit-check";
 export const Route = createFileRoute("/fit-check")({
   head: () => ({
     meta: [
-      { title: "A quick fit check — Room for Mama" },
+      { title: "A quick fit check | Room for Mama" },
       { name: "description", content: "Four quick questions before you choose a hello call." },
-      { property: "og:title", content: "A quick fit check — Room for Mama" },
+      { property: "og:title", content: "A quick fit check | Room for Mama" },
       { property: "og:description", content: "Four quick questions before you choose a hello call." },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },

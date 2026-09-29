@@ -5,13 +5,13 @@ import { WebsitePage } from "../components/rfm/WebsiteChrome";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Room for Mama — a little room for you" },
+      { title: "Room for Mama | a little room for you" },
       {
         name: "description",
         content:
           "Gentle routine coaching for mothers of babies and toddlers. Half an hour a week, with a mother who’s living it too.",
       },
-      { property: "og:title", content: "Room for Mama — a little room for you" },
+      { property: "og:title", content: "Room for Mama | a little room for you" },
       {
         property: "og:description",
         content:
@@ -42,9 +42,9 @@ function Home() {
           <div className="max-w-[620px]">
             <h1 className="t-display md:text-[64px] md:leading-[68px]">A little room <span className="t-italic">for you.</span></h1>
             <p className="mt-5 max-w-[580px] text-[19px] leading-8 text-ink-muted">Gentle routine coaching for mothers of babies and toddlers. Half an hour a week, with a mother who’s living it too.</p>
-            <div className="mt-7 flex max-w-[440px] flex-col gap-3 sm:flex-row sm:max-w-none">
-              <ButtonMain to="/fit-check" className="sm:w-auto">Book a free hello call</ButtonMain>
-              <Link to="/book" search={{ demo: "manchester" }} className="inline-flex min-h-12 items-center justify-center rounded-full border-2 border-line-strong px-6 text-[17px] font-semibold">Try it as a mama in Manchester</Link>
+            <div className="mt-7 flex flex-col gap-3 md:flex-row md:flex-nowrap">
+              <ButtonMain to="/fit-check" className="md:w-auto md:shrink-0 md:whitespace-nowrap">Book a free hello call</ButtonMain>
+              <Link to="/book" search={{ demo: "manchester" }} className="inline-flex min-h-12 items-center justify-center rounded-full border-2 border-line-strong px-6 text-[17px] font-semibold md:shrink-0 md:whitespace-nowrap">Try it as a mama in Manchester</Link>
             </div>
           </div>
           <Drawing name="illo-her-half-hour" className="home-steam w-full" />

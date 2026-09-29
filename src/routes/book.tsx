@@ -13,12 +13,12 @@ export const Route = createFileRoute("/book")({
     search["demo"] === "manchester" ? { demo: "manchester" } : {},
   head: () => ({
     meta: [
-      { title: "Book a free hello call — Room for Mama" },
+      { title: "Book a free hello call | Room for Mama" },
       {
         name: "description",
         content: "Tell me when you usually get a quiet moment, and pick a time that suits you.",
       },
-      { property: "og:title", content: "Book a free hello call — Room for Mama" },
+      { property: "og:title", content: "Book a free hello call | Room for Mama" },
       {
         property: "og:description",
         content: "Tell me when you usually get a quiet moment, and pick a time that suits you.",
