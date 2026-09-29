@@ -190,7 +190,7 @@ function RulesTab() {
     ["Top-up half hour", "PKR 3,500 / US$35"],
     ["Notice", "6 hours for new calls, 1 hour for moves · up to 6 weeks ahead"],
     ["Video link", PLACEHOLDERS.meetLink],
-    ["Payment details", `${PLACEHOLDERS.bank} · ${PLACEHOLDERS.raast} · ${PLACEHOLDERS.jazzcash} · ${PLACEHOLDERS.wise}`],
+    ["Payment details", `${PLACEHOLDERS.payment.bank} · ${PLACEHOLDERS.payment.raast} · ${PLACEHOLDERS.payment.jazzcash} · ${PLACEHOLDERS.payment.wise}`],
     ["Your email", PLACEHOLDERS.coachEmail],
   ];
   return (
@@ -276,7 +276,7 @@ function Coach() {
 
       <nav className="flex flex-wrap gap-2" aria-label="Coach sections">
         {TABS.map((t) => (
-          <Chip key={t.id} selected={tab === t.id} onClick={() => setTab(t.id)}>
+          <Chip key={t.id} active={tab === t.id} onClick={() => setTab(t.id)}>
             {t.label}
           </Chip>
         ))}
