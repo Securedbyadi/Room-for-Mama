@@ -93,7 +93,7 @@ export function WebsitePage({ children, home = false }: { children: ReactNode; h
     <div className="min-h-screen bg-page pb-24 lg:pb-0">
       {home ? <HomeHeader /> : <WebsiteHeader />}
       {children}
-      {!home && <WebsiteFooter />}
+      <WebsiteFooter />
       {home && <div className="fixed right-6 bottom-6 z-30 hidden lg:block"><ThemeRound className="relative" /></div>}
       <div className="fixed inset-x-0 bottom-0 z-20 border-t border-line bg-page/95 p-3 backdrop-blur lg:hidden"><div className="mx-auto max-w-[480px]"><ButtonMain to="/fit-check">Book a free hello call</ButtonMain></div></div>
     </div>
