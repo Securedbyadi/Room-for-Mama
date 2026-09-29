@@ -64,7 +64,7 @@ export const DEMO_BUSY: BusyInterval[] = DEMO_CALLS.map((c) => ({
 
 /** Sara's sample message for "Try it as a mama in Manchester". */
 export const DEMO_MESSAGE =
-  "Usually late morning, once the school run is done and the baby naps — weekdays around half eleven. I'm in Manchester.";
+  "Usually late morning, once the school run is done and the baby naps, weekdays around half eleven. I’m in Manchester.";
 
 /** Placeholders the coach replaces in Rules later. */
 export const PLACEHOLDERS = {
@@ -79,7 +79,7 @@ export const PLACEHOLDERS = {
 };
 
 export const NOT_A_FIT_NOTE =
-  "Thank you for the hello call. I don't think Make Room is the right fit for you just now, and I'd rather say so kindly than take your time or money. If you ever want another chat, I'm here.";
+  "Thank you for the hello call. I don’t think Make Room is the right fit for you just now, and I’d rather say so kindly than take your time or money. If you ever want another chat, I’m here.";
 
 /** A quiet moment no open time fits (Sunday nights), to show the waitlist. */
 export const DEMO_NO_MATCH = "Only Sunday nights around 2 am, when everyone’s asleep. I’m in Lahore.";

@@ -69,7 +69,7 @@ const EMAILS: EmailDef[] = [
     label: "Make Room offer",
     subject: "Half hour with Room for Mama",
     body: [
-      "It was lovely to meet you. I think Make Room would suit you — four half hours, one a week, at a time that’s already yours.",
+      "It was lovely to meet you. I think Make Room would suit you: four half hours, one a week, at a time that’s already yours.",
     ],
     action: "See your four times",
   },

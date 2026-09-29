@@ -278,7 +278,7 @@ export function planWeekly(opts: {
       start = zonedToUtc(rules.zone, cp.y, cp.mo, cp.d, coachFirst.h, coachFirst.mi);
       clockNote = `Clocks change: this call moves to ${fmtTime(start, opts.motherZone)}, your time.`;
     } else if (offsetChanged && wk > 0) {
-      clockNote = `Clocks change before this call — still ${fmtTime(start, opts.motherZone)}, your time.`;
+      clockNote = `Clocks change before this call. Still ${fmtTime(start, opts.motherZone)}, your time.`;
     }
     void busy;
     out.push({ start, end: new Date(start.getTime() + opts.durationMin * MIN), clockNote });
