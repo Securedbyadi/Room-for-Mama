@@ -8,3 +8,9 @@
 > Commits you push to the connected branch sync back to Lovable and show up in
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
+
+# Project rules
+
+- Time logic lives in pure functions in src/lib/time-engine.ts with Vitest tests; UI and server code call it, never re-implement it. Why: clock-change rules must be proven once.
+- Brand SVGs are inlined from public/brand via import.meta.glob raw imports, never redrawn. Why: brand files are final.
+- Colours are CSS variables in src/styles.css; night mode follows prefers-color-scheme. Why: one source for day and night.
