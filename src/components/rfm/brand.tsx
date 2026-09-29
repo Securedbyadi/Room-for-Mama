@@ -230,8 +230,8 @@ export function StepArrows({
 }) {
   return (
     <div className="flex items-center justify-between gap-3">
-      <BackButton onClick={onBack} label={backLabel} />
-      <ForwardButton onClick={onForward} disabled={forwardDisabled} label={forwardLabel} />
+      <BackButton onClick={onBack} label={backLabel ?? "Go back"} />
+      <ForwardButton onClick={onForward} disabled={forwardDisabled} label={forwardLabel ?? "Continue"} />
     </div>
   );
 }
