@@ -13,4 +13,4 @@
 - [ ] Coach dashboard per docs/coach-dashboard.md
 - [x] Home drawings sit on the bottom edge of their light cards
 - [x] Night mode issues on the home page
-- [ ] Lift the hero card stack higher
+- [x] Hero card drawings sit at the top of each card
