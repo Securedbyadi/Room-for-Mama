@@ -58,17 +58,17 @@ function CoachApp() {
 
   if (role.data && !role.data.coach) {
     return (
-      <Page>
+      <Page chrome={false}>
         <h1 className="t-title">This app is for the coach.</h1>
         <ButtonOutline onClick={signOut}>Sign out</ButtonOutline>
       </Page>
     );
   }
-  if (!q.data) return <Page><p className="text-ink-muted">One moment.</p></Page>;
+  if (!q.data) return <Page chrome={false}><p className="text-ink-muted">One moment.</p></Page>;
   const d = q.data;
 
   return (
-    <Page headerAction={<span className="t-caption uppercase tracking-[0.12em] text-ink-muted">Coach</span>} className="pb-28">
+    <Page chrome={false} headerAction={<span className="t-caption uppercase tracking-[0.12em] text-ink-muted">Coach</span>} className="pb-28">
       <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-4">
         <h1 className="t-title">{TABS.find((t) => t.id === tab)?.label}</h1>
         <button type="button" className="t-caption min-h-12 underline" onClick={signOut}>Sign out</button>

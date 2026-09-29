@@ -86,7 +86,7 @@ function Emails() {
   const email = EMAILS.find((e) => e.id === active) ?? EMAILS[0]!;
 
   return (
-    <Page>
+    <Page chrome={false}>
       <div>
         <h1 className="t-title">Emails</h1>
       </div>
