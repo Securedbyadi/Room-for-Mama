@@ -9,6 +9,7 @@
 ## Mother-facing website
 
 - Add a wide desktop header with the supplied logo, links to What I offer, Who it’s for, Prices, and FAQ, plus the main booking button.
+- Add a Day / Night / Auto display control to the desktop top bar using the supplied sun and moon icons.
 - Build the home page to 1120 px wide with:
   - the approved hero copy and tea drawing
   - What I offer: free 20-minute hello call and Make Room
@@ -23,8 +24,15 @@
 
 - Reflow the same home content into one column.
 - Replace desktop navigation with a compact menu shown as a bottom sheet.
+- Put the same Day / Night / Auto control inside the phone menu.
 - Keep a sticky “Book a free hello call” button at the bottom, with safe spacing so it does not cover content.
 - Leave the existing booking pages in their current narrow phone layout.
+
+## Display mode
+
+- Default to Auto, which follows the phone or computer’s colour setting.
+- Let Day and Night override the device setting while preserving the existing day and night colour tokens.
+- Remember the chosen mode on this device and apply it before the page is shown to avoid a visible colour flash.
 
 ## Four-tap fit check
 
@@ -41,7 +49,7 @@
 ## Verification
 
 - Add tests for all fitting and non-fitting answer paths, including that nothing is persisted.
-- Check desktop and phone layouts, the menu bottom sheet, sticky booking button, fit check, and handoff into `/book`.
+- Check desktop and phone layouts, the menu bottom sheet, sticky booking button, all three display modes, fit check, and handoff into `/book`.
 - Confirm every new content route has its own title, description, social title, social description, `og:type`, and Twitter card metadata.
 - Run the existing time-engine and screen tests and confirm the preview builds cleanly.
 
