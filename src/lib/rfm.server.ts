@@ -1,3 +1,4 @@
+/* BEFORE LAUNCH: demo mode is on. Set is_demo defaults to false on mothers, calls, plans and waitlist, and remove the nightly rfm-demo-purge job (purge_demo_bookings). */
 /*
  * Server-only helpers for Room for Mama. Loaded inside server-function
  * handlers after the caller is checked (manage token or coach role).

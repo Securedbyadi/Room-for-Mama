@@ -89,3 +89,6 @@ Motion: 320 ms fades; the Baby’s up sheet rises 24 px in 380 ms; the home draw
 
 ## Out of scope
 Booking in DMs, automated WhatsApp, card payments, in-app video, group calls.
+
+## Before launch
+- Demo mode is on for the competition: switch the is_demo default to false on mothers, calls, plans and waitlist, and remove the nightly demo purge (rfm-demo-purge, purge_demo_bookings). The purge also clears the coach's digest emails, which have no mother.
