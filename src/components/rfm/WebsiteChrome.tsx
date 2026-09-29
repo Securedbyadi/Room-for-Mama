@@ -1,5 +1,5 @@
 import { Link } from "@tanstack/react-router";
-import { useState, type ReactNode } from "react";
+import { useEffect, useState, type ReactNode } from "react";
 import { SafetyNote } from "./SafetyNote";
 import { ButtonMain, Logo } from "./brand";
 import { ThemeControl, ThemeRound } from "./ThemeControl";
@@ -74,11 +74,15 @@ function HomeHeader() {
 }
 
 export function WebsiteFooter() {
+  const [zone, setZone] = useState<string>();
+  useEffect(() => {
+    try { setZone(Intl.DateTimeFormat().resolvedOptions().timeZone); } catch { /* show anywhere-else line */ }
+  }, []);
   return (
     <footer className="band-ink">
       <div className="mx-auto grid max-w-[1120px] gap-6 px-5 py-10 md:grid-cols-[minmax(0,1fr)_minmax(0,2fr)] md:items-start">
         <div><Logo height={30} /><p className="mt-3 text-ink-muted">A little room for you.</p></div>
-        <SafetyNote />
+        <SafetyNote zone={zone} />
       </div>
     </footer>
   );

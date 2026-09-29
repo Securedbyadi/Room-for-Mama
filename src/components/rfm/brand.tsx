@@ -259,7 +259,7 @@ export function Page({
           {headerAction ? <div className="shrink-0">{headerAction}</div> : null}
         </header>
         <div className="rfm-split-page grid min-h-[calc(100svh-106px)] items-center gap-7 lg:grid-cols-12 lg:gap-10">
-          <aside className="rfm-splash lg:col-span-6" aria-hidden>
+          <aside className="rfm-splash rounded-[24px] bg-sunk p-5 lg:col-span-6 lg:p-10" aria-hidden>
             {illustration}
           </aside>
           <main className="flex min-w-0 flex-col gap-6 lg:col-span-5 lg:col-start-8 lg:min-h-[640px] lg:justify-center">
