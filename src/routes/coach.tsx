@@ -269,8 +269,6 @@ function Coach() {
     <Page>
       <div>
         <h1 className="t-title">{TABS.find((t) => t.id === tab)?.label}</h1>
-        {tab === "today" && (
-        )}
       </div>
 
       <nav className="flex flex-wrap gap-2" aria-label="Coach sections">
