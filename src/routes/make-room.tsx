@@ -69,9 +69,6 @@ function MakeRoom() {
       {stage === "held" && (
         <Card className="flex flex-col gap-3">
           <h2 className="t-heading">Your four times are held for 48 hours</h2>
-          <p className="text-ink-muted">
-            Pay whichever way is easiest, then tap I’ve paid with your reference.
-          </p>
           <ul className="space-y-1 text-[15px]">
             <li><span className="font-semibold">Bank:</span> {PLACEHOLDERS.payment.bank}</li>
             <li><span className="font-semibold">Raast:</span> {PLACEHOLDERS.payment.raast}</li>
@@ -93,10 +90,6 @@ function MakeRoom() {
       {stage === "confirmed" && (
         <Card offset="peach">
           <h2 className="t-heading">All four are yours.</h2>
-          <p className="mt-2">
-            I’ll confirm your payment and your invites will follow. If the baby
-            wakes, Baby’s up moves any call, free.
-          </p>
         </Card>
       )}
 
