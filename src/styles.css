@@ -259,7 +259,7 @@
   color: #34402a;
 }
 
-/* Motion: 320 ms fades, sheet rises 24 px in 380 ms, steam drifts 3 s */
+/* Motion: 320 ms fades, sheet rises 24 px in 380 ms */
 @keyframes rfm-fade {
   from {
     opacity: 0;
@@ -276,20 +276,6 @@
   to {
     transform: translateY(0);
     opacity: 1;
-  }
-}
-@keyframes rfm-steam {
-  0% {
-    transform: translateY(0);
-    opacity: 0.55;
-  }
-  50% {
-    transform: translateY(-6px);
-    opacity: 0.9;
-  }
-  100% {
-    transform: translateY(0);
-    opacity: 0.55;
   }
 }
 @keyframes rfm-reveal {
@@ -506,8 +492,6 @@ button[aria-pressed="true"] .theme-icon { opacity: 1; }
   .slot-selected,
   .mug-next-motion::after,
   .rfm-icon-mug-done,
-  .baby-awake-once svg > g:last-child,
-  .youre-in-rise svg > g:last-child,
   .theme-icon,
   .count-up {
     animation: none;
