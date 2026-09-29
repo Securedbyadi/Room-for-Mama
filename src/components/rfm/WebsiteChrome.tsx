@@ -61,6 +61,14 @@ export function DesktopToggle() {
   return <div className="fixed right-6 bottom-6 z-30 hidden lg:block"><ThemeRound className="relative" /></div>;
 }
 
+export function DemoNote({ className = "" }: { className?: string }) {
+  return (
+    <p className={`w-fit rounded-full bg-sunk px-4 py-2 text-[13px] font-semibold text-ink ${className}`} role="note">
+      Demo project: no real emails are sent, so please use a made-up email.
+    </p>
+  );
+}
+
 export function WebsiteFooter() {
   const [zone, setZone] = useState<string>();
   useEffect(() => {
@@ -84,9 +92,11 @@ export function WebsiteFooter() {
             <Link to="/fit-check" className={link}>Book a free hello call</Link>
             <Link to="/manage" className={link}>Manage my calls</Link>
             <Link to="/demo/coach" className={link}>See the coach’s side (demo)</Link>
+            <Link to="/judges" className={link}>For judges</Link>
           </nav>
         </div>
-        <div className="mt-10"><SafetyNote zone={zone} /></div>
+        <DemoNote className="mt-10" />
+        <div className="mt-6"><SafetyNote zone={zone} /></div>
         <p className="t-caption mt-8 text-ink-muted">© 2026 Room for Mama · Lahore, Pakistan</p>
       </div>
     </footer>

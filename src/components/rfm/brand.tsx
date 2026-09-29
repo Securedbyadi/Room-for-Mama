@@ -329,7 +329,10 @@ export function Page({
   chrome?: boolean;
 }) {
   const top = chrome ? (
-    headerAction ? <div className="mb-4 flex justify-end">{headerAction}</div> : null
+    <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+      <DemoNote />
+      {headerAction}
+    </div>
   ) : (
     <header className="mb-8 grid grid-cols-[minmax(0,1fr)_auto] items-center gap-4">
       <Logo />
