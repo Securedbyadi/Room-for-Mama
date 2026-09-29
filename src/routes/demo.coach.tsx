@@ -116,11 +116,18 @@ function TodayTab() {
   return (
     <>
       <section className="flex flex-col gap-3">
+        <h2 className="t-heading">This week’s calls</h2>
+        {DEMO_CALLS.map((c) => (
+          <CallCard key={c.mother.id + c.start.toISOString()} call={c} />
+        ))}
+      </section>
+
+      <section className="flex flex-col gap-3">
         <h2 className="t-heading">Needs you</h2>
         {needsYou
           .filter((n) => !done.has(n.id))
           .map((n) => (
-            <Card key={n.id} offset="peach" className="flex flex-col gap-3">
+            <Card key={n.id} offset="peach" className="!bg-paper flex flex-col gap-3 shadow-[6px_6px_0_var(--butter)]">
               <p className="t-heading">{n.title}</p>
               <p>{n.detail}</p>
               <ButtonMain onClick={() => setDone(new Set(done).add(n.id))}>
@@ -133,13 +140,6 @@ function TodayTab() {
             Nothing needs you. Put the kettle on.
           </p>
         )}
-      </section>
-
-      <section className="flex flex-col gap-3">
-        <h2 className="t-heading">This week’s calls</h2>
-        {DEMO_CALLS.map((c) => (
-          <CallCard key={c.mother.id + c.start.toISOString()} call={c} />
-        ))}
       </section>
 
       <p className="t-caption text-ink-muted">

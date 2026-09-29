@@ -110,8 +110,14 @@ function TodayTab({ d }: { d: Data }) {
 
   return (
     <div className="flex flex-col gap-6">
+      <section className="flex flex-col gap-3">
+        <h2 className="t-heading">Coming up</h2>
+        {upcoming.length === 0 && <p className="text-ink-muted">No calls yet.</p>}
+        {upcoming.map((c) => <CallCard key={c.id} c={c} coachZone={coachZone} />)}
+      </section>
+
       {d.needs.length > 0 && (
-        <Card offset="peach" className="flex flex-col gap-3">
+        <Card offset="peach" className="!bg-paper flex flex-col gap-3 shadow-[6px_6px_0_var(--butter)]">
           <h2 className="t-heading">Needs you</h2>
           {d.needs.map((n) => {
             const m = n.mothers as { first_name: string } | null;
@@ -130,12 +136,6 @@ function TodayTab({ d }: { d: Data }) {
           })}
         </Card>
       )}
-
-      <section className="flex flex-col gap-3">
-        <h2 className="t-heading">Coming up</h2>
-        {upcoming.length === 0 && <p className="text-ink-muted">No calls yet.</p>}
-        {upcoming.map((c) => <CallCard key={c.id} c={c} coachZone={coachZone} />)}
-      </section>
 
       {past.length > 0 && (
         <section className="flex flex-col gap-3">
