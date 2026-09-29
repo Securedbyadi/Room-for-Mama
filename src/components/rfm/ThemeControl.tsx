@@ -12,7 +12,7 @@ function readMode(): ThemeMode {
 }
 
 function applyMode(mode: ThemeMode) {
-  document.documentElement.dataset.theme = mode;
+  document.documentElement.dataset["theme"] = mode;
   document.documentElement.style.colorScheme = mode === "day" ? "light" : mode === "night" ? "dark" : "light dark";
 }
 
