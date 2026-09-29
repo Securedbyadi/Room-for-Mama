@@ -124,7 +124,10 @@ export const resolveNeed = createServerFn({ method: "POST" })
       await db.from("plans").update({ status: "confirmed", confirmed_at: new Date().toISOString() }).eq("id", need.plan_id);
       await db.from("calls").update({ status: "booked" }).eq("plan_id", need.plan_id).eq("status", "held");
       const { data: m } = await db.from("mothers").select("email").eq("id", need.mother_id!).single();
-      if (m) await r.queueEmail(db, { motherId: need.mother_id, to: m.email, kind: "confirmed", subject: r.callTitle("make_room"), lines: ["All four are yours. The invites are on their way."] });
+      const { data: four } = await db.from("calls").select("id, starts_at, ends_at, kind").eq("plan_id", need.plan_id).eq("status", "booked").order("starts_at");
+      const invite = (four ?? []).map((c) => ({ id: c.id, start: new Date(c.starts_at), end: new Date(c.ends_at), kind: c.kind }));
+      if (m) await r.queueEmail(db, { motherId: need.mother_id, to: m.email, kind: "confirmed", subject: r.callTitle("make_room"), lines: ["All four are yours. The invites are attached."], ics: invite });
+      await r.queueEmail(db, { motherId: need.mother_id, to: s.coach_email, kind: "coach-invite", subject: r.callTitle("make_room"), lines: ["Four half hours confirmed."], ics: invite });
       await r.logAutomation(db, s, "payment", need.mother_id);
     }
     if (need.kind === "third_move" && need.call_id) {
@@ -157,6 +160,8 @@ export const afterHello = createServerFn({ method: "POST" })
       await r.queueEmail(db, { motherId: data.motherId, to: m.email, kind: "not-a-fit", subject: "Hello call with Room for Mama", lines: [s.not_a_fit_note] });
     } else if (data.callId) {
       await db.from("calls").update({ status: "missed" }).eq("id", data.callId);
+      await db.from("needs_you").insert({ kind: "missed_call", mother_id: data.motherId, call_id: data.callId });
+      await putBackFirstMiss(r, db, s, data.callId);
     }
     return { ok: true };
   });
@@ -206,9 +211,12 @@ export const coachBabysUp = createServerFn({ method: "POST" })
     const { data: call } = await db.from("calls").select("*, mothers(email, zone)").eq("id", data.callId).single();
     const m = call?.mothers as unknown as { email: string; zone: string } | null;
     if (!call || !m) return { ok: false };
+    // The coach has her own two moves per call, separate from the mother's.
+    if (call.coach_moves_used >= 2) return { ok: false, reason: "limit" as const };
     const opts = te.babysUpOptions({ call: { start: new Date(call.starts_at), end: new Date(call.ends_at) }, now: new Date(), motherZone: m.zone, durationMin: (new Date(call.ends_at).getTime() - new Date(call.starts_at).getTime()) / 60_000, rules: r.rulesFrom(s), busy: await r.busyCalls(db) });
     const origin = await r.requestOrigin();
     const { data: link } = await db.from("mother_links").select("token").eq("mother_id", call.mother_id).maybeSingle();
+    await db.from("calls").update({ coach_moves_used: call.coach_moves_used + 1, coach_move_pending: true }).eq("id", call.id);
     await db.from("move_log").insert({ call_id: call.id, moved_by: "coach", from_at: call.starts_at, to_at: null });
     await r.queueEmail(db, { motherId: call.mother_id, to: m.email, kind: "coach-babys-up", subject: r.callTitle(call.kind), lines: ["My baby’s up, so I need to move our call. Pick whichever of these suits you:", ...opts.map((o) => `${te.fmtLong(o.start, m.zone)}, your time`)], action: { label: "Pick a new time", url: link ? r.manageUrl(origin, link.token) : origin } });
     await r.logAutomation(db, s, "move", call.mother_id);
