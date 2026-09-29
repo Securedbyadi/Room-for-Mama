@@ -65,6 +65,7 @@ function FitCheck() {
           {FIT_QUESTIONS.map((item, index) => <span key={item.id} className={`h-2 rounded-full ${index <= step ? "bg-sage" : "bg-sunk"}`} />)}
         </div>
       </div>
+      {step === 0 && <p className="mt-4 text-ink-muted">Four quick questions first, so your hello call is time well spent.</p>}
       <h1 className="t-title">{question.question}</h1>
       <div className="mt-auto flex flex-col gap-3 pt-8">
         {question.choices.map((choice) => <ButtonOutline key={choice.label} onClick={() => answer(choice)} className="min-h-16 justify-start text-left">{choice.label}</ButtonOutline>)}
