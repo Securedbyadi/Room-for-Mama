@@ -14,16 +14,563 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      automation_log: {
+        Row: {
+          created_at: string
+          id: string
+          minutes_saved: number
+          mother_id: string | null
+          type: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          minutes_saved?: number
+          mother_id?: string | null
+          type: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          minutes_saved?: number
+          mother_id?: string | null
+          type?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "automation_log_mother_id_fkey"
+            columns: ["mother_id"]
+            isOneToOne: false
+            referencedRelation: "mothers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      booking_attempts: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+          ip: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id?: string
+          ip: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+          ip?: string
+        }
+        Relationships: []
+      }
+      calls: {
+        Row: {
+          blocked_until: string
+          clock_note: string | null
+          created_at: string
+          ends_at: string
+          id: string
+          keep_spot_confirmed_at: string | null
+          keep_spot_sent_at: string | null
+          kind: string
+          mother_id: string
+          moves_used: number
+          plan_id: string | null
+          reminder_sent_at: string | null
+          small_step: string | null
+          starts_at: string
+          status: string
+          thanks_sent_at: string | null
+          updated_at: string
+          week: number | null
+        }
+        Insert: {
+          blocked_until: string
+          clock_note?: string | null
+          created_at?: string
+          ends_at: string
+          id?: string
+          keep_spot_confirmed_at?: string | null
+          keep_spot_sent_at?: string | null
+          kind: string
+          mother_id: string
+          moves_used?: number
+          plan_id?: string | null
+          reminder_sent_at?: string | null
+          small_step?: string | null
+          starts_at: string
+          status?: string
+          thanks_sent_at?: string | null
+          updated_at?: string
+          week?: number | null
+        }
+        Update: {
+          blocked_until?: string
+          clock_note?: string | null
+          created_at?: string
+          ends_at?: string
+          id?: string
+          keep_spot_confirmed_at?: string | null
+          keep_spot_sent_at?: string | null
+          kind?: string
+          mother_id?: string
+          moves_used?: number
+          plan_id?: string | null
+          reminder_sent_at?: string | null
+          small_step?: string | null
+          starts_at?: string
+          status?: string
+          thanks_sent_at?: string | null
+          updated_at?: string
+          week?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "calls_mother_id_fkey"
+            columns: ["mother_id"]
+            isOneToOne: false
+            referencedRelation: "mothers"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "calls_plan_id_fkey"
+            columns: ["plan_id"]
+            isOneToOne: false
+            referencedRelation: "plans"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      email_outbox: {
+        Row: {
+          action_label: string | null
+          action_url: string | null
+          body: string
+          created_at: string
+          id: string
+          kind: string
+          mother_id: string | null
+          subject: string
+          to_email: string
+        }
+        Insert: {
+          action_label?: string | null
+          action_url?: string | null
+          body: string
+          created_at?: string
+          id?: string
+          kind: string
+          mother_id?: string | null
+          subject: string
+          to_email: string
+        }
+        Update: {
+          action_label?: string | null
+          action_url?: string | null
+          body?: string
+          created_at?: string
+          id?: string
+          kind?: string
+          mother_id?: string | null
+          subject?: string
+          to_email?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "email_outbox_mother_id_fkey"
+            columns: ["mother_id"]
+            isOneToOne: false
+            referencedRelation: "mothers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      helplines: {
+        Row: {
+          country: string
+          created_at: string
+          hours: string | null
+          id: string
+          name: string
+          number: string
+          sort: number
+          zones: string[]
+        }
+        Insert: {
+          country: string
+          created_at?: string
+          hours?: string | null
+          id?: string
+          name: string
+          number: string
+          sort?: number
+          zones?: string[]
+        }
+        Update: {
+          country?: string
+          created_at?: string
+          hours?: string | null
+          id?: string
+          name?: string
+          number?: string
+          sort?: number
+          zones?: string[]
+        }
+        Relationships: []
+      }
+      mothers: {
+        Row: {
+          city: string | null
+          created_at: string
+          email: string
+          first_name: string
+          id: string
+          moment_days: number[]
+          moment_not_after: string | null
+          moment_not_before: string | null
+          phone: string | null
+          status: string
+          token_hash: string
+          updated_at: string
+          zone: string
+        }
+        Insert: {
+          city?: string | null
+          created_at?: string
+          email: string
+          first_name: string
+          id?: string
+          moment_days?: number[]
+          moment_not_after?: string | null
+          moment_not_before?: string | null
+          phone?: string | null
+          status?: string
+          token_hash: string
+          updated_at?: string
+          zone: string
+        }
+        Update: {
+          city?: string | null
+          created_at?: string
+          email?: string
+          first_name?: string
+          id?: string
+          moment_days?: number[]
+          moment_not_after?: string | null
+          moment_not_before?: string | null
+          phone?: string | null
+          status?: string
+          token_hash?: string
+          updated_at?: string
+          zone?: string
+        }
+        Relationships: []
+      }
+      move_log: {
+        Row: {
+          call_id: string
+          created_at: string
+          from_at: string
+          id: string
+          moved_by: string
+          to_at: string | null
+        }
+        Insert: {
+          call_id: string
+          created_at?: string
+          from_at: string
+          id?: string
+          moved_by: string
+          to_at?: string | null
+        }
+        Update: {
+          call_id?: string
+          created_at?: string
+          from_at?: string
+          id?: string
+          moved_by?: string
+          to_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "move_log_call_id_fkey"
+            columns: ["call_id"]
+            isOneToOne: false
+            referencedRelation: "calls"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      needs_you: {
+        Row: {
+          call_id: string | null
+          created_at: string
+          id: string
+          kind: string
+          mother_id: string | null
+          plan_id: string | null
+          resolved_at: string | null
+        }
+        Insert: {
+          call_id?: string | null
+          created_at?: string
+          id?: string
+          kind: string
+          mother_id?: string | null
+          plan_id?: string | null
+          resolved_at?: string | null
+        }
+        Update: {
+          call_id?: string | null
+          created_at?: string
+          id?: string
+          kind?: string
+          mother_id?: string | null
+          plan_id?: string | null
+          resolved_at?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "needs_you_call_id_fkey"
+            columns: ["call_id"]
+            isOneToOne: false
+            referencedRelation: "calls"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "needs_you_mother_id_fkey"
+            columns: ["mother_id"]
+            isOneToOne: false
+            referencedRelation: "mothers"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "needs_you_plan_id_fkey"
+            columns: ["plan_id"]
+            isOneToOne: false
+            referencedRelation: "plans"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      plans: {
+        Row: {
+          amount: number
+          confirmed_at: string | null
+          created_at: string
+          currency: string
+          founding: boolean
+          hold_expires_at: string
+          id: string
+          mother_id: string
+          paid_at: string | null
+          paid_reference: string | null
+          reference: string
+          status: string
+          updated_at: string
+        }
+        Insert: {
+          amount: number
+          confirmed_at?: string | null
+          created_at?: string
+          currency: string
+          founding?: boolean
+          hold_expires_at: string
+          id?: string
+          mother_id: string
+          paid_at?: string | null
+          paid_reference?: string | null
+          reference: string
+          status?: string
+          updated_at?: string
+        }
+        Update: {
+          amount?: number
+          confirmed_at?: string | null
+          created_at?: string
+          currency?: string
+          founding?: boolean
+          hold_expires_at?: string
+          id?: string
+          mother_id?: string
+          paid_at?: string | null
+          paid_reference?: string | null
+          reference?: string
+          status?: string
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "plans_mother_id_fkey"
+            columns: ["mother_id"]
+            isOneToOne: false
+            referencedRelation: "mothers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      private_notes: {
+        Row: {
+          body: string
+          created_at: string
+          id: string
+          mother_id: string
+        }
+        Insert: {
+          body: string
+          created_at?: string
+          id?: string
+          mother_id: string
+        }
+        Update: {
+          body?: string
+          created_at?: string
+          id?: string
+          mother_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "private_notes_mother_id_fkey"
+            columns: ["mother_id"]
+            isOneToOne: false
+            referencedRelation: "mothers"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      settings: {
+        Row: {
+          buffer_min: number
+          coach_email: string
+          coach_zone: string
+          id: number
+          max_per_day: number
+          meet_link: string
+          minutes: Json
+          not_a_fit_note: string
+          notice_move_h: number
+          notice_new_h: number
+          payment: Json
+          prices: Json
+          updated_at: string
+          weeks_ahead: number
+          windows: Json
+        }
+        Insert: {
+          buffer_min?: number
+          coach_email?: string
+          coach_zone?: string
+          id?: number
+          max_per_day?: number
+          meet_link?: string
+          minutes?: Json
+          not_a_fit_note?: string
+          notice_move_h?: number
+          notice_new_h?: number
+          payment?: Json
+          prices?: Json
+          updated_at?: string
+          weeks_ahead?: number
+          windows?: Json
+        }
+        Update: {
+          buffer_min?: number
+          coach_email?: string
+          coach_zone?: string
+          id?: number
+          max_per_day?: number
+          meet_link?: string
+          minutes?: Json
+          not_a_fit_note?: string
+          notice_move_h?: number
+          notice_new_h?: number
+          payment?: Json
+          prices?: Json
+          updated_at?: string
+          weeks_ahead?: number
+          windows?: Json
+        }
+        Relationships: []
+      }
+      user_roles: {
+        Row: {
+          created_at: string
+          id: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          role: Database["public"]["Enums"]["app_role"]
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          role?: Database["public"]["Enums"]["app_role"]
+          user_id?: string
+        }
+        Relationships: []
+      }
+      waitlist: {
+        Row: {
+          city: string | null
+          created_at: string
+          days: number[]
+          email: string
+          first_name: string
+          id: string
+          not_after: string | null
+          not_before: string | null
+          status: string
+          zone: string
+        }
+        Insert: {
+          city?: string | null
+          created_at?: string
+          days?: number[]
+          email: string
+          first_name: string
+          id?: string
+          not_after?: string | null
+          not_before?: string | null
+          status?: string
+          zone: string
+        }
+        Update: {
+          city?: string | null
+          created_at?: string
+          days?: number[]
+          email?: string
+          first_name?: string
+          id?: string
+          not_after?: string | null
+          not_before?: string | null
+          status?: string
+          zone?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
-      [_ in never]: never
+      has_role: {
+        Args: {
+          _role: Database["public"]["Enums"]["app_role"]
+          _user_id: string
+        }
+        Returns: boolean
+      }
     }
     Enums: {
-      [_ in never]: never
+      app_role: "coach"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -150,6 +697,8 @@ export type CompositeTypes<
 
 export const Constants = {
   public: {
-    Enums: {},
+    Enums: {
+      app_role: ["coach"],
+    },
   },
 } as const
