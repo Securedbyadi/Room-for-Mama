@@ -62,7 +62,7 @@ function HomeHeader() {
       <div className="mx-auto grid min-h-20 max-w-[1120px] grid-cols-[minmax(0,1fr)_auto] items-center gap-4 px-5">
         <Logo height={32} className="logo-rise" />
         <Link to="/fit-check" className="hidden min-h-12 items-center rounded-full border-2 border-ink px-5 text-[15px] font-semibold whitespace-nowrap lg:inline-flex">Book a free hello call</Link>
-        <ThemeRound className="relative !h-12 !w-12 lg:!hidden" />
+        <ThemeRound className="relative !h-12 !w-12 lg:hidden" />
       </div>
     </header>
   );
@@ -85,7 +85,7 @@ export function WebsitePage({ children, home = false }: { children: ReactNode; h
       {home ? <HomeHeader /> : <WebsiteHeader />}
       {children}
       <WebsiteFooter />
-      {home && <ThemeRound className="fixed right-6 bottom-6 z-30 !hidden lg:!grid" />}
+      {home && <div className="fixed right-6 bottom-6 z-30 hidden lg:block"><ThemeRound className="relative" /></div>}
       <div className="fixed inset-x-0 bottom-0 z-20 border-t border-line bg-page/95 p-3 backdrop-blur lg:hidden"><div className="mx-auto max-w-[480px]"><ButtonMain to="/fit-check">Book a free hello call</ButtonMain></div></div>
     </div>
   );
