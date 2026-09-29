@@ -132,12 +132,12 @@ function Manage() {
         <SafetyNote lines={d.helplines} />
       </div>
 
-      {sheetFor && <BabysUpSheet token={token} call={sheetFor} zone={zone} onClose={() => setSheetFor(null)} onMoved={(msg) => { setSheetFor(null); setNote(msg); void refresh(); }} />}
+      {sheetFor && <BabysUpSheet token={token} call={sheetFor} zone={zone} onClose={() => setSheetFor(null)} onMoved={async (msg) => { await refresh(); setSheetFor(null); setNote(msg); }} />}
     </Page>
   );
 }
 
-function BabysUpSheet({ token, call, zone, onClose, onMoved }: { token: string; call: CallRow; zone: string; onClose: () => void; onMoved: (m: string) => void }) {
+function BabysUpSheet({ token, call, zone, onClose, onMoved }: { token: string; call: CallRow; zone: string; onClose: () => void; onMoved: (m: string) => Promise<void> }) {
   const times = useServerFn(babysUpTimes);
   const move = useServerFn(moveMyCall);
   const q = useQuery({ queryKey: ["babys-up", call.id], queryFn: () => times({ data: { token, callId: call.id } }) });
@@ -167,7 +167,7 @@ function BabysUpSheet({ token, call, zone, onClose, onMoved }: { token: string; 
             onClick={async () => {
               if (!chosen) return;
               const r = await move({ data: { token, callId: call.id, start: chosen } });
-              if (r.kind === "moved") onMoved(`Moved. ${fmtLong(new Date(r.start), zone)}, your time.`);
+              if (r.kind === "moved") await onMoved(`Moved. ${fmtLong(new Date(r.start), zone)}, your time.`);
               else if (r.kind === "needs-coach") onMoved("I’ll be in touch about this move.");
               else if (r.kind === "taken") onMoved("That time just went. Tap Baby’s up to pick another.");
               else onMoved("This call has already started.");
