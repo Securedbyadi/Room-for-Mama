@@ -82,7 +82,16 @@ function CallCard({ call }: { call: DemoCall }) {
   );
 }
 
-function Coach() {
+type Tab = "today" | "mothers" | "rules" | "given-back";
+
+const TABS: { id: Tab; label: string }[] = [
+  { id: "today", label: "Today" },
+  { id: "mothers", label: "Mothers" },
+  { id: "rules", label: "Rules" },
+  { id: "given-back", label: "Given back" },
+];
+
+function TodayTab() {
   const [done, setDone] = useState<Set<string>>(new Set());
 
   const needsYou = [
@@ -101,12 +110,7 @@ function Coach() {
   ];
 
   return (
-    <Page>
-      <div>
-        <h1 className="t-title">Today</h1>
-        <p className="mt-1 text-ink-muted">Your calls, your time — hers alongside.</p>
-      </div>
-
+    <>
       <section className="flex flex-col gap-3">
         <h2 className="t-heading">Needs you</h2>
         {needsYou
@@ -138,6 +142,150 @@ function Coach() {
         Demo data only — no real mothers, no real calendar.
         {DEMO_CALLS[0] ? ` Next: ${fmtLong(DEMO_CALLS[0].start, COACH_ZONE)}.` : ""}
       </p>
+    </>
+  );
+}
+
+function MothersTab() {
+  const [shared, setShared] = useState<Set<string>>(new Set());
+  return (
+    <section className="flex flex-col gap-3">
+      {DEMO_MOTHERS.map((m) => {
+        const calls = DEMO_CALLS.filter((c) => c.mother.id === m.id);
+        return (
+          <Card key={m.id} className="flex flex-col gap-2">
+            <p className="t-heading">{m.name}</p>
+            <p className="t-caption text-ink-muted">
+              {m.city} · {zoneLabel(m.zone)} · {calls.length} call{calls.length === 1 ? "" : "s"}{" "}
+              this week
+            </p>
+            {calls[0] && (
+              <p className="t-time">
+                Next: {fmtLong(calls[0].start, m.zone)}, her time
+              </p>
+            )}
+            {!shared.has(m.id) ? (
+              <ButtonOutline onClick={() => setShared(new Set(shared).add(m.id))}>
+                Share helplines
+              </ButtonOutline>
+            ) : (
+              <p className="rounded-xl bg-sage-soft p-3 text-[15px] font-semibold">
+                Helplines sent to {m.name}.
+              </p>
+            )}
+          </Card>
+        );
+      })}
+    </section>
+  );
+}
+
+function RulesTab() {
+  const rows: [string, string][] = [
+    ["Your windows", "Mon–Fri 2:00–5:00 pm and 9:00–11:00 pm, Karachi time"],
+    ["Calls a day", "At most 3, with 10 minutes between"],
+    ["Hello call", "20 minutes, free"],
+    ["Make Room", "4 half hours, one a week · PKR 12,000 / US$120"],
+    ["Founding price", "First 10 mothers · PKR 8,000 / US$80"],
+    ["Top-up half hour", "PKR 3,500 / US$35"],
+    ["Notice", "6 hours for new calls, 1 hour for moves · up to 6 weeks ahead"],
+    ["Video link", PLACEHOLDERS.meetLink],
+    ["Payment details", `${PLACEHOLDERS.bank} · ${PLACEHOLDERS.raast} · ${PLACEHOLDERS.jazzcash} · ${PLACEHOLDERS.wise}`],
+    ["Your email", PLACEHOLDERS.coachEmail],
+  ];
+  return (
+    <section className="flex flex-col gap-3">
+      <p className="text-ink-muted">
+        These run the whole app. Change them here and every screen follows.
+      </p>
+      {rows.map(([label, value]) => (
+        <Card key={label} className="flex flex-col gap-1">
+          <p className="t-caption text-ink-muted">{label}</p>
+          <p className="font-semibold">{value}</p>
+        </Card>
+      ))}
+      <Card className="flex flex-col gap-1">
+        <p className="t-caption text-ink-muted">Your “Not a fit” note</p>
+        <p>{NOT_A_FIT_NOTE}</p>
+      </Card>
+    </section>
+  );
+}
+
+function GivenBackTab() {
+  const [ran, setRan] = useState(false);
+  const feed = [
+    ["Sara booked her hello call", 20],
+    ["Keep my spot sent to Ayesha", 10],
+    ["Make Room offer sent to Hina", 5],
+    ["Reminder sent to Emily", 5],
+    ["Ayesha moved her call herself", 10],
+  ] as const;
+  const week = feed.reduce((s, [, m]) => s + m, 0);
+  return (
+    <section className="flex flex-col gap-3">
+      <p className="text-ink-muted">
+        Time the app gave back to you. Every number is an estimate.
+      </p>
+      <div className="grid grid-cols-3 gap-2">
+        {(
+          [
+            ["This week", week],
+            ["This month", 185],
+            ["All time", 740],
+          ] as const
+        ).map(([label, mins]) => (
+          <Card key={label} className="flex flex-col items-center gap-1 text-center">
+            <p className="t-time">{mins} min</p>
+            <p className="t-caption text-ink-muted">{label}, estimated</p>
+          </Card>
+        ))}
+      </div>
+      <Card className="flex flex-col gap-2">
+        <p className="t-heading">Lately</p>
+        {feed.map(([what, mins]) => (
+          <div key={what} className="flex items-center justify-between gap-3">
+            <p className="text-[15px]">{what}</p>
+            <Chip>{mins} min</Chip>
+          </div>
+        ))}
+      </Card>
+      {!ran ? (
+        <ButtonMain onClick={() => setRan(true)}>Run today’s automations now</ButtonMain>
+      ) : (
+        <p className="rounded-2xl bg-sage-soft p-4 font-semibold">
+          Done. 2 reminders and 1 Keep my spot sent, 1 hold released. 25 minutes given back,
+          estimated.
+        </p>
+      )}
+    </section>
+  );
+}
+
+function Coach() {
+  const [tab, setTab] = useState<Tab>("today");
+
+  return (
+    <Page>
+      <div>
+        <h1 className="t-title">{TABS.find((t) => t.id === tab)?.label}</h1>
+        {tab === "today" && (
+          <p className="mt-1 text-ink-muted">Your calls, your time — hers alongside.</p>
+        )}
+      </div>
+
+      <nav className="flex flex-wrap gap-2" aria-label="Coach sections">
+        {TABS.map((t) => (
+          <Chip key={t.id} selected={tab === t.id} onClick={() => setTab(t.id)}>
+            {t.label}
+          </Chip>
+        ))}
+      </nav>
+
+      {tab === "today" && <TodayTab />}
+      {tab === "mothers" && <MothersTab />}
+      {tab === "rules" && <RulesTab />}
+      {tab === "given-back" && <GivenBackTab />}
 
       <div className="mt-auto pt-4">
         <SafetyNote zone={COACH_ZONE} />
