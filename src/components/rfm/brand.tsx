@@ -110,13 +110,10 @@ export function Drawing({
 export function Logo({ height = 28 }: { height?: number }) {
   return (
     <Link to="/" aria-label="Room for Mama — home" className="inline-flex">
-      <picture>
-        <source
-          srcSet="/brand/logo/rfm-logo-horizontal-night.svg"
-          media="(prefers-color-scheme: dark)"
-        />
-        <img src="/brand/logo/rfm-logo-horizontal.svg" alt="Room for Mama" height={height} style={{ height }} />
-      </picture>
+      <span className="rfm-logo-wrap">
+        <img className="rfm-logo-day" src="/brand/logo/rfm-logo-horizontal.svg" alt="Room for Mama" height={height} style={{ height }} />
+        <img className="rfm-logo-night" src="/brand/logo/rfm-logo-horizontal-night.svg" alt="Room for Mama" height={height} style={{ height }} />
+      </span>
     </Link>
   );
 }

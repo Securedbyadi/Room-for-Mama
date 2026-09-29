@@ -326,7 +326,18 @@
   animation: rfm-rise-once 380ms ease-out both;
 }
 .theme-icon {
-  animation: rfm-theme-crossfade 320ms ease-out both;
+  opacity: 0.55;
+  transition: opacity 320ms ease-out;
+}
+button[aria-pressed="true"] .theme-icon { opacity: 1; }
+.rfm-logo-wrap { display: inline-grid; }
+.rfm-logo-wrap > img { grid-area: 1 / 1; }
+.rfm-logo-night { display: none; }
+:root[data-theme="night"] .rfm-logo-day { display: none; }
+:root[data-theme="night"] .rfm-logo-night { display: block; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="day"]) .rfm-logo-day { display: none; }
+  :root:not([data-theme="day"]) .rfm-logo-night { display: block; }
 }
 .count-up {
   --rfm-count-to: 0;
