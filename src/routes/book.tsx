@@ -7,6 +7,8 @@ import { parseMoment, type ParsedMoment } from "../lib/moment-parse";
 import { findSlots, fmtLong, zoneLabel, type Slot as SlotT } from "../lib/time-engine";
 
 export const Route = createFileRoute("/book")({
+  validateSearch: (search: Record<string, unknown>): { demo?: "manchester" | undefined } =>
+    search["demo"] === "manchester" ? { demo: "manchester" } : {},
   head: () => ({
     meta: [
       { title: "Book a free hello call — Room for Mama" },
@@ -30,9 +32,11 @@ type Step = "moment" | "times" | "details";
 
 function Book() {
   const navigate = useNavigate();
-  const [step, setStep] = useState<Step>("moment");
-  const [moment, setMoment] = useState("");
-  const [parsed, setParsed] = useState<ReturnType<typeof parseMoment> | null>(null);
+  const { demo } = Route.useSearch();
+  const demoParsed = demo === "manchester" ? parseMoment(DEMO_MESSAGE, "Europe/London") : null;
+  const [step, setStep] = useState<Step>(demo ? "times" : "moment");
+  const [moment, setMoment] = useState(demo ? DEMO_MESSAGE : "");
+  const [parsed, setParsed] = useState<ReturnType<typeof parseMoment> | null>(demoParsed);
   const [selected, setSelected] = useState<SlotT | null>(null);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");

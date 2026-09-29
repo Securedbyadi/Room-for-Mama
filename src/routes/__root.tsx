@@ -105,6 +105,12 @@ function RootShell({ children }: { children: ReactNode }) {
   return (
     <html lang="en">
       <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html:
+              "try{var t=localStorage.getItem('rfm-theme');document.documentElement.dataset.theme=t==='day'||t==='night'?t:'auto';document.documentElement.style.colorScheme=t==='day'?'light':t==='night'?'dark':'light dark'}catch(e){}",
+          }}
+        />
         <HeadContent />
       </head>
       <body>
