@@ -14,6 +14,7 @@ import { Route as BookRouteImport } from './routes/book'
 import { Route as BookedRouteImport } from './routes/booked'
 import { Route as CoachRouteImport } from './routes/coach'
 import { Route as EmailsRouteImport } from './routes/emails'
+import { Route as FitCheckRouteImport } from './routes/fit-check'
 import { Route as MakeRoomRouteImport } from './routes/make-room'
 
 const IndexRoute = IndexRouteImport.update({
@@ -41,6 +42,11 @@ const EmailsRoute = EmailsRouteImport.update({
   path: '/emails',
   getParentRoute: () => rootRouteImport,
 } as any)
+const FitCheckRoute = FitCheckRouteImport.update({
+  id: '/fit-check',
+  path: '/fit-check',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const MakeRoomRoute = MakeRoomRouteImport.update({
   id: '/make-room',
   path: '/make-room',
@@ -53,6 +59,7 @@ export interface FileRoutesByFullPath {
   '/booked': typeof BookedRoute
   '/coach': typeof CoachRoute
   '/emails': typeof EmailsRoute
+  '/fit-check': typeof FitCheckRoute
   '/make-room': typeof MakeRoomRoute
 }
 export interface FileRoutesByTo {
@@ -61,6 +68,7 @@ export interface FileRoutesByTo {
   '/booked': typeof BookedRoute
   '/coach': typeof CoachRoute
   '/emails': typeof EmailsRoute
+  '/fit-check': typeof FitCheckRoute
   '/make-room': typeof MakeRoomRoute
 }
 export interface FileRoutesById {
@@ -70,15 +78,37 @@ export interface FileRoutesById {
   '/booked': typeof BookedRoute
   '/coach': typeof CoachRoute
   '/emails': typeof EmailsRoute
+  '/fit-check': typeof FitCheckRoute
   '/make-room': typeof MakeRoomRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/book' | '/booked' | '/coach' | '/emails' | '/make-room'
+  fullPaths:
+    | '/'
+    | '/book'
+    | '/booked'
+    | '/coach'
+    | '/emails'
+    | '/fit-check'
+    | '/make-room'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/book' | '/booked' | '/coach' | '/emails' | '/make-room'
+  to:
+    | '/'
+    | '/book'
+    | '/booked'
+    | '/coach'
+    | '/emails'
+    | '/fit-check'
+    | '/make-room'
   id:
-    '__root__' | '/' | '/book' | '/booked' | '/coach' | '/emails' | '/make-room'
+    | '__root__'
+    | '/'
+    | '/book'
+    | '/booked'
+    | '/coach'
+    | '/emails'
+    | '/fit-check'
+    | '/make-room'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -87,6 +117,7 @@ export interface RootRouteChildren {
   BookedRoute: typeof BookedRoute
   CoachRoute: typeof CoachRoute
   EmailsRoute: typeof EmailsRoute
+  FitCheckRoute: typeof FitCheckRoute
   MakeRoomRoute: typeof MakeRoomRoute
 }
 
@@ -127,6 +158,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof EmailsRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/fit-check': {
+      id: '/fit-check'
+      path: '/fit-check'
+      fullPath: '/fit-check'
+      preLoaderRoute: typeof FitCheckRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/make-room': {
       id: '/make-room'
       path: '/make-room'
@@ -143,6 +181,7 @@ const rootRouteChildren: RootRouteChildren = {
   BookedRoute: BookedRoute,
   CoachRoute: CoachRoute,
   EmailsRoute: EmailsRoute,
+  FitCheckRoute: FitCheckRoute,
   MakeRoomRoute: MakeRoomRoute,
 }
 export const routeTree = rootRouteImport
