@@ -16,6 +16,8 @@ import { Route as CoachRouteImport } from './routes/coach'
 import { Route as EmailsRouteImport } from './routes/emails'
 import { Route as FitCheckRouteImport } from './routes/fit-check'
 import { Route as MakeRoomRouteImport } from './routes/make-room'
+import { Route as ApiPublicHooksDigestRouteImport } from './routes/api/public/hooks/digest'
+import { Route as ApiPublicHooksTickRouteImport } from './routes/api/public/hooks/tick'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -52,6 +54,16 @@ const MakeRoomRoute = MakeRoomRouteImport.update({
   path: '/make-room',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ApiPublicHooksDigestRoute = ApiPublicHooksDigestRouteImport.update({
+  id: '/api/public/hooks/digest',
+  path: '/api/public/hooks/digest',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiPublicHooksTickRoute = ApiPublicHooksTickRouteImport.update({
+  id: '/api/public/hooks/tick',
+  path: '/api/public/hooks/tick',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -61,6 +73,8 @@ export interface FileRoutesByFullPath {
   '/emails': typeof EmailsRoute
   '/fit-check': typeof FitCheckRoute
   '/make-room': typeof MakeRoomRoute
+  '/api/public/hooks/digest': typeof ApiPublicHooksDigestRoute
+  '/api/public/hooks/tick': typeof ApiPublicHooksTickRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -70,6 +84,8 @@ export interface FileRoutesByTo {
   '/emails': typeof EmailsRoute
   '/fit-check': typeof FitCheckRoute
   '/make-room': typeof MakeRoomRoute
+  '/api/public/hooks/digest': typeof ApiPublicHooksDigestRoute
+  '/api/public/hooks/tick': typeof ApiPublicHooksTickRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -80,6 +96,8 @@ export interface FileRoutesById {
   '/emails': typeof EmailsRoute
   '/fit-check': typeof FitCheckRoute
   '/make-room': typeof MakeRoomRoute
+  '/api/public/hooks/digest': typeof ApiPublicHooksDigestRoute
+  '/api/public/hooks/tick': typeof ApiPublicHooksTickRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -91,6 +109,8 @@ export interface FileRouteTypes {
     | '/emails'
     | '/fit-check'
     | '/make-room'
+    | '/api/public/hooks/digest'
+    | '/api/public/hooks/tick'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -100,6 +120,8 @@ export interface FileRouteTypes {
     | '/emails'
     | '/fit-check'
     | '/make-room'
+    | '/api/public/hooks/digest'
+    | '/api/public/hooks/tick'
   id:
     | '__root__'
     | '/'
@@ -109,6 +131,8 @@ export interface FileRouteTypes {
     | '/emails'
     | '/fit-check'
     | '/make-room'
+    | '/api/public/hooks/digest'
+    | '/api/public/hooks/tick'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -119,6 +143,8 @@ export interface RootRouteChildren {
   EmailsRoute: typeof EmailsRoute
   FitCheckRoute: typeof FitCheckRoute
   MakeRoomRoute: typeof MakeRoomRoute
+  ApiPublicHooksDigestRoute: typeof ApiPublicHooksDigestRoute
+  ApiPublicHooksTickRoute: typeof ApiPublicHooksTickRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -172,6 +198,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof MakeRoomRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/api/public/hooks/digest': {
+      id: '/api/public/hooks/digest'
+      path: '/api/public/hooks/digest'
+      fullPath: '/api/public/hooks/digest'
+      preLoaderRoute: typeof ApiPublicHooksDigestRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/public/hooks/tick': {
+      id: '/api/public/hooks/tick'
+      path: '/api/public/hooks/tick'
+      fullPath: '/api/public/hooks/tick'
+      preLoaderRoute: typeof ApiPublicHooksTickRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -183,6 +223,8 @@ const rootRouteChildren: RootRouteChildren = {
   EmailsRoute: EmailsRoute,
   FitCheckRoute: FitCheckRoute,
   MakeRoomRoute: MakeRoomRoute,
+  ApiPublicHooksDigestRoute: ApiPublicHooksDigestRoute,
+  ApiPublicHooksTickRoute: ApiPublicHooksTickRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
