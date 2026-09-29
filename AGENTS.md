@@ -10,3 +10,5 @@
 <!-- LOVABLE:END -->
 
 - Tests: `bun run test` (vitest) uses its own vitest.config.ts, separate from the app build config, so the app plugins stay out of tests.
+- The public home page uses a wide website shell; booking and coach routes keep the narrow app shell so their established flows remain stable.
+- Theme preference is device-local only, defaults to Auto, and is applied on the root element before paint to avoid a colour flash.

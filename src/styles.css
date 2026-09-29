@@ -49,7 +49,7 @@
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
+  :root:not([data-theme="day"]) {
     --page: #1f2619;
     --paper: #283122;
     --sunk: #2f3927;
@@ -66,6 +66,26 @@
     --primary: #f5d06f;
     --primary-foreground: #1f2619;
   }
+}
+
+:root[data-theme="night"] {
+  --page: #1f2619;
+  --paper: #283122;
+  --sunk: #2f3927;
+  --ink: #f6eee3;
+  --ink-muted: #c4c9b5;
+  --line: #3a4531;
+  --line-strong: #7f8a70;
+  --butter-soft: #4a4424;
+  --peach-soft: #4a3a2e;
+  --sage-soft: #34422c;
+  --clay: #f0a08a;
+  --primary: #f5d06f;
+  --primary-foreground: #1f2619;
+}
+
+:root[data-theme="day"] {
+  color-scheme: light;
 }
 
 @theme inline {
@@ -122,6 +142,8 @@
   }
   html {
     background: var(--page);
+    scroll-behavior: smooth;
+    scroll-padding-top: 96px;
   }
   body {
     background: var(--page);
@@ -135,6 +157,12 @@
     outline: 2px solid var(--ink);
     outline-offset: 2px;
     border-radius: 4px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
   }
 }
 
@@ -222,21 +250,120 @@
     opacity: 0.55;
   }
 }
+@keyframes rfm-reveal {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes rfm-shadow-in {
+  from { box-shadow: 0 0 0 0 var(--ink); }
+  to { box-shadow: 4px 4px 0 0 var(--ink); }
+}
+@keyframes rfm-rise-once {
+  from { transform: translateY(5px); opacity: 0.45; }
+  to { transform: translateY(0); opacity: 1; }
+}
+@keyframes rfm-sway-once {
+  0% { transform: rotate(0deg); }
+  35% { transform: rotate(3deg); }
+  70% { transform: rotate(-2deg); }
+  100% { transform: rotate(0deg); }
+}
+@keyframes rfm-theme-crossfade {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+@property --rfm-count {
+  syntax: "<integer>";
+  initial-value: 0;
+  inherits: false;
+}
+@keyframes rfm-count-up {
+  to { --rfm-count: var(--rfm-count-to); }
+}
 .anim-fade {
   animation: rfm-fade 320ms ease-out both;
 }
 .anim-sheet {
   animation: rfm-sheet-rise 380ms ease-out both;
 }
-.rfm-drawing svg #steam {
+.home-steam svg #steam {
   animation: rfm-steam 3s ease-in-out infinite;
   transform-origin: center;
 }
+.section-reveal {
+  animation: rfm-reveal 320ms ease-out both;
+  animation-timeline: view();
+  animation-range: entry 10% cover 24%;
+}
+.slot-selected {
+  animation: rfm-shadow-in 160ms ease-out both;
+}
+.mug-next-motion::after {
+  content: "";
+  width: 8px;
+  height: 8px;
+  margin-left: -8px;
+  margin-top: -24px;
+  border-left: 2px solid currentColor;
+  border-radius: 50%;
+  animation: rfm-rise-once 400ms ease-out both;
+}
+.rfm-icon-mug-done {
+  background: linear-gradient(to top, var(--sage) 0 50%, transparent 50% 100%);
+  background-size: 100% 200%;
+  background-position: 0 100%;
+  animation: rfm-mug-fill 400ms ease-out both;
+}
+@keyframes rfm-mug-fill {
+  from { background-position: 0 0; }
+  to { background-position: 0 100%; }
+}
+.baby-awake-once svg > g:last-child {
+  transform-origin: center;
+  animation: rfm-sway-once 380ms ease-out both;
+}
+.youre-in-rise svg > g:last-child {
+  animation: rfm-rise-once 380ms ease-out both;
+}
+.theme-icon {
+  opacity: 0.55;
+  transition: opacity 320ms ease-out;
+}
+button[aria-pressed="true"] .theme-icon { opacity: 1; }
+.rfm-logo-wrap { display: inline-grid; }
+.rfm-logo-wrap > img { grid-area: 1 / 1; }
+.rfm-logo-night { display: none; }
+:root[data-theme="night"] .rfm-logo-day { display: none; }
+:root[data-theme="night"] .rfm-logo-night { display: block; }
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="day"]) .rfm-logo-day { display: none; }
+  :root:not([data-theme="day"]) .rfm-logo-night { display: block; }
+}
+.count-up {
+  --rfm-count-to: 0;
+  counter-reset: rfm-minutes var(--rfm-count);
+  animation: rfm-count-up 700ms ease-out both;
+}
+.count-up::before { content: counter(rfm-minutes); }
+.count-50 { --rfm-count-to: 50; }
+.count-185 { --rfm-count-to: 185; }
+.count-740 { --rfm-count-to: 740; }
 
 @media (prefers-reduced-motion: reduce) {
   .anim-fade,
   .anim-sheet,
-  .rfm-drawing svg #steam {
+  .home-steam svg #steam,
+  .section-reveal,
+  .slot-selected,
+  .mug-next-motion::after,
+  .rfm-icon-mug-done,
+  .baby-awake-once svg > g:last-child,
+  .youre-in-rise svg > g:last-child,
+  .theme-icon,
+  .count-up {
     animation: none;
+  }
+  .count-up {
+    --rfm-count: var(--rfm-count-to);
   }
 }

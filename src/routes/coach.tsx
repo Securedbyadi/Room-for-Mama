@@ -16,6 +16,10 @@ export const Route = createFileRoute("/coach")({
     meta: [
       { title: "Today — Room for Mama" },
       { name: "description", content: "Your calls today, in your time." },
+      { property: "og:title", content: "Today — Room for Mama" },
+      { property: "og:description", content: "Your calls today, in your time." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
       { name: "robots", content: "noindex" },
     ],
   }),
@@ -236,7 +240,7 @@ function GivenBackTab() {
           ] as const
         ).map(([label, mins]) => (
           <Card key={label} className="flex flex-col items-center gap-1 text-center">
-            <p className="t-time">{mins} min</p>
+            <p className={`t-time count-up count-${mins}`} aria-label={`${mins} minutes`}> min</p>
             <p className="t-caption text-ink-muted">{label}, estimated</p>
           </Card>
         ))}

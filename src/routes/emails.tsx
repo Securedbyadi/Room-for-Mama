@@ -9,6 +9,10 @@ export const Route = createFileRoute("/emails")({
     meta: [
       { title: "Email previews — Room for Mama" },
       { name: "description", content: "The branded email template, one action each." },
+      { property: "og:title", content: "Email previews — Room for Mama" },
+      { property: "og:description", content: "The branded email template, one action each." },
+      { property: "og:type", content: "website" },
+      { name: "twitter:card", content: "summary" },
       { name: "robots", content: "noindex" },
     ],
   }),
