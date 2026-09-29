@@ -135,17 +135,19 @@ export const bookHello = createServerFn({ method: "POST" })
     const origin = await r.requestOrigin();
 
     // Rate limit: 5 per email, 20 per connection, per hour.
-    // cf-connecting-ip is set by the hosting edge and can't be supplied by the browser.
+    // With no connection address, only the per-email limit applies (never one shared bucket).
     const { getRequestHeader } = await import("@tanstack/react-start/server");
-    const ip = (getRequestHeader("cf-connecting-ip") ?? "unknown").trim();
+    const ip = (getRequestHeader("cf-connecting-ip") ?? getRequestHeader("x-real-ip") ?? getRequestHeader("x-forwarded-for")?.split(",")[0] ?? "").trim();
     const since = new Date(Date.now() - 60 * MIN).toISOString();
     const email = data.email.toLowerCase();
     const [{ count: byEmail }, { count: byIp }] = await Promise.all([
       db.from("booking_attempts").select("id", { count: "exact", head: true }).eq("email", email).gte("created_at", since),
-      db.from("booking_attempts").select("id", { count: "exact", head: true }).eq("ip", ip).gte("created_at", since),
+      ip
+        ? db.from("booking_attempts").select("id", { count: "exact", head: true }).eq("ip", ip).gte("created_at", since)
+        : Promise.resolve({ count: 0 }),
     ]);
     if ((byEmail ?? 0) >= 5 || (byIp ?? 0) >= 20) return { ok: false as const, reason: "busy" as const };
-    await db.from("booking_attempts").insert({ email, ip });
+    await db.from("booking_attempts").insert({ email, ip: ip || `none:${email}` });
 
     const start = new Date(data.start);
     const end = new Date(start.getTime() + 20 * MIN);
@@ -160,32 +162,40 @@ export const bookHello = createServerFn({ method: "POST" })
       te.isFree(start, end, busy, rules.bufferMin);
     if (!valid) return { ok: false as const, reason: "taken" as const };
 
-    // Reuse her record if she has booked before with this email.
-    const tok = r.newToken();
-    const profile = {
-      first_name: data.firstName,
-      phone: data.phone || null,
-      zone: data.zone,
-      city: data.city ?? null,
-      moment_days: data.days ?? [],
-      moment_not_before: data.notBeforeLocal ?? null,
-      moment_not_after: data.notAfterLocal ?? null,
-      token_hash: r.hashToken(tok),
-    };
-    const { data: existing } = await db.from("mothers").select("id").eq("email", email).order("created_at").limit(1).maybeSingle();
+    // Reuse her record if she has booked before with this email: keep her details and her manage link.
+    let tok = r.newToken();
+    const { data: existing } = await db.from("mothers").select("id").ilike("email", email).limit(1).maybeSingle();
     let motherId: string;
     let isNew = false;
     if (existing) {
       motherId = existing.id;
-      await db.from("mothers").update(profile).eq("id", motherId);
-      await db.from("mother_links").delete().eq("mother_id", motherId);
+      const { data: link } = await db.from("mother_links").select("token").eq("mother_id", motherId).maybeSingle();
+      if (link) tok = link.token;
+      else {
+        await db.from("mothers").update({ token_hash: r.hashToken(tok) }).eq("id", motherId);
+        await db.from("mother_links").insert({ mother_id: motherId, token: tok });
+      }
     } else {
-      const { data: mother, error: mErr } = await db.from("mothers").insert({ ...profile, email }).select("id").single();
+      const { data: mother, error: mErr } = await db
+        .from("mothers")
+        .insert({
+          email,
+          first_name: data.firstName,
+          phone: data.phone || null,
+          zone: data.zone,
+          city: data.city ?? null,
+          moment_days: data.days ?? [],
+          moment_not_before: data.notBeforeLocal ?? null,
+          moment_not_after: data.notAfterLocal ?? null,
+          token_hash: r.hashToken(tok),
+        })
+        .select("id")
+        .single();
       if (mErr || !mother) throw new Error("Could not save");
       motherId = mother.id;
       isNew = true;
+      await db.from("mother_links").insert({ mother_id: motherId, token: tok });
     }
-    await db.from("mother_links").insert({ mother_id: motherId, token: tok });
 
     const { data: call, error: cErr } = await db
       .from("calls")
