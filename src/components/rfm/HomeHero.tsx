@@ -82,7 +82,7 @@ function Deck({ deals }: { deals: Deal[] }) {
   };
   return (
     <div className="deck">
-      <div ref={ref} onScroll={onScroll} className="-mx-5 flex snap-x snap-mandatory gap-4 overflow-x-auto px-5 pt-2 pb-3 [scrollbar-width:none]">
+      <div ref={ref} onScroll={onScroll} className="-mx-5 flex snap-x snap-mandatory gap-4 overflow-x-auto scroll-pl-5 px-5 pt-2 pb-3 [scrollbar-width:none]">
         {deals.map((d) => (
           <Link key={d.to} to={d.to} viewTransition className="rfm-deal-card w-[80%] shrink-0 snap-start p-3" style={{ viewTransitionName: d.vt }}>
             <CardFace deal={d} alwaysLine />
