@@ -10,33 +10,84 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as BookRouteImport } from './routes/book'
+import { Route as BookedRouteImport } from './routes/booked'
+import { Route as CoachRouteImport } from './routes/coach'
+import { Route as EmailsRouteImport } from './routes/emails'
+import { Route as MakeRoomRouteImport } from './routes/make-room'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BookRoute = BookRouteImport.update({
+  id: '/book',
+  path: '/book',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const BookedRoute = BookedRouteImport.update({
+  id: '/booked',
+  path: '/booked',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CoachRoute = CoachRouteImport.update({
+  id: '/coach',
+  path: '/coach',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const EmailsRoute = EmailsRouteImport.update({
+  id: '/emails',
+  path: '/emails',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const MakeRoomRoute = MakeRoomRouteImport.update({
+  id: '/make-room',
+  path: '/make-room',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/book': typeof BookRoute
+  '/booked': typeof BookedRoute
+  '/coach': typeof CoachRoute
+  '/emails': typeof EmailsRoute
+  '/make-room': typeof MakeRoomRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/book': typeof BookRoute
+  '/booked': typeof BookedRoute
+  '/coach': typeof CoachRoute
+  '/emails': typeof EmailsRoute
+  '/make-room': typeof MakeRoomRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/book': typeof BookRoute
+  '/booked': typeof BookedRoute
+  '/coach': typeof CoachRoute
+  '/emails': typeof EmailsRoute
+  '/make-room': typeof MakeRoomRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/book' | '/booked' | '/coach' | '/emails' | '/make-room'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/book' | '/booked' | '/coach' | '/emails' | '/make-room'
+  id:
+    '__root__' | '/' | '/book' | '/booked' | '/coach' | '/emails' | '/make-room'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  BookRoute: typeof BookRoute
+  BookedRoute: typeof BookedRoute
+  CoachRoute: typeof CoachRoute
+  EmailsRoute: typeof EmailsRoute
+  MakeRoomRoute: typeof MakeRoomRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +99,51 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/book': {
+      id: '/book'
+      path: '/book'
+      fullPath: '/book'
+      preLoaderRoute: typeof BookRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/booked': {
+      id: '/booked'
+      path: '/booked'
+      fullPath: '/booked'
+      preLoaderRoute: typeof BookedRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/coach': {
+      id: '/coach'
+      path: '/coach'
+      fullPath: '/coach'
+      preLoaderRoute: typeof CoachRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/emails': {
+      id: '/emails'
+      path: '/emails'
+      fullPath: '/emails'
+      preLoaderRoute: typeof EmailsRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/make-room': {
+      id: '/make-room'
+      path: '/make-room'
+      fullPath: '/make-room'
+      preLoaderRoute: typeof MakeRoomRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  BookRoute: BookRoute,
+  BookedRoute: BookedRoute,
+  CoachRoute: CoachRoute,
+  EmailsRoute: EmailsRoute,
+  MakeRoomRoute: MakeRoomRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

@@ -1,0 +1,21 @@
+{
+  "name": "Room for Mama",
+  "short_name": "Room for Mama",
+  "description": "Gentle routine coaching for mothers of babies and toddlers.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#F6EEE3",
+  "theme_color": "#F6EEE3",
+  "icons": [
+    {
+      "src": "/brand/logo/png/rfm-app-icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/brand/logo/png/rfm-app-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
