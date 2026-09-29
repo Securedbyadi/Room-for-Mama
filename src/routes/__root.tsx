@@ -23,9 +23,7 @@ function NotFoundComponent() {
         <p className="mt-2 text-ink-muted">Let’s get you back.</p>
       </div>
       <div className="mt-auto flex flex-col gap-4 pt-4">
-        <Link to="/" className="block">
-          <ButtonMain>Back to home</ButtonMain>
-        </Link>
+        <ButtonMain to="/">Back to home</ButtonMain>
         <SafetyNote />
       </div>
     </Page>
