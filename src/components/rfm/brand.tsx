@@ -6,6 +6,7 @@
 import { Link } from "@tanstack/react-router";
 import type { ReactNode } from "react";
 import { DesktopToggle, WebsiteFooter, WebsiteHeader } from "./WebsiteChrome";
+import { ThemeRound } from "./ThemeControl";
 
 const iconModules = import.meta.glob("../../assets/brand/icons/*.svg", {
   query: "?raw",
@@ -260,7 +261,10 @@ export function Page({
   ) : (
     <header className="mb-8 grid grid-cols-[minmax(0,1fr)_auto] items-center gap-4">
       <Logo />
-      {headerAction ? <div className="shrink-0">{headerAction}</div> : null}
+      <div className="flex shrink-0 items-center gap-3">
+        {headerAction}
+        <ThemeRound className="relative !h-12 !w-12" />
+      </div>
     </header>
   );
   const body = illustration ? (
