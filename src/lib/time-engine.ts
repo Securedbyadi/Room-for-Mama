@@ -80,7 +80,7 @@ export function localParts(zone: string, date: Date): LocalParts {
     d: Number(out.day),
     h: Number(out.hour) % 24,
     mi: Number(out.minute),
-    weekday: WEEKDAYS[out.weekday],
+    weekday: WEEKDAYS[out.weekday] ?? 0,
   };
 }
 
@@ -240,7 +240,7 @@ export interface WeeklyCall {
   start: Date;
   end: Date;
   /** Set when a clock change moved the mother's local time. */
-  clockNote?: string;
+  clockNote?: string | undefined;
 }
 
 /**
