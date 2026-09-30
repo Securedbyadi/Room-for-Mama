@@ -77,9 +77,9 @@ function Manage() {
   const title = (k: string) => (k === "hello" ? "Hello call with Room for Mama" : "Half hour with Room for Mama");
 
   return (
-    <Page illustration={just === "booked" ? <Drawing name="illo-tea-warm" className="final-illustration" /> : undefined} headerAction={<span className="font-semibold underline underline-offset-8">My calls</span>}>
+    <Page illustration={just === "booked" ? <Drawing name="illo-tea-warm" bare className="final-illustration" /> : undefined} headerAction={<span className="font-semibold underline underline-offset-8">My calls</span>}>
       {just === "booked" && next ? (
-        <Card offset="peach" className="!bg-paper flex flex-col gap-3 shadow-[6px_6px_0_var(--peach)]"><div className="flex items-center gap-3"><Icon name="icon-done" size={30} /><h1 className="t-title">You’re in.</h1></div><div><p className="t-time text-[20px]">{fmtLong(new Date(next.starts_at), zone)}</p><p className="t-caption mt-1 text-ink-muted">your time · {next.kind === "hello" ? "20 minutes" : "half hour"} · video call</p></div><p>If the baby wakes, tap <strong>Baby’s up</strong> and pick another time. No need to explain.</p></Card>
+        <Card offset="peach" className="flex flex-col gap-3 shadow-[6px_6px_0_var(--peach)]"><div className="flex items-center gap-3"><Icon name="icon-done" size={30} /><h1 className="t-title">You’re in.</h1></div><div><p className="t-time text-[20px]">{fmtLong(new Date(next.starts_at), zone)}</p><p className="t-caption mt-1 text-ink-muted">your time · {next.kind === "hello" ? "20 minutes" : "half hour"} · video call</p></div><p>If the baby wakes, tap <strong>Baby’s up</strong> and pick another time. No need to explain.</p></Card>
       ) : (
         <h1 className="t-title">Hello, {d.mother.firstName}</h1>
       )}
@@ -139,7 +139,7 @@ function BabysUpSheet({ token, call, zone, onClose, onMoved }: { token: string; 
   const [picked, setPicked] = useState<string | null>(null);
   const chosen = picked ?? q.data?.[0]?.start ?? null;
   return (
-    <div className="fixed inset-0 z-40 bg-ink/30" onClick={onClose} role="presentation">
+    <div className="fixed inset-0 z-40 bg-black/40" onClick={onClose} role="presentation">
       <div className="anim-sheet absolute inset-x-0 bottom-0 mx-auto w-full max-w-[480px] rounded-t-[28px] bg-paper p-5 pb-8 shadow-[0_-8px_24px_rgba(0,0,0,0.18)]" onClick={(e) => e.stopPropagation()} role="dialog" aria-label="Baby’s up">
         <div className="mb-4 flex items-start gap-3">
            <Drawing name="illo-baby-up" className="baby-awake-once aspect-square w-20 shrink-0 rounded-full [&>div]:p-1" />
