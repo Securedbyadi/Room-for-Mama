@@ -20,3 +20,6 @@
 - [x] Standardize typography across public, booking and coach screens
 - [x] Mobile home header: stacked logo, smaller day/night toggle and burger menu
 - [x] Light mode is the default theme (was Auto)
+- [x] New day/night logo set installed (horizontal, stacked, wordmark, mark, favicon)
+- [x] Header shows the mark only at the top and reveals the full lockup on scroll; header sticky everywhere
+- [x] Footer redesigned as a rounded sunk panel with offset-print booking card and link columns
