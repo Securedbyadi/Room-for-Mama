@@ -357,6 +357,13 @@
 button[aria-pressed="true"] .theme-icon { opacity: 1; }
 .rfm-logo-wrap { display: inline-grid; }
 .rfm-logo-wrap > img { grid-area: 1 / 1; }
+/* Stacked lockup on mobile home; horizontal from tablet up. */
+.rfm-logo-wrap.rfm-logo-horizontal-when-stacked { display: none; }
+@media (min-width: 1024px) {
+  .rfm-logo-wrap.rfm-logo-stacked { display: none; }
+  .rfm-logo-wrap.rfm-logo-horizontal-when-stacked { display: inline-grid; }
+}
+.rfm-logo-wrap > img { grid-area: 1 / 1; }
 .rfm-logo-night { display: none; }
 :root[data-theme="night"] .rfm-logo-day { display: none; }
 :root[data-theme="night"] .rfm-logo-night { display: block; }
