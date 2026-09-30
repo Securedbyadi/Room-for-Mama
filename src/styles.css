@@ -582,7 +582,7 @@ button[aria-pressed="true"] .theme-icon { opacity: 1; }
 }
 
 /* Coach dashboard */
-.coach-cup-icon svg { transform: scale(.84); transform-origin: center; }
+.coach-cup-icon svg { transform: scale(1.14); transform-origin: center; }
 .coach-tab { transition: background-color 160ms ease-out; }
 .coach-tab:hover { background: var(--sunk); }
 .coach-slot { transition: transform 160ms ease-out; }
