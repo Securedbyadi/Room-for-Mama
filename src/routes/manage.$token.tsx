@@ -82,7 +82,7 @@ function Manage() {
   return (
     <Page illustration={just === "booked" ? <Drawing name="illo-tea-warm" bare className="final-illustration" /> : undefined} headerAction={<span className="font-semibold underline underline-offset-8">My calls</span>}>
       {just === "booked" && next ? (
-        <Card offset="peach" className="flex flex-col gap-3 shadow-[6px_6px_0_var(--peach)]"><div className="flex items-center gap-3"><Icon name="icon-done" size={30} /><h1 className="t-title">You’re in.</h1></div><div><p className="t-heading t-time">{fmtLong(new Date(next.starts_at), zone)}</p><p className="t-caption mt-1 text-ink-muted">your time · {next.kind === "hello" ? "20 minutes" : "half hour"} · video call</p></div><p>If the baby wakes, tap <strong>Baby’s up</strong> and pick another time. No need to explain.</p></Card>
+        <Card offset="peach" className="flex flex-col gap-3 shadow-[6px_6px_0_var(--peach)]"><div className="flex items-center gap-3"><Icon name="icon-done" size={30} /><h1 className="t-title">Thank you — you’re in.</h1></div><div><p className="t-heading t-time">{fmtLong(new Date(next.starts_at), zone)}</p><p className="t-caption mt-1 text-ink-muted">your time · {next.kind === "hello" ? "20 minutes" : "half hour"} · video call</p></div><p>Check your email for your link and calendar invite. If the baby wakes, tap <strong>Baby’s up</strong> and pick another time. No need to explain.</p></Card>
       ) : (
         <h1 className="t-title">Hello, {d.mother.firstName}</h1>
       )}
