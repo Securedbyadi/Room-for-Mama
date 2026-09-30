@@ -9,16 +9,17 @@
 > the editor, so keep the branch in a working state.
 <!-- LOVABLE:END -->
 
-- Tests: `bun run test` (vitest) uses its own vitest.config.ts, separate from the app build config, so the app plugins stay out of tests.
-- The public home keeps every reference section below a compact hero (no forced full-viewport height; the user asked for less empty space); mother flows use a wide illustrated split shell on desktop and retain the stacked app shell on phones. Why: this matches the approved visual references without changing booking behaviour.
-- Approved plans are copied into docs and all edits rely on the connected Lovable GitHub auto-sync. Why: the user requires an external record of plan context and every change.
-- Theme preference is device-local only, defaults to Auto, and is applied on the root element before paint to avoid a colour flash.
-- Mother actions go through createServerFn in src/lib/mother.functions.ts and check a manage token (hashed on mothers, raw token only in service-only mother_links for email links); visitors never read tables.
-- Coach actions live in src/lib/coach.functions.ts behind requireSupabaseAuth plus has_role('coach'), and server-side access is restricted to the verified email adilmushtaq088@gmail.com. Why: only the named coach may access private practice data.
-- The real coach app is /coach (under _authenticated); the sample one is /demo/coach and uses demo rows only.
-- Automations run in src/lib/automations.server.ts via /api/public/hooks/tick (pg_cron every 5 min) and /digest (02:00 UTC), authorised by the service-only cron_keys row. Emails go to email_outbox until an email domain exists.
-- Double-booking is refused by the calls exclusion constraint on [starts_at, blocked_until); blocked_until = ends_at + buffer, set by trigger.
-- Drawings render as image files from `public/brand/animated` with static `public/brand/drawings` fallbacks for reduced motion or missing files; headers keep the horizontal logo unchanged. Why: supplied SVG animations stay self-contained and accessible without inline SVG manipulation.
-- The coach dashboard UI lives in src/components/coach/CoachDashboard.tsx (spec: docs/coach-dashboard.md); /demo/coach renders it on in-memory demo rows. Why: one dashboard for demo and, next, the real coach app.
-- Calendar feeds are built by src/lib/ics.ts with random 48-hex tokens. Why: a pure, tested writer the feed endpoint can reuse.
-- Competition demo mode: mothers/calls/plans/waitlist default is_demo=true and pg_cron rfm-demo-purge (21:00 UTC) runs purge_demo_bookings(). Why: the public demo must never keep real data.
+- Tests use `bun run test` with the separate vitest config so app plugins stay out.
+- Home uses a compact hero; mother flows split on desktop and stack on phones to match references.
+- Approved plans are copied into docs; connected GitHub auto-sync records every change.
+- Theme is device-local, defaults to Auto, and applies before paint to prevent flashing.
+- Mother actions use server functions and checked manage tokens; visitors never read tables.
+- Coach functions require auth, the coach role, and the verified email adilmushtaq088@gmail.com.
+- Real coach app is `/coach`; `/demo/coach` uses only in-memory sample rows.
+- Automations use public tick/digest routes, service-only cron keys, and email_outbox pending a domain.
+- A calls exclusion constraint on `[starts_at, blocked_until)` prevents double-booking.
+- Drawings use animated public SVG images with static reduced-motion fallbacks; the header logo stays horizontal.
+- Shared coach UI lives in `CoachDashboard.tsx`; the public sample supplies in-memory rows.
+- Calendar feeds use the pure ICS writer and random 48-hex tokens.
+- Demo rows use `is_demo=true`; a nightly purge removes them before they can persist.
+- Typography uses shared global classes: Fraunces for headings and Figtree elsewhere; compact sizes are limited to dense UI.
