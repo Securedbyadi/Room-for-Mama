@@ -19,7 +19,7 @@ export const Route = createFileRoute("/auth")({
   component: AuthPage,
 });
 
-const inputCls = "min-h-12 w-full rounded-2xl border border-input bg-paper px-4 text-[17px] text-ink placeholder:text-ink-muted";
+const inputCls = "min-h-12 w-full rounded-2xl border border-input bg-paper px-4 text-ink placeholder:text-ink-muted";
 
 function AuthPage() {
   const navigate = useNavigate();

@@ -171,7 +171,7 @@ function Book() {
             onChange={(e) => setMoment(e.target.value)}
             rows={4}
             autoFocus
-            className="w-full rounded-2xl border border-input bg-paper p-4 text-[17px] text-ink placeholder:text-ink-muted"
+            className="w-full rounded-2xl border border-input bg-paper p-4 text-ink placeholder:text-ink-muted"
           />
           <div className="mt-auto flex flex-col gap-3 pt-4">
             <ButtonMain disabled={!moment.trim() || busy} onClick={() => void showTimes(moment)}>
@@ -239,21 +239,21 @@ function Book() {
               value={name}
               onChange={(e) => setName(e.target.value)}
               placeholder="First name"
-              className="min-h-12 w-full rounded-2xl border border-input bg-paper px-4 text-[17px] text-ink placeholder:text-ink-muted"
+              className="min-h-12 w-full rounded-2xl border border-input bg-paper px-4 text-ink placeholder:text-ink-muted"
             />
             <input
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               placeholder="Email"
               type="email"
-              className="min-h-12 w-full rounded-2xl border border-input bg-paper px-4 text-[17px] text-ink placeholder:text-ink-muted"
+              className="min-h-12 w-full rounded-2xl border border-input bg-paper px-4 text-ink placeholder:text-ink-muted"
             />
             <input
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
               placeholder="Phone (optional)"
               type="tel"
-              className="min-h-12 w-full rounded-2xl border border-input bg-paper px-4 text-[17px] text-ink placeholder:text-ink-muted"
+              className="min-h-12 w-full rounded-2xl border border-input bg-paper px-4 text-ink placeholder:text-ink-muted"
             />
           </div>
           <div className="mt-auto flex flex-col gap-4 pt-4">
@@ -270,7 +270,7 @@ function Book() {
 }
 
 const inputCls =
-  "min-h-12 w-full rounded-2xl border border-input bg-paper px-4 text-[17px] text-ink placeholder:text-ink-muted";
+  "min-h-12 w-full rounded-2xl border border-input bg-paper px-4 text-ink placeholder:text-ink-muted";
 
 function Waitlist({ parsed, demo }: { parsed: ParsedMoment; demo: boolean }) {
   const join = useServerFn(joinWaitlist);

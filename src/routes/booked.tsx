@@ -90,7 +90,7 @@ function Booked() {
       <Card offset="peach" className="flex flex-col gap-3 shadow-[6px_6px_0_var(--peach)]" >
         <div className="flex items-center gap-3"><Icon name="icon-done" size={30} /><h1 className="t-title">You’re in.</h1></div>
         <div id="my-call">
-          <p className="t-time text-[20px]">{fmtLong(current, zone)}</p>
+          <p className="t-heading t-time">{fmtLong(current, zone)}</p>
           <p className="t-caption mt-1 text-ink-muted">your time · 20 minutes · video call</p>
         </div>
         <p>

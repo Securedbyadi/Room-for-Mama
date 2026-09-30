@@ -46,7 +46,7 @@ function MakeRoom() {
   });
 
   return (
-    <Page illustration={<Drawing name="illo-the-chair" className="form-illustration" />} headerAction={<span className="t-caption uppercase tracking-[0.12em] text-ink-muted">Make Room</span>}>
+    <Page illustration={<Drawing name="illo-the-chair" className="form-illustration" />} headerAction={<span className="eyebrow text-ink-muted">Make Room</span>}>
 
       <div>
         <h1 className="t-display">Four half hours,<br />one a week</h1>
@@ -55,7 +55,7 @@ function MakeRoom() {
 
       <MakeRoomPlan plan={plan} zone={ZONE} />
 
-      <div><p className="t-display">{ZONE === "Asia/Karachi" ? "PKR 8,000" : "US$80"} <span className="font-body text-[17px] font-semibold">for all four</span></p><p className="mt-2 inline-block rounded-full bg-peach-soft px-4 py-2 font-semibold">Founding price, usually {ZONE === "Asia/Karachi" ? "PKR 12,000" : "US$120"}</p></div>
+      <div><p className="t-display">{ZONE === "Asia/Karachi" ? "PKR 8,000" : "US$80"} <span className="t-control font-body">for all four</span></p><p className="mt-2 inline-block rounded-full bg-peach-soft px-4 py-2 font-semibold">Founding price, usually {ZONE === "Asia/Karachi" ? "PKR 12,000" : "US$120"}</p></div>
 
       {stage === "offer" && (
         <div className="mt-auto pt-4">
@@ -67,7 +67,7 @@ function MakeRoom() {
       {stage === "held" && (
         <Card className="flex flex-col gap-3">
           <h2 className="t-heading">Your four times are held for 48 hours</h2>
-          <ul className="space-y-1 text-[15px]">
+          <ul className="t-compact space-y-1">
             <li><span className="font-semibold">Bank:</span> {PLACEHOLDERS.payment.bank}</li>
             <li><span className="font-semibold">Raast:</span> {PLACEHOLDERS.payment.raast}</li>
             <li><span className="font-semibold">JazzCash:</span> {PLACEHOLDERS.payment.jazzcash}</li>
@@ -77,7 +77,7 @@ function MakeRoom() {
             value={reference}
             onChange={(e) => setReference(e.target.value)}
             placeholder="Payment reference (RM…)"
-            className="min-h-12 w-full rounded-2xl border border-input bg-paper px-4 text-[17px] text-ink placeholder:text-ink-muted"
+            className="min-h-12 w-full rounded-2xl border border-input bg-paper px-4 text-ink placeholder:text-ink-muted"
           />
           <ButtonMain disabled={!reference.trim()} onClick={() => setStage("confirmed")}>
             I’ve paid

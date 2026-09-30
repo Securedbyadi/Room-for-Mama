@@ -20,9 +20,9 @@ export function WebsiteHeader({ home = false }: { home?: boolean }) {
           <Logo height={32} className={home ? "logo-rise" : ""} />
           <div className="hidden items-center gap-8 lg:flex">
             <nav className="flex items-center gap-7" aria-label="Main navigation">
-              {LINKS.map(([label, to]) => <Link key={label} to={to} viewTransition className="micro-link whitespace-nowrap text-[14px] font-semibold text-ink-muted">{label}</Link>)}
+              {LINKS.map(([label, to]) => <Link key={label} to={to} viewTransition className="micro-link t-caption whitespace-nowrap text-ink-muted">{label}</Link>)}
             </nav>
-            <Link to="/fit-check" className="rfm-button inline-flex min-h-12 items-center rounded-full border-2 border-ink px-5 text-[15px] font-semibold whitespace-nowrap">Book a free hello call</Link>
+            <Link to="/fit-check" className="rfm-button t-control inline-flex min-h-12 items-center rounded-full border-2 border-ink px-5 whitespace-nowrap">Book a free hello call</Link>
           </div>
           <div className="flex items-center gap-2 lg:hidden">
             <ThemeRound className="relative !h-12 !w-12" />
@@ -128,7 +128,7 @@ export function CardPageHeader({ vt, title, children }: { vt: string; title: str
     <div className="anim-fade mx-auto max-w-[1200px] px-5 pt-8">
       <Link to="/" viewTransition className="micro-link inline-flex min-h-12 items-center font-semibold underline underline-offset-4">Back to the cards</Link>
       <div className="card-expanded-page mt-4 grid gap-8 p-6 md:grid-cols-[minmax(0,1fr)_400px] md:items-center md:p-10" style={{ viewTransitionName: vt }}>
-        <h1 className="page-reveal-title t-display md:text-[72px] md:leading-[76px]">{title}</h1>
+        <h1 className="page-reveal-title page-title">{title}</h1>
         {children}
       </div>
     </div>

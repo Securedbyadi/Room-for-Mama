@@ -79,7 +79,7 @@ function Manage() {
   return (
     <Page illustration={just === "booked" ? <Drawing name="illo-tea-warm" bare className="final-illustration" /> : undefined} headerAction={<span className="font-semibold underline underline-offset-8">My calls</span>}>
       {just === "booked" && next ? (
-        <Card offset="peach" className="flex flex-col gap-3 shadow-[6px_6px_0_var(--peach)]"><div className="flex items-center gap-3"><Icon name="icon-done" size={30} /><h1 className="t-title">You’re in.</h1></div><div><p className="t-time text-[20px]">{fmtLong(new Date(next.starts_at), zone)}</p><p className="t-caption mt-1 text-ink-muted">your time · {next.kind === "hello" ? "20 minutes" : "half hour"} · video call</p></div><p>If the baby wakes, tap <strong>Baby’s up</strong> and pick another time. No need to explain.</p></Card>
+        <Card offset="peach" className="flex flex-col gap-3 shadow-[6px_6px_0_var(--peach)]"><div className="flex items-center gap-3"><Icon name="icon-done" size={30} /><h1 className="t-title">You’re in.</h1></div><div><p className="t-heading t-time">{fmtLong(new Date(next.starts_at), zone)}</p><p className="t-caption mt-1 text-ink-muted">your time · {next.kind === "hello" ? "20 minutes" : "half hour"} · video call</p></div><p>If the baby wakes, tap <strong>Baby’s up</strong> and pick another time. No need to explain.</p></Card>
       ) : (
         <h1 className="t-title">Hello, {d.mother.firstName}</h1>
       )}
@@ -91,8 +91,8 @@ function Manage() {
           {upcoming.map((c) => (
             <Card key={c.id} className="flex flex-col gap-2">
               <p className="t-caption text-ink-muted">{c.kind === "hello" ? "Hello call" : `Half hour ${c.week ?? ""} of 4`}{c.status === "held" ? ", held" : ""}</p>
-              <p className="t-time text-[17px]">{fmtLong(new Date(c.starts_at), zone)}, your time</p>
-              {c.clock_note && <p className="rounded-xl bg-butter-soft p-3 text-[13px] font-semibold">{c.clock_note}</p>}
+              <p className="t-time">{fmtLong(new Date(c.starts_at), zone)}, your time</p>
+              {c.clock_note && <p className="t-caption rounded-xl bg-butter-soft p-3">{c.clock_note}</p>}
               {c.status === "booked" && (
                 <div className="mt-2 flex flex-col gap-2">
                   {c.keep_spot_sent_at && !c.keep_spot_confirmed_at && (
@@ -190,7 +190,7 @@ function MakeRoomOffer({ token, onDone }: { token: string; onDone: () => void })
       <Drawing name="illo-the-chair" />
       <div><h2 className="t-display">Four half hours,<br />one a week</h2><p className="mt-2 font-semibold text-ink-muted">One weekly time, shown in your time.</p></div>
       {plan.length === 4 ? <MakeRoomPlan plan={plan} zone={zone} /> : <p>No weekly time fits just now. I’ll be in touch.</p>}
-      {p && <p className="t-display">{p.currency === "PKR" ? `PKR ${p.amount.toLocaleString("en")}` : `US$${p.amount}`} <span className="font-body text-[17px] font-semibold">for all four</span></p>}
+      {p && <p className="t-display">{p.currency === "PKR" ? `PKR ${p.amount.toLocaleString("en")}` : `US$${p.amount}`} <span className="t-control font-body">for all four</span></p>}
       {plan.length === 4 && (
         <div><ButtonMain onClick={async () => { await hold({ data: { token } }); onDone(); }}>Book all four</ButtonMain><p className="mt-3 text-center font-semibold text-ink-muted">Held for 48 hours while you pay.</p></div>
       )}
@@ -205,13 +205,13 @@ function PayCard({ token, plan, payment, onDone }: { token: string; plan: { refe
     <Card className="flex flex-col gap-3">
       <h2 className="t-heading">Your four times are held for 48 hours</h2>
       <p className="t-time">{plan.currency === "PKR" ? `PKR ${plan.amount.toLocaleString("en")}` : `US$${plan.amount}`}, reference {plan.reference}</p>
-      <ul className="space-y-1 text-[15px]">
+      <ul className="t-compact space-y-1">
         <li><span className="font-semibold">Bank:</span> {payment.bank}</li>
         <li><span className="font-semibold">Raast:</span> {payment.raast}</li>
         <li><span className="font-semibold">JazzCash:</span> {payment.jazzcash}</li>
         <li><span className="font-semibold">Wise:</span> {payment.wise}</li>
       </ul>
-      <input value={ref} onChange={(e) => setRef(e.target.value)} aria-label="Payment reference" placeholder={`Payment reference (${plan.reference})`} className="min-h-12 w-full rounded-2xl border border-input bg-paper px-4 text-[17px] text-ink placeholder:text-ink-muted" />
+      <input value={ref} onChange={(e) => setRef(e.target.value)} aria-label="Payment reference" placeholder={`Payment reference (${plan.reference})`} className="min-h-12 w-full rounded-2xl border border-input bg-paper px-4 text-ink placeholder:text-ink-muted" />
       <ButtonMain disabled={!ref.trim()} onClick={async () => { await paid({ data: { token, reference: ref.trim() } }); onDone(); }}>I’ve paid</ButtonMain>
     </Card>
   );

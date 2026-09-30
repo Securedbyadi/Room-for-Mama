@@ -43,7 +43,7 @@ function Prices() {
           </div>
         </section>
         <section id="faq" className="section-reveal border-t border-line bg-paper">
-          <div className="mx-auto max-w-[760px] px-5 py-16"><h2 className="t-title">FAQ</h2><div className="mt-8 divide-y divide-line">{FAQ.map(([q, a]) => <details key={q} className="py-5"><summary className="grid cursor-pointer list-none grid-cols-[minmax(0,1fr)_auto] items-center gap-4 font-semibold"><span>{q}</span><span aria-hidden className="text-2xl">+</span></summary><p className="mt-3 pr-10 text-ink-muted">{a}</p></details>)}</div></div>
+          <div className="mx-auto max-w-[760px] px-5 py-16"><h2 className="t-title">FAQ</h2><div className="mt-8 divide-y divide-line">{FAQ.map(([q, a]) => <details key={q} className="py-5"><summary className="grid cursor-pointer list-none grid-cols-[minmax(0,1fr)_auto] items-center gap-4"><h3 className="t-heading">{q}</h3><span aria-hidden className="text-2xl">+</span></summary><p className="mt-3 pr-10 text-ink-muted">{a}</p></details>)}</div></div>
         </section>
       </main>
     </WebsitePage>
