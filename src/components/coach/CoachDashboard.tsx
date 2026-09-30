@@ -97,8 +97,18 @@ function Saved({ onSave }: { onSave: () => void }) {
   const [s, setS] = useState(false);
   return (
     <button type="button" onClick={() => { onSave(); setS(true); setTimeout(() => setS(false), 2000); }}
-      className="rfm-button min-h-12 rounded-full border-2 border-line-strong px-5 font-semibold">
+      className="rfm-button min-h-10 rounded-full border border-line-strong px-4 text-[15px] font-semibold">
       {s ? "Saved" : "Save"}
+    </button>
+  );
+}
+
+/* Small, light coach action: thin stroke, faded fill, no heavy block. */
+function CoachBtn({ children, onClick, primary = false, className = "" }: { children: ReactNode; onClick?: () => void; primary?: boolean; className?: string }) {
+  return (
+    <button type="button" onClick={onClick}
+      className={`rfm-button inline-flex min-h-10 items-center justify-center gap-2 rounded-full border px-4 text-[15px] font-semibold ${primary ? "border-ink/70 bg-butter-soft text-ink" : "border-line bg-paper text-ink"} ${className}`}>
+      {children}
     </button>
   );
 }
