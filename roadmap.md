@@ -28,3 +28,6 @@
 - [x] Button hover: butter fill with dark ink text in both themes (was peach-soft, text could turn cream/invisible)
 - [x] Balance the Today cup icon with the other dashboard navigation icons
 - [x] Restore the visible weekly bars in Time given back
+
+## Payments
+- User wants to collect payments from customers in the app. Built-in Lovable payments unavailable for PK seller + product type (eligibility check ran 2026-09-30). Awaiting user choice: keep manual bank/Raast/JazzCash/Wise hold flow (already built) vs connect a Pakistan-friendly gateway with own merchant account.
