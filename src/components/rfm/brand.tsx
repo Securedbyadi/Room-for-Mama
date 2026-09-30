@@ -95,15 +95,26 @@ const ANIMATED = new Set(
 );
 
 /** Drawings always sit on a light #FBF6EE card, even at night. */
+const DRAWING_ALT: Record<DrawingName, string> = {
+  "illo-her-half-hour": "A mother sitting with a warm cup of tea, taking half an hour for herself",
+  "illo-tea-warm": "A warm cup of tea with gentle steam rising",
+  "illo-tea-cold": "A forgotten cup of tea gone cold on the counter",
+  "illo-baby-up": "A baby waking up, wide awake",
+  "illo-the-chair": "A comfortable chair waiting in a quiet corner",
+};
+
 export function Drawing({
   name,
   className = "",
   bare = false,
+  alt,
 }: {
   name: DrawingName;
   className?: string;
   bare?: boolean;
+  alt?: string;
 }) {
+  const label = alt ?? DRAWING_ALT[name];
   return (
     <div
       className={`rfm-drawing rfm-${name} flex flex-col overflow-hidden ${className}`}
@@ -113,10 +124,10 @@ export function Drawing({
         {ANIMATED.has(name) ? (
           <picture>
             <source media="(prefers-reduced-motion: reduce)" srcSet={`/brand/drawings/${name}.svg`} />
-            <img src={`/brand/animated/${name}.svg`} alt="" className="block h-auto w-full" />
+            <img src={`/brand/animated/${name}.svg`} alt={label} className="block h-auto w-full" />
           </picture>
         ) : (
-          <img src={`/brand/drawings/${name}.svg`} alt="" className="block h-auto w-full" />
+          <img src={`/brand/drawings/${name}.svg`} alt={label} className="block h-auto w-full" />
         )}
       </div>
     </div>
