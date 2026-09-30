@@ -91,7 +91,15 @@ function FitCheck() {
       {step === 0 && <p className="mt-4 text-ink-muted">Four quick questions first, so your hello call is time well spent.</p>}
       <h1 className="t-title">{question.question}</h1>
       <div className="mt-auto flex flex-col gap-3 pt-8">
-        {question.choices.map((choice) => <ButtonOutline key={choice.label} onClick={() => choose(choice)} className={`min-h-16 justify-start text-left ${answers[step] === choice ? "!border-ink bg-butter-soft" : ""}`}>{choice.label}</ButtonOutline>)}
+        {question.choices.map((choice) => {
+          const on = answers[step] === choice;
+          return (
+            <ButtonOutline key={choice.label} aria-pressed={on} onClick={() => choose(choice)} className={`min-h-16 justify-between text-left ${on ? "!border-[#34402A] !bg-butter !text-[#34402A] shadow-[4px_4px_0_var(--peach)]" : ""}`}>
+              <span>{choice.label}</span>
+              {on && <Icon name="icon-done" size={24} className="!text-[#34402A]" />}
+            </ButtonOutline>
+          );
+        })}
         <SafetyNote />
       </div>
     </Page>

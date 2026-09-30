@@ -52,6 +52,7 @@ function Manage() {
   const q = useQuery({ queryKey: ["manage", token], queryFn: () => get({ data: { token } }), retry: false });
   const [sheetFor, setSheetFor] = useState<CallRow | null>(null);
   const [note, setNote] = useState<string | null>(null);
+  const [movedId, setMovedId] = useState<string | null>(null);
   const keep = useServerFn(keepMySpot);
   const cancel = useServerFn(cancelMine);
   const del = useServerFn(deleteMyData);
@@ -72,8 +73,10 @@ function Manage() {
   const d = q.data;
   const zone = d.mother.zone;
   const now = Date.now();
-  const upcoming = (d.calls as CallRow[]).filter((c) => (c.status === "booked" || c.status === "held") && new Date(c.ends_at).getTime() + 10 * 60_000 > now);
-  const next = upcoming[0];
+  const upcoming = (d.calls as CallRow[])
+    .filter((c) => (c.status === "booked" || c.status === "held") && new Date(c.ends_at).getTime() + 10 * 60_000 > now)
+    .sort((a, b) => new Date(a.starts_at).getTime() - new Date(b.starts_at).getTime());
+  const next = (movedId && upcoming.find((c) => c.id === movedId)) || upcoming[0];
   const title = (k: string) => (k === "hello" ? "Hello call with Room for Mama" : "Half hour with Room for Mama");
 
   return (
@@ -127,7 +130,7 @@ function Manage() {
         <SafetyNote lines={d.helplines} />
       </div>
 
-      {sheetFor && <BabysUpSheet token={token} call={sheetFor} zone={zone} onClose={() => setSheetFor(null)} onMoved={async (msg) => { await refresh(); setSheetFor(null); setNote(msg); }} />}
+      {sheetFor && <BabysUpSheet token={token} call={sheetFor} zone={zone} onClose={() => setSheetFor(null)} onMoved={async (msg) => { setMovedId(sheetFor.id); await qc.refetchQueries({ queryKey: ["manage", token] }); setSheetFor(null); setNote(msg); }} />}
     </Page>
   );
 }
