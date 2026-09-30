@@ -17,7 +17,7 @@ export function WebsiteHeader({ home = false }: { home?: boolean }) {
     <>
       <header className={`z-30 ${home ? "relative" : "sticky top-0 border-b border-line bg-page/95 backdrop-blur"}`}>
         <div className="mx-auto grid min-h-20 max-w-[1200px] grid-cols-[minmax(0,1fr)_auto] items-center gap-4 px-5">
-          <Logo height={32} className={home ? "logo-rise" : ""} />
+          <Logo height={32} stackedHeight={44} stacked={home} className={home ? "logo-rise" : ""} />
           <div className="hidden items-center gap-8 lg:flex">
             <nav className="flex items-center gap-7" aria-label="Main navigation">
               {LINKS.map(([label, to]) => <Link key={label} to={to} viewTransition className="micro-link t-caption whitespace-nowrap text-ink-muted">{label}</Link>)}
@@ -25,13 +25,13 @@ export function WebsiteHeader({ home = false }: { home?: boolean }) {
             <Link to="/fit-check" className="rfm-button t-control inline-flex min-h-12 items-center rounded-full border-2 border-ink px-5 whitespace-nowrap">Book a free hello call</Link>
           </div>
           <div className="flex items-center gap-2 lg:hidden">
-            <ThemeRound className="relative !h-12 !w-12" />
+            <ThemeRound className="relative !h-10 !w-10" small />
             <button
               type="button"
               aria-label="Open menu"
               aria-expanded={menuOpen}
               onClick={() => setMenuOpen(true)}
-              className="grid min-h-12 min-w-12 place-items-center rounded-full border-2 border-line-strong text-2xl"
+              className="grid min-h-10 min-w-10 place-items-center rounded-full border-2 border-line-strong text-lg"
             >
               <span aria-hidden>☰</span>
             </button>

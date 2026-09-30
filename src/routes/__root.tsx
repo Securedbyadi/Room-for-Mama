@@ -108,7 +108,7 @@ function RootShell({ children }: { children: ReactNode }) {
         <script
           dangerouslySetInnerHTML={{
             __html:
-              "try{var t=localStorage.getItem('rfm-theme');document.documentElement.dataset.theme=t==='day'||t==='night'?t:'auto';document.documentElement.style.colorScheme=t==='day'?'light':t==='night'?'dark':'light dark'}catch(e){}",
+              "try{var t=localStorage.getItem('rfm-theme');document.documentElement.dataset.theme=t==='day'||t==='night'?t:'day';document.documentElement.style.colorScheme=t==='night'?'dark':'light'}catch(e){}",
           }}
         />
         <HeadContent />

@@ -6,9 +6,9 @@ export type ThemeMode = "day" | "night" | "auto";
 const STORAGE_KEY = "rfm-theme";
 
 function readMode(): ThemeMode {
-  if (typeof window === "undefined") return "auto";
+  if (typeof window === "undefined") return "day";
   const saved = window.localStorage.getItem(STORAGE_KEY);
-  return saved === "day" || saved === "night" ? saved : "auto";
+  return saved === "day" || saved === "night" ? saved : "day";
 }
 
 function applyMode(mode: ThemeMode) {
@@ -16,8 +16,8 @@ function applyMode(mode: ThemeMode) {
   document.documentElement.style.colorScheme = mode === "day" ? "light" : mode === "night" ? "dark" : "light dark";
 }
 
-/** Round day/night switch. Stays on Auto until she taps; then flips to the other look and remembers it. */
-export function ThemeRound({ className = "" }: { className?: string }) {
+/** Round day/night switch. Starts on Day until she taps; then flips to the other look and remembers it. */
+export function ThemeRound({ className = "", small = false }: { className?: string; small?: boolean }) {
   const [dark, setDark] = useState(false);
   useEffect(() => {
     const mode = readMode();
@@ -37,14 +37,14 @@ export function ThemeRound({ className = "" }: { className?: string }) {
       aria-label={dark ? "Switch to day" : "Switch to night"}
       className={`grid h-14 w-14 place-items-center rounded-full border-2 border-ink bg-paper ${className}`}
     >
-      <span className={`theme-swap absolute ${dark ? "opacity-0" : "opacity-100"}`}><Icon name="icon-night" size={28} /></span>
-      <span className={`theme-swap absolute ${dark ? "opacity-100" : "opacity-0"}`}><Icon name="icon-day" size={28} /></span>
+      <span className={`theme-swap absolute ${dark ? "opacity-0" : "opacity-100"}`}><Icon name="icon-night" size={small ? 22 : 28} /></span>
+      <span className={`theme-swap absolute ${dark ? "opacity-100" : "opacity-0"}`}><Icon name="icon-day" size={small ? 22 : 28} /></span>
     </button>
   );
 }
 
 export function ThemeControl({ compact = false }: { compact?: boolean | undefined }) {
-  const [mode, setMode] = useState<ThemeMode>("auto");
+  const [mode, setMode] = useState<ThemeMode>("day");
 
   useEffect(() => {
     const saved = readMode();
