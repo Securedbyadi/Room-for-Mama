@@ -1,7 +1,7 @@
 import { Link } from "@tanstack/react-router";
 import { useEffect, useState, type ReactNode } from "react";
 import { SafetyNote } from "./SafetyNote";
-import { ButtonMain, Logo } from "./brand";
+import { ButtonMain, Drawing, HeaderLogo, Logo } from "./brand";
 import { ThemeRound } from "./ThemeControl";
 
 const LINKS = [
@@ -13,11 +13,18 @@ const LINKS = [
 /** The one header, on every page: logo, three links, the main button; the round toggle sits in it on phones. */
 export function WebsiteHeader({ home = false }: { home?: boolean }) {
   const [menuOpen, setMenuOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 24);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
   return (
     <>
-      <header className={`z-30 ${home ? "relative" : "sticky top-0 border-b border-line bg-page/95 backdrop-blur"}`}>
+      <header className={`sticky top-0 z-30 transition-colors duration-300 ${scrolled ? "border-b border-line bg-page/95 backdrop-blur" : "border-b border-transparent bg-page"}`}>
         <div className="mx-auto grid min-h-20 max-w-[1200px] grid-cols-[minmax(0,1fr)_auto] items-center gap-4 px-5">
-          <Logo height={32} stackedHeight={44} stacked={home} className={home ? "logo-rise" : ""} />
+          <HeaderLogo revealed={scrolled} stacked={home} height={32} stackedHeight={44} />
           <div className="hidden items-center gap-8 lg:flex">
             <nav className="flex items-center gap-7" aria-label="Main navigation">
               {LINKS.map(([label, to]) => <Link key={label} to={to} viewTransition className="micro-link t-caption whitespace-nowrap text-ink-muted">{label}</Link>)}
