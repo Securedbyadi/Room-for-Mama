@@ -45,7 +45,7 @@ function Home() {
         <HomeHero />
 
         <section className="grid md:grid-cols-2">
-          <article className="home-tea section-reveal bg-sunk px-5 py-16 text-center md:py-20">
+          <article className="home-tea section-reveal bg-paper px-5 py-16 text-center md:py-20">
             <Drawing name="illo-tea-cold" className="mx-auto w-full max-w-[290px] !border-0" />
             <p className="eyebrow mt-6">Before</p>
             <h2 className="t-title mx-auto mt-2 max-w-[390px]">You made tea at seven.<br />It’s still on the counter.</h2>

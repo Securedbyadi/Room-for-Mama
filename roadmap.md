@@ -23,4 +23,5 @@
 - [x] New day/night logo set installed (horizontal, stacked, wordmark, mark, favicon)
 - [x] Header shows the mark only at the top and reveals the full lockup on scroll; header sticky everywhere
 - [x] Footer redesigned as a rounded sunk panel with offset-print booking card and link columns
-- Fix before/after tea section background so it pairs with the butter on the right (user says the two don't go together).
+- [x] Before/after tea section: Before half re-toned to the warm alabaster paper beside the butter half
+- [x] Sitewide button hover: fill changes (invert for main, peach-soft for outline) plus an animated butter under-shade that slides in below
