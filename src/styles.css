@@ -475,11 +475,11 @@ button[aria-pressed="true"] .theme-icon { opacity: 1; }
 }
 .rfm-splash > * { position: relative; width: min(78vw, 240px); max-width: 240px; border: 0 !important; box-shadow: none !important; }
 .form-illustration, .final-illustration, .language-icon-card { animation: rfm-illustration-arrive 320ms ease-out both; }
-.rfm-button { transition: transform 120ms ease-out, opacity 120ms ease-out, color 160ms ease-out, background-color 160ms ease-out, border-color 160ms ease-out, box-shadow 260ms ease-out; }
-.rfm-button:active:not(:disabled) { transform: scale(.98); }
-/* Hover fill: main buttons invert, outline buttons warm up; offset-print shadow grows in */
+.rfm-button { transition: transform 260ms cubic-bezier(.22,1,.36,1), opacity 120ms ease-out, color 160ms ease-out, background-color 160ms ease-out, border-color 160ms ease-out, box-shadow 480ms cubic-bezier(.22,1,.36,1); }
+.rfm-button:active:not(:disabled) { transform: scale(.98) rotate(-1.5deg); }
+/* Hover like the hero cards: a little tilt, a small lift, and the hard offset-print shadow */
 .rfm-button:hover:not(:disabled),
-.rfm-button:active:not(:disabled) { background: var(--peach-soft); color: var(--ink); border-color: var(--ink); box-shadow: 4px 4px 0 0 var(--peach); }
+.rfm-button:active:not(:disabled) { transform: translateY(-2px) rotate(-1.5deg); background: var(--peach-soft); color: var(--ink); border-color: var(--ink); box-shadow: 4px 4px 0 0 var(--peach); }
 .rfm-button.bg-primary:hover:not(:disabled),
 .rfm-button.bg-primary:active:not(:disabled) { background: var(--butter); color: var(--ink); }
 :root[data-theme="night"] .rfm-button:hover:not(:disabled),

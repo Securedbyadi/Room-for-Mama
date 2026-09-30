@@ -24,4 +24,4 @@
 - [x] Header shows the mark only at the top and reveals the full lockup on scroll; header sticky everywhere
 - [x] Footer redesigned as a rounded sunk panel with offset-print booking card and link columns
 - [x] Before/after tea section: Before half re-toned to the warm alabaster paper beside the butter half
-- [x] Sitewide button hover: fill changes (invert for main, peach-soft for outline) plus the offset-print peach hard shadow animating in
+- [x] Sitewide button hover: hero-card style — slight tilt, small lift, fill changes (invert for main, peach-soft for outline) and the offset-print peach hard shadow, checked in night mode

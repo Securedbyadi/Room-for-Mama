@@ -27,6 +27,6 @@ small horizontal logo and the copyright line. Night mode follows the site tokens
 
 ## Button hover system (30 Sep 2026)
 - All `.rfm-button` buttons (main, outline, header CTA, theme round, coach buttons) change fill on hover, in both themes: main buttons invert (day: butter fill with ink text; night: cream fill with page text), outline buttons warm to peach-soft with an ink border.
-- On hover or press, every button takes the offset-print style of a selected time slot: a hard 4 px peach shadow down-right with no blur, growing in over 260 ms. (An earlier butter under-shade bar was replaced by this after review.)
+- On hover or press, every button matches the hero cards: a little tilt (−1.5°), a small 2 px lift, and the hard offset-print peach shadow (4 px down-right, no blur) growing in. Night mode keeps peach-soft fills on outline buttons and the cream invert on main buttons, and the peach shadow stays visible on both themes. (An earlier butter under-shade bar was replaced by this after review.)
 - Footer CTA text hover and link hairlines use peach; the theme round button now shares the same hover language.
 - The before/after tea band's Before half moved from sunk to paper (warm alabaster) so it pairs cleanly with the butter After half; night follows tokens.
