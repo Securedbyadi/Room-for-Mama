@@ -152,7 +152,7 @@ export function CoachDashboard() {
           {TABS.map((t) => (
             <button key={t.id} type="button" onClick={() => go(t.id)} aria-current={tab === t.id ? "page" : undefined}
               className={`coach-tab flex min-h-12 items-center gap-3 rounded-2xl px-3 text-left font-semibold ${tab === t.id ? "bg-sunk" : ""}`}>
-              <Icon name={t.icon} size={24} /> <span className="flex-1">{t.label}</span>
+              <Icon name={t.icon} size={24} className={t.icon === "icon-half-hour" ? "coach-cup-icon" : ""} /> <span className="flex-1">{t.label}</span>
               {t.id === "today" && openNeeds.length > 0 && <Badge n={openNeeds.length} />}
             </button>
           ))}
@@ -181,7 +181,7 @@ export function CoachDashboard() {
           const t = TABS.find((x) => x.id === id)!;
           return (
             <button key={id} type="button" onClick={() => go(id)} className={`t-caption relative flex min-h-16 flex-col items-center justify-center gap-1 ${tab === id ? "" : "text-ink-muted"}`}>
-              <Icon name={t.icon} size={24} />{t.label}
+              <Icon name={t.icon} size={24} className={t.icon === "icon-half-hour" ? "coach-cup-icon" : ""} />{t.label}
               {id === "today" && openNeeds.length > 0 && <span className="t-micro absolute top-1.5 right-[26%] inline-flex h-4 min-w-4 items-center justify-center rounded-full bg-butter px-1 text-[10px] font-semibold text-[#34402A]">{openNeeds.length}</span>}
             </button>
           );
@@ -762,11 +762,13 @@ function GivenBackView({ c }: { c: Ctx }) {
       </div>
       <Panel>
         <p className="t-heading mb-4">By week</p>
-        <div className="flex h-44 items-end gap-4">
+        <div className="grid h-44 grid-cols-5 gap-2 sm:gap-4">
           {[...bars, week].map((b, i) => (
-            <div key={i} className="flex flex-1 flex-col items-center gap-2">
-              <div className={`coach-bar w-full rounded-t-xl ${i === bars.length ? "bg-butter" : "bg-sage"}`} style={{ height: `${(b / 160) * 100}%` }} />
-              <span className="t-caption text-ink-muted">{["21 Sep", "28 Sep", "5 Oct", "12 Oct", "This week"][i]}</span>
+            <div key={i} className="grid min-w-0 grid-rows-[1fr_auto] gap-2">
+              <div className="flex min-h-0 items-end">
+                <div className={`coach-bar w-full rounded-t-xl ${i === bars.length ? "bg-butter" : "bg-sage"}`} style={{ height: `${Math.min(100, (b / 160) * 100)}%` }} />
+              </div>
+              <span className="t-micro min-h-8 text-center text-ink-muted sm:t-caption">{["21 Sep", "28 Sep", "5 Oct", "12 Oct", "This week"][i]}</span>
             </div>
           ))}
         </div>
