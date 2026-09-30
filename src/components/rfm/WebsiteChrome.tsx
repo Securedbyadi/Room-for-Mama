@@ -76,11 +76,12 @@ export function WebsiteFooter() {
   }, []);
   const link = "micro-link flex min-h-10 items-center border-b border-line";
   return (
-    <footer className="bg-page px-0 md:px-5">
-      <div className="footer-panel relative mx-auto max-w-[1200px] overflow-hidden bg-sunk px-5 py-12 md:px-10">
+    <footer className="bg-page">
+      <div className="footer-panel relative overflow-hidden bg-sunk px-5 py-12 md:px-10">
         <div aria-hidden className="hero-sun pointer-events-none absolute -top-64 -left-40 h-[560px] w-[560px] rounded-full opacity-25" />
         <div aria-hidden className="pointer-events-none absolute top-6 right-8 h-14 w-14 rounded-full" style={{ background: "#f3b08f" }} />
-        <div className="relative grid gap-10 md:grid-cols-[1.2fr_0.8fr]">
+        <div className="relative mx-auto max-w-[1200px]">
+        <div className="grid gap-10 md:grid-cols-[1.2fr_0.8fr]">
           <div className="footer-card bg-paper p-6">
             <div className="grid gap-5 md:grid-cols-[150px_minmax(0,1fr)] md:items-center">
               <Drawing name="illo-tea-warm" className="w-[150px]" />
@@ -112,6 +113,7 @@ export function WebsiteFooter() {
         <div className="relative mt-8 grid items-center gap-3 sm:grid-cols-[auto_minmax(0,1fr)]">
           <Logo height={26} />
           <p className="t-caption text-ink-muted sm:text-right">© 2026 Room for Mama · Lahore, Pakistan</p>
+        </div>
         </div>
       </div>
     </footer>
