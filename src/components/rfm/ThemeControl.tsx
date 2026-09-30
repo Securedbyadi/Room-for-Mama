@@ -35,7 +35,7 @@ export function ThemeRound({ className = "", small = false }: { className?: stri
       type="button"
       onClick={flip}
       aria-label={dark ? "Switch to day" : "Switch to night"}
-      className={`grid h-14 w-14 place-items-center rounded-full border-2 border-ink bg-paper ${className}`}
+      className={`rfm-button grid h-14 w-14 place-items-center rounded-full border-2 border-ink bg-paper ${className}`}
     >
       <span className={`theme-swap absolute ${dark ? "opacity-0" : "opacity-100"}`}><Icon name="icon-night" size={small ? 22 : 28} /></span>
       <span className={`theme-swap absolute ${dark ? "opacity-100" : "opacity-0"}`}><Icon name="icon-day" size={small ? 22 : 28} /></span>
