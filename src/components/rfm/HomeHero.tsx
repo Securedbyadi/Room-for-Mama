@@ -41,10 +41,10 @@ export function useDeals(): Deal[] {
 
 function CardFace({ deal, alwaysLine }: { deal: Deal; alwaysLine?: boolean }) {
   return (
-    <div className="flex h-full min-h-0 flex-col">
+    <div className="home-card-face flex h-full min-h-0 flex-col">
       <Drawing name={deal.drawing} className={`${deal.drawing === "illo-her-half-hour" ? "home-steam" : ""} fan-art min-h-0 flex-1 !border-0 [&>div]:h-full [&>div]:items-start [&>div]:p-2`} />
       <h2 className="home-card-title mt-auto whitespace-nowrap pt-2">{deal.title}</h2>
-      <div className={alwaysLine ? "px-1" : "fan-more px-1"}>
+      <div className={alwaysLine ? "home-card-copy px-1" : "fan-more px-1"}>
         <p className="t-compact mt-1">{deal.line}</p>
         <span className="t-compact mt-2 inline-block font-semibold underline underline-offset-4">Open</span>
       </div>
