@@ -475,8 +475,10 @@ button[aria-pressed="true"] .theme-icon { opacity: 1; }
 }
 .rfm-splash > * { position: relative; width: min(78vw, 240px); max-width: 240px; border: 0 !important; box-shadow: none !important; }
 .form-illustration, .final-illustration, .language-icon-card { animation: rfm-illustration-arrive 320ms ease-out both; }
-.rfm-button { transition: transform 120ms ease-out, opacity 120ms ease-out; }
+.rfm-button { transition: transform 120ms ease-out, opacity 120ms ease-out, color 160ms ease-out; }
 .rfm-button:active:not(:disabled) { transform: scale(.98); }
+.rfm-button:hover:not(:disabled) { color: var(--butter); }
+:root[data-theme="night"] .rfm-button:hover:not(:disabled) { color: var(--page); }
 .micro-link { transition: color 160ms ease-out, text-underline-offset 160ms ease-out; }
 .micro-link:hover { color: var(--ink); text-underline-offset: 7px; text-decoration-color: var(--peach); text-decoration-thickness: 2px; }
 .micro-link.underline-border:hover { border-color: var(--peach); }
