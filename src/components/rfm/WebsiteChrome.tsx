@@ -109,8 +109,8 @@ export function WebsiteFooter() {
             </nav>
           </div>
         </div>
-        <div className="relative mt-10 rounded-[22px] bg-paper p-5 text-[16px]"><SafetyNote zone={zone} /></div>
-        <div className="relative mt-8 grid items-center gap-3 sm:grid-cols-[auto_minmax(0,1fr)]">
+        <div className="relative mt-10"><SafetyNote zone={zone} /></div>
+        <div className="relative mt-10 grid items-center gap-3 border-t border-line pt-8 sm:grid-cols-[auto_minmax(0,1fr)]">
           <Logo height={26} />
           <p className="t-caption text-ink-muted sm:text-right">© 2026 Room for Mama · Lahore, Pakistan</p>
         </div>
