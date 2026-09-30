@@ -67,8 +67,8 @@ export function Icon({
   if (!raw) return null;
   return (
     <span
-      className={`rfm-icon rfm-${name} inline-flex shrink-0 items-center justify-center ${className}`}
-      style={{ width: size, height: size, color: "var(--ink)" }}
+      className={`text-ink rfm-icon rfm-${name} inline-flex shrink-0 items-center justify-center ${className}`}
+      style={{ width: size, height: size }}
       aria-hidden
       dangerouslySetInnerHTML={{
         __html: raw.replace(

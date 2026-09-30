@@ -139,7 +139,7 @@ function BabysUpSheet({ token, call, zone, onClose, onMoved }: { token: string; 
   const [picked, setPicked] = useState<string | null>(null);
   const chosen = picked ?? q.data?.[0]?.start ?? null;
   return (
-    <div className="fixed inset-0 z-40 bg-ink/30" onClick={onClose} role="presentation">
+    <div className="fixed inset-0 z-40 bg-black/40" onClick={onClose} role="presentation">
       <div className="anim-sheet absolute inset-x-0 bottom-0 mx-auto w-full max-w-[480px] rounded-t-[28px] bg-paper p-5 pb-8 shadow-[0_-8px_24px_rgba(0,0,0,0.18)]" onClick={(e) => e.stopPropagation()} role="dialog" aria-label="Baby’s up">
         <div className="mb-4 flex items-start gap-3">
            <Drawing name="illo-baby-up" className="baby-awake-once aspect-square w-20 shrink-0 rounded-full [&>div]:p-1" />

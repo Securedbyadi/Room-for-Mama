@@ -40,7 +40,7 @@ export function WebsiteHeader({ home = false }: { home?: boolean }) {
       </header>
 
       {menuOpen && (
-        <div className="fixed inset-0 z-50 bg-ink/30 lg:hidden" role="presentation" onClick={() => setMenuOpen(false)}>
+        <div className="fixed inset-0 z-50 bg-black/40 lg:hidden" role="presentation" onClick={() => setMenuOpen(false)}>
           <div className="anim-sheet absolute inset-x-0 bottom-0 max-h-[90svh] overflow-y-auto rounded-t-[28px] bg-paper px-5 pt-5 pb-8" role="dialog" aria-label="Menu" onClick={(event) => event.stopPropagation()}>
             <div className="mb-5 grid grid-cols-[minmax(0,1fr)_auto] items-center gap-4">
               <h2 className="t-title">Menu</h2>

@@ -117,7 +117,7 @@ function Booked() {
 
       {sheetOpen && (
         <div
-          className="fixed inset-0 z-40 bg-ink/30"
+          className="fixed inset-0 z-40 bg-black/40"
           onClick={() => setSheetOpen(false)}
           role="presentation"
         >
