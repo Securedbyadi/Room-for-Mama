@@ -378,8 +378,7 @@ button[aria-pressed="true"] .theme-icon { opacity: 1; }
 .logo-morph.is-revealed > .lm-mark { opacity: 0; }
 .logo-morph.is-revealed > .lm-full { opacity: 1; }
 /* Footer panel */
-.footer-panel { border-radius: 32px 32px 0 0; }
-@media (min-width: 768px) { .footer-panel { border-radius: 48px 48px 0 0; } }
+.footer-panel { border-radius: 0; }
 .footer-card {
   border: 2px solid var(--ink); border-radius: 22px;
   box-shadow: 6px 6px 0 0 #f3b08f; rotate: -1.2deg;
