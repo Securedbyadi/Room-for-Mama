@@ -425,12 +425,12 @@ button[aria-pressed="true"] .theme-icon { opacity: 1; }
 .rfm-splash::before {
   content: "";
   position: absolute;
-  width: min(64vw, 340px);
+  width: min(56vw, 280px);
   aspect-ratio: 1;
   border-radius: 999px;
   background: #FAE8B4;
 }
-.rfm-splash > * { position: relative; width: min(78vw, 460px); max-width: 300px; border: 0 !important; box-shadow: none !important; }
+.rfm-splash > * { position: relative; width: min(78vw, 240px); max-width: 240px; border: 0 !important; box-shadow: none !important; }
 .form-illustration, .final-illustration, .language-icon-card { animation: rfm-illustration-arrive 320ms ease-out both; }
 .rfm-button { transition: transform 120ms ease-out, opacity 120ms ease-out; }
 .rfm-button:active:not(:disabled) { transform: scale(.98); }
