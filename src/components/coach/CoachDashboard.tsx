@@ -156,7 +156,6 @@ export function CoachDashboard() {
           <ThemeRound className="relative !h-12 !w-12" />
         </header>
         <main className="mx-auto flex max-w-[1200px] flex-col gap-6 px-5 pt-6 pb-32 lg:px-10 lg:pt-10">
-          <p className="w-fit rounded-full bg-sunk px-4 py-2 text-[13px] font-semibold">Demo: sample mothers, nothing is sent.</p>
           <div key={tab + (openMom ?? "")} className="anim-fade flex flex-col gap-6">
             {tab === "today" && <TodayView c={ctx} />}
             {tab === "calendar" && <CalendarView c={ctx} />}

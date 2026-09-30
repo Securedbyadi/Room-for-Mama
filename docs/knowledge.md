@@ -86,6 +86,7 @@ Motion: 320 ms fades; the Baby’s up sheet rises 24 px in 380 ms; the home draw
 
 ## Demo
 - "Try it as a mama in Manchester" fills in the sample message. Demo bookings and the demo coach login use demo rows only, never the real calendar or email. No real people or children.
+- Look-and-feel (30 Sep 2026): the site reads as real. No demo notices on public pages, the coach dashboard or /demo/coach titles. Demo behaviour stays at the backend (is_demo rows, nightly purge, made-up emails); only the judges page explains it.
 
 ## Out of scope
 Booking in DMs, automated WhatsApp, card payments, in-app video, group calls.

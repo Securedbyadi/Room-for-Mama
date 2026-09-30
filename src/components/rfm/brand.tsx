@@ -6,7 +6,7 @@
 import { Link } from "@tanstack/react-router";
 import { ArrowLeft, ArrowRight } from "lucide-react";
 import type { ReactNode } from "react";
-import { DemoNote, DesktopToggle, WebsiteFooter, WebsiteHeader } from "./WebsiteChrome";
+import { DesktopToggle, WebsiteFooter, WebsiteHeader } from "./WebsiteChrome";
 import { ThemeRound } from "./ThemeControl";
 
 const iconModules = import.meta.glob("../../assets/brand/icons/*.svg", {
@@ -330,7 +330,6 @@ export function Page({
 }) {
   const top = chrome ? (
     <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
-      <DemoNote />
       {headerAction}
     </div>
   ) : (
