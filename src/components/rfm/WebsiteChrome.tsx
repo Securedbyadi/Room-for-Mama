@@ -74,12 +74,10 @@ export function WebsiteFooter() {
   useEffect(() => {
     try { setZone(Intl.DateTimeFormat().resolvedOptions().timeZone); } catch { /* show anywhere-else line */ }
   }, []);
-  const link = "micro-link flex min-h-10 items-center border-b border-line";
+  const link = "micro-link underline-border flex min-h-10 items-center border-b border-line hover:border-peach transition-colors";
   return (
     <footer className="bg-page">
       <div className="footer-panel relative overflow-hidden bg-sunk px-5 py-12 md:px-10">
-        <div aria-hidden className="hero-sun pointer-events-none absolute -top-64 -left-40 h-[560px] w-[560px] rounded-full opacity-25" />
-        <div aria-hidden className="pointer-events-none absolute top-6 right-8 h-14 w-14 rounded-full" style={{ background: "#f3b08f" }} />
         <div className="relative mx-auto max-w-[1200px]">
         <div className="grid gap-10 md:grid-cols-[1.2fr_0.8fr]">
           <div className="footer-card bg-paper p-6">
