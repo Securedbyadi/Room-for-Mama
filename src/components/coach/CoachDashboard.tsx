@@ -4,7 +4,7 @@
  */
 import { useEffect, useMemo, useState, type ReactNode } from "react";
 import { createPortal } from "react-dom";
-import { ButtonMain, ButtonOutline, Chip, Drawing, Icon, Logo, type IconName } from "../rfm/brand";
+import { Chip, Drawing, Icon, Logo, type IconName } from "../rfm/brand";
 import { ThemeRound } from "../rfm/ThemeControl";
 import { MakeRoomPlan } from "../rfm/MakeRoomPlan";
 import { helplinesFor } from "../../lib/helplines";
@@ -383,7 +383,7 @@ function CalendarView({ c }: { c: Ctx }) {
         </div>
       </div>
       <div className="flex flex-wrap gap-3">
-        <ButtonOutline className="!w-auto" onClick={() => setOffPick(true)}><Icon name="icon-day" size={22} /> Take time off</ButtonOutline>
+        <CoachBtn onClick={() => setOffPick(true)}><Icon name="icon-day" size={20} /> Take time off</CoachBtn>
         <FeedLink c={c} compact />
       </div>
 
