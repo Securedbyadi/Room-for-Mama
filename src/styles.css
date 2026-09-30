@@ -371,6 +371,20 @@ button[aria-pressed="true"] .theme-icon { opacity: 1; }
   :root:not([data-theme="day"]) .rfm-logo-day { display: none; }
   :root:not([data-theme="day"]) .rfm-logo-night { display: block; }
 }
+/* Header lockup: mark only at the top, full lockup once the page scrolls. */
+.logo-morph { display: inline-grid; align-items: center; justify-items: start; }
+.logo-morph > * { grid-area: 1 / 1; transition: opacity 320ms ease-out; }
+.logo-morph > .lm-full { opacity: 0; }
+.logo-morph.is-revealed > .lm-mark { opacity: 0; }
+.logo-morph.is-revealed > .lm-full { opacity: 1; }
+/* Footer panel */
+.footer-panel { border-radius: 32px 32px 0 0; }
+@media (min-width: 768px) { .footer-panel { border-radius: 48px 48px 0 0; } }
+.footer-card {
+  border: 2px solid var(--ink); border-radius: 22px;
+  box-shadow: 6px 6px 0 0 #f3b08f; rotate: -1.2deg;
+}
+@media (prefers-reduced-motion: reduce) { .logo-morph > * { transition: none; } }
 .count-up {
   --rfm-count-to: 0;
   counter-reset: rfm-minutes var(--rfm-count);
