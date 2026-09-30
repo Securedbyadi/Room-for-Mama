@@ -261,6 +261,14 @@
   background: var(--butter);
   color: #34402a;
 }
+.offset-peach .text-ink,
+.offset-butter .text-ink {
+  color: #34402a;
+}
+.offset-peach .text-ink-muted,
+.offset-butter .text-ink-muted {
+  color: #5b6450;
+}
 
 /* Motion: 320 ms fades, sheet rises 24 px in 380 ms */
 @keyframes rfm-fade {

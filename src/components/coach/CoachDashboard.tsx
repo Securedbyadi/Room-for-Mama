@@ -91,7 +91,7 @@ function Panel({ children, className = "", offset = false }: { children: ReactNo
   return <div className={`rounded-[22px] p-5 ${offset ? "offset-butter" : "border border-line bg-paper"} ${className}`}>{children}</div>;
 }
 function Done({ children }: { children: ReactNode }) {
-  return <p className="anim-fade rounded-2xl bg-sage-soft p-3 text-[15px] font-semibold text-[#34402A]">{children}</p>;
+  return <p className="anim-fade rounded-2xl bg-sage-soft p-3 text-[15px] font-semibold text-ink">{children}</p>;
 }
 function Saved({ onSave }: { onSave: () => void }) {
   const [s, setS] = useState(false);
