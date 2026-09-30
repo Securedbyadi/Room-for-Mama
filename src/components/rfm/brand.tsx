@@ -147,11 +147,11 @@ export function Logo({
   }
   return (
     <Link to="/" aria-label="Room for Mama, home" className={`inline-flex ${className}`}>
-      <span className="rfm-logo-wrap lg:hidden">
+      <span className="rfm-logo-wrap rfm-logo-stacked">
         <img className="rfm-logo-day" src="/brand/logo/rfm-logo-stacked.svg" alt="Room for Mama" style={{ height: stackedHeight }} />
         <img className="rfm-logo-night" src="/brand/logo/rfm-logo-stacked-night.svg" alt="Room for Mama" style={{ height: stackedHeight }} />
       </span>
-      <span className="rfm-logo-wrap hidden lg:inline-grid">
+      <span className="rfm-logo-wrap rfm-logo-horizontal-when-stacked">
         <img className="rfm-logo-day" src="/brand/logo/rfm-logo-horizontal.svg" alt="Room for Mama" style={{ height }} />
         <img className="rfm-logo-night" src="/brand/logo/rfm-logo-horizontal-night.svg" alt="Room for Mama" style={{ height }} />
       </span>
