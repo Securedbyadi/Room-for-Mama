@@ -114,6 +114,7 @@ export function WebsiteFooter() {
           <Logo height={26} />
           <p className="t-caption text-ink-muted sm:text-right">© 2026 Room for Mama · Lahore, Pakistan</p>
         </div>
+        </div>
       </div>
     </footer>
   );
