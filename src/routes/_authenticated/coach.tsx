@@ -68,7 +68,7 @@ function CoachApp() {
   const d = q.data;
 
   return (
-    <Page chrome={false} headerAction={<span className="t-caption uppercase tracking-[0.12em] text-ink-muted">Coach</span>} className="pb-28">
+    <Page chrome={false} headerAction={<span className="eyebrow text-ink-muted">Coach</span>} className="pb-28">
       <div className="grid grid-cols-[minmax(0,1fr)_auto] items-center gap-4">
         <h1 className="t-title">{TABS.find((t) => t.id === tab)?.label}</h1>
         <button type="button" className="t-caption min-h-12 underline" onClick={signOut}>Sign out</button>
@@ -89,7 +89,7 @@ function CoachApp() {
 
 function CoachBottomNav({ tab, setTab }: { tab: Tab; setTab: (tab: Tab) => void }) {
   const icons = { today: "icon-day", mothers: "icon-email", rules: "icon-notes", "given-back": "icon-time-given-back" } as const;
-  return <nav className="fixed inset-x-0 bottom-0 z-30 mx-auto grid max-w-[480px] grid-cols-4 border-t border-line bg-page px-2 pb-[max(12px,env(safe-area-inset-bottom))] pt-2 md:hidden" aria-label="Coach sections">{TABS.map((t) => <button key={t.id} type="button" onClick={() => setTab(t.id)} className={`flex min-h-14 flex-col items-center justify-center text-[13px] font-semibold ${tab === t.id ? "text-ink" : "text-ink-muted"}`}><Icon name={icons[t.id]} size={26} /><span>{t.label}</span></button>)}</nav>;
+  return <nav className="fixed inset-x-0 bottom-0 z-30 mx-auto grid max-w-[480px] grid-cols-4 border-t border-line bg-page px-2 pb-[max(12px,env(safe-area-inset-bottom))] pt-2 md:hidden" aria-label="Coach sections">{TABS.map((t) => <button key={t.id} type="button" onClick={() => setTab(t.id)} className={`t-caption flex min-h-14 flex-col items-center justify-center ${tab === t.id ? "text-ink" : "text-ink-muted"}`}><Icon name={icons[t.id]} size={26} /><span>{t.label}</span></button>)}</nav>;
 }
 
 function useRefresh() {
@@ -194,7 +194,7 @@ function AfterCard({ c, coachZone }: { c: CallT; coachZone: string }) {
         onChange={(e) => setText(e.target.value)}
         aria-label="One small step"
         placeholder="One small step"
-        className="min-h-12 w-full rounded-2xl border border-input bg-paper px-4 text-[17px] text-ink placeholder:text-ink-muted"
+        className="min-h-12 w-full rounded-2xl border border-input bg-paper px-4 text-ink placeholder:text-ink-muted"
       />
       <div className="flex gap-2">
         <ButtonOutline disabled={!text.trim() || text === c.small_step} onClick={async () => { await step({ data: { callId: c.id, step: text } }); void refresh(); }}>Save step</ButtonOutline>
@@ -225,8 +225,8 @@ function MothersTab({ d }: { d: Data }) {
             {open === m.id && (
               <div className="flex flex-col gap-3">
                 {plan && <p className="t-caption">Make Room {plan.reference}: {plan.status.replace("_", " ")}, {plan.currency} {plan.amount}</p>}
-                {notes.map((n) => <p key={n.id} className="rounded-xl bg-sunk p-3 text-[15px]">{n.body}</p>)}
-                <textarea value={text} onChange={(e) => setText(e.target.value)} rows={2} aria-label="Private note" placeholder="Private note" className="w-full rounded-2xl border border-input bg-paper p-3 text-[17px] text-ink" />
+                {notes.map((n) => <p key={n.id} className="t-compact rounded-xl bg-sunk p-3">{n.body}</p>)}
+                <textarea value={text} onChange={(e) => setText(e.target.value)} rows={2} aria-label="Private note" placeholder="Private note" className="w-full rounded-2xl border border-input bg-paper p-3 text-ink" />
                 <ButtonOutline disabled={!text.trim()} onClick={async () => { await note({ data: { motherId: m.id, body: text } }); setText(""); void refresh(); }}>Save note</ButtonOutline>
                 <ButtonOutline onClick={async () => { await share({ data: { motherId: m.id } }); }}>Share helplines</ButtonOutline>
               </div>
@@ -247,7 +247,7 @@ type RulesForm = {
   not_a_fit_note: string; minutes: Record<string, number>;
 };
 
-const inputCls = "min-h-12 w-full rounded-2xl border border-input bg-paper px-4 text-[17px] text-ink";
+const inputCls = "min-h-12 w-full rounded-2xl border border-input bg-paper px-4 text-ink";
 
 function RulesTab({ d }: { d: Data }) {
   const refresh = useRefresh();
@@ -296,7 +296,7 @@ function RulesTab({ d }: { d: Data }) {
 
       <Card className="flex flex-col gap-3">
         <h2 className="t-heading">Not a fit note</h2>
-        <textarea rows={5} className="w-full rounded-2xl border border-input bg-paper p-3 text-[17px] text-ink" value={form.not_a_fit_note} onChange={(e) => set("not_a_fit_note", e.target.value)} />
+        <textarea rows={5} className="w-full rounded-2xl border border-input bg-paper p-3 text-ink" value={form.not_a_fit_note} onChange={(e) => set("not_a_fit_note", e.target.value)} />
       </Card>
 
       <Card className="flex flex-col gap-3">
@@ -363,7 +363,7 @@ function GivenBackTab({ d }: { d: Data }) {
       {ran && <p className="rounded-2xl bg-sage-soft p-4">{ran}</p>}
       <section className="flex flex-col gap-2">
         {d.log.slice(0, 30).map((l) => (
-          <p key={l.id} className="flex justify-between text-[15px]">
+          <p key={l.id} className="t-compact flex justify-between">
             <span>{l.type.replace("_", " ")}{(l.mothers as { first_name: string } | null)?.first_name ? `, ${(l.mothers as { first_name: string }).first_name}` : ""}</span>
             <span className="text-ink-muted">{l.minutes_saved} min</span>
           </p>
@@ -375,7 +375,7 @@ function GivenBackTab({ d }: { d: Data }) {
         {d.outbox.map((e) => (
           <Card key={e.id} className="flex flex-col gap-1">
             <p className="t-caption text-ink-muted">To {e.to_email} · {e.subject}</p>
-            <p className="whitespace-pre-line text-[15px]">{e.body}</p>
+            <p className="t-compact whitespace-pre-line">{e.body}</p>
             {e.action_label && <p className="font-semibold">[{e.action_label}]</p>}
           </Card>
         ))}

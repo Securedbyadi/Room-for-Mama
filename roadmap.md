@@ -17,3 +17,4 @@
 - [x] Hero card drawings sit at the top of each card
 - [x] Less empty space above and below the hero
 - [x] Make the home page adapt cleanly across tablet widths without desktop overflow
+- [x] Standardize typography across public, booking and coach screens

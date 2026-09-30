@@ -17,7 +17,7 @@ export function MakeRoomPlan({ plan, zone }: { plan: WeeklyCall[]; zone: string 
               <p className="t-caption shrink-0 text-ink-muted">{i + 1} of {plan.length}</p>
             </div>
             {call.clockNote && (
-              <p className="mt-2 rounded-xl bg-butter-soft p-3 text-[13px] font-semibold">
+              <p className="t-caption mt-2 rounded-xl bg-butter-soft p-3">
                 {call.clockNote}
               </p>
             )}

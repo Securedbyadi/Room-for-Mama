@@ -146,7 +146,7 @@ type ButtonProps = {
 };
 
 const baseBtn =
-  "rfm-button inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full px-6 text-[17px] font-semibold disabled:opacity-50";
+  "rfm-button t-control inline-flex min-h-12 w-full items-center justify-center gap-2 rounded-full px-6 disabled:opacity-50";
 
 export function ButtonMain(props: ButtonProps) {
   const cls = `${baseBtn} bg-primary text-primary-foreground ${props.className ?? ""}`;
@@ -251,7 +251,7 @@ export function Chip({
     <button
       type="button"
       onClick={onClick}
-      className={`min-h-12 rounded-full px-4 text-[15px] font-semibold ${
+      className={`t-caption min-h-12 rounded-full px-4 ${
         active ? "bg-butter text-[#34402A]" : "bg-sunk text-ink"
       }`}
     >
@@ -284,7 +284,7 @@ export function Slot({
       }`}
     >
       <span className="min-w-0">
-        <span className="t-time block text-[17px]">{label}</span>
+        <span className="t-time block">{label}</span>
         {sub ? <span className="t-caption block text-ink-muted">{sub}</span> : null}
       </span>
       {marker ? <Icon name={selected ? "icon-done" : "icon-time"} size={28} /> : null}

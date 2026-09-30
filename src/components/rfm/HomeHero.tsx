@@ -45,8 +45,8 @@ function CardFace({ deal, alwaysLine }: { deal: Deal; alwaysLine?: boolean }) {
       <Drawing name={deal.drawing} className={`${deal.drawing === "illo-her-half-hour" ? "home-steam" : ""} fan-art min-h-0 flex-1 !border-0 [&>div]:h-full [&>div]:items-start [&>div]:p-2`} />
       <h2 className="home-card-title mt-auto whitespace-nowrap pt-2">{deal.title}</h2>
       <div className={alwaysLine ? "px-1" : "fan-more px-1"}>
-        <p className="mt-1 text-[15px] leading-[22px]">{deal.line}</p>
-        <span className="mt-2 inline-block text-[15px] font-semibold underline underline-offset-4">Open</span>
+        <p className="t-compact mt-1">{deal.line}</p>
+        <span className="t-compact mt-2 inline-block font-semibold underline underline-offset-4">Open</span>
       </div>
     </div>
   );
@@ -122,7 +122,7 @@ export function HomeHero() {
             <Link to="/book" search={{ demo: "manchester" }} className="micro-link inline-flex min-h-12 items-center font-semibold underline underline-offset-4">Try it as a mama in Manchester</Link>
           </div>
           <ul className="mt-7 flex flex-wrap gap-x-6 gap-y-3">
-            {notes.map(([icon, label]) => <li key={label} className="micro-icon flex items-center gap-2 text-[13px] font-semibold text-ink-muted"><Icon name={icon} size={22} />{label}</li>)}
+            {notes.map(([icon, label]) => <li key={label} className="micro-icon t-caption flex items-center gap-2 text-ink-muted"><Icon name={icon} size={22} />{label}</li>)}
           </ul>
         </div>
         <div className="xl:hidden"><Deck deals={deals} /></div>

@@ -25,7 +25,7 @@ function WhoItsFor() {
         <CardPageHeader vt="card-who" title="Who it’s for"><Drawing name="illo-her-half-hour" className="home-steam !border-0" /></CardPageHeader>
         <section className="section-reveal mx-auto grid max-w-[1120px] gap-10 px-5 py-16 md:grid-cols-2">
           <div>
-            <p className="text-[19px] leading-8">Mothers of babies and toddlers up to 3 who want a calmer day.</p>
+            <p className="hero-lead">Mothers of babies and toddlers up to 3 who want a calmer day.</p>
             <p className="mt-4 text-ink-muted">It’s not baby sleep or feeding advice, and it’s not medical care.</p>
             <div className="mt-8 max-w-[360px]"><ButtonMain to="/fit-check">Book a free hello call</ButtonMain></div>
           </div>

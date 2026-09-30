@@ -102,13 +102,13 @@ function Emails() {
       <Card className="flex flex-col gap-4">
         <div>
           <p className="t-caption text-ink-muted">From hello@roomformama.com</p>
-          <p className="t-heading mt-1">{email.subject}</p>
+          <h2 className="t-heading mt-1">{email.subject}</h2>
         </div>
         {email.body.map((p, i) => (
           <p key={i}>{p}</p>
         ))}
         {email.action && (
-          <span className="inline-flex min-h-12 items-center justify-center rounded-full bg-primary px-6 text-[17px] font-semibold text-primary-foreground">
+          <span className="t-control inline-flex min-h-12 items-center justify-center rounded-full bg-primary px-6 text-primary-foreground">
             {email.action}
           </span>
         )}

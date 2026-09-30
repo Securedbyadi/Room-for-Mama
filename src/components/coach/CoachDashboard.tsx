@@ -91,7 +91,7 @@ function Panel({ children, className = "", offset = false }: { children: ReactNo
   return <div className={`rounded-[22px] p-5 ${offset ? "offset-butter" : "border border-line bg-paper"} ${className}`}>{children}</div>;
 }
 function Done({ children }: { children: ReactNode }) {
-  return <p className="anim-fade rounded-2xl bg-sage-soft p-3 text-[15px] font-semibold text-ink">{children}</p>;
+  return <p className="t-compact anim-fade rounded-2xl bg-sage-soft p-3 font-semibold text-ink">{children}</p>;
 }
 function Saved({ onSave }: { onSave: () => void }) {
   const [s, setS] = useState(false);
@@ -170,13 +170,13 @@ export function CoachDashboard() {
         {(["today", "calendar", "mothers"] as const).map((id) => {
           const t = TABS.find((x) => x.id === id)!;
           return (
-            <button key={id} type="button" onClick={() => go(id)} className={`relative flex min-h-16 flex-col items-center justify-center gap-1 text-[13px] font-semibold ${tab === id ? "" : "text-ink-muted"}`}>
+            <button key={id} type="button" onClick={() => go(id)} className={`t-caption relative flex min-h-16 flex-col items-center justify-center gap-1 ${tab === id ? "" : "text-ink-muted"}`}>
               <Icon name={t.icon} size={24} />{t.label}
               {id === "today" && openNeeds.length > 0 && <span className="absolute top-2 right-[28%]"><Badge n={openNeeds.length} /></span>}
             </button>
           );
         })}
-        <button type="button" onClick={() => setMoreOpen(true)} className={`flex min-h-16 flex-col items-center justify-center gap-1 text-[13px] font-semibold ${tab === "rules" || tab === "given-back" ? "" : "text-ink-muted"}`}>
+        <button type="button" onClick={() => setMoreOpen(true)} className={`t-caption flex min-h-16 flex-col items-center justify-center gap-1 ${tab === "rules" || tab === "given-back" ? "" : "text-ink-muted"}`}>
           <Icon name="icon-notes" size={24} />More
         </button>
       </nav>
@@ -206,7 +206,7 @@ interface Ctx {
 }
 
 function Badge({ n }: { n: number }) {
-  return <span className="inline-flex h-6 min-w-6 items-center justify-center rounded-full bg-butter px-1.5 text-[13px] font-bold text-[#34402A]">{n}</span>;
+  return <span className="t-caption inline-flex h-6 min-w-6 items-center justify-center rounded-full bg-butter px-1.5 text-[#34402A]">{n}</span>;
 }
 
 function Sheet({ children, onClose, title }: { children: ReactNode; onClose: () => void; title: string }) {
@@ -251,7 +251,7 @@ function TodayView({ c }: { c: Ctx }) {
 
       {next && (() => { const m = c.mom(next.momId); return (
         <div className="offset-butter rounded-[22px] bg-butter p-6 text-[#34402A]">
-          <p className="t-caption uppercase tracking-[0.12em]">Next call · in {inMin} min</p>
+          <p className="eyebrow">Next call · in {inMin} min</p>
           <p className="t-title mt-2">{m.name}</p>
           <p className="font-semibold">{callLabel(next)}</p>
           <p className="t-time mt-2">{fmtTime(next.start, KHI)} Lahore{herTime(next.start, m)}</p>
@@ -276,14 +276,14 @@ function TodayView({ c }: { c: Ctx }) {
 
       {afterHello && (
         <Panel className="flex flex-col gap-3">
-          <p className="t-heading">How was your hello call with {c.mom(afterHello.momId).name}?</p>
+          <h2 className="t-heading">How was your hello call with {c.mom(afterHello.momId).name}?</h2>
           {decided === null ? (
             <div className="grid gap-3 sm:grid-cols-2">
               <ButtonMain onClick={() => setDecided("offer")}>Offer Make Room</ButtonMain>
               <ButtonOutline onClick={() => setDecided("no")}>Not a fit</ButtonOutline>
             </div>
           ) : decided === "offer" ? <Done>Make Room offer sent to {c.mom(afterHello.momId).name}.</Done>
-            : <p className="rounded-2xl bg-sunk p-3 text-[15px]"><span className="font-semibold">Sent your note:</span> {NOT_A_FIT_NOTE}</p>}
+            : <p className="t-compact rounded-2xl bg-sunk p-3"><span className="font-semibold">Sent your note:</span> {NOT_A_FIT_NOTE}</p>}
           <label className="t-caption text-ink-muted" htmlFor="small-step">Small step (optional, goes in her thank-you email)</label>
           <div className="flex gap-2">
             <input id="small-step" value={step} onChange={(e) => { setStep(e.target.value); setStepSaved(false); }} placeholder="One small step…" className="min-h-12 w-full rounded-2xl border border-line bg-paper px-4" />
@@ -420,10 +420,10 @@ function WeekGrid({ c, days, next }: { c: Ctx; days: number[]; next: Call | unde
         <div className="bg-paper" />
         {days.map((d) => {
           const off = c.daysOff.includes(`2026-10-${d}`);
-          return <div key={d} className="border-l border-line bg-paper p-2 text-center text-[13px] font-semibold">{dayLabel(at(d, 12, 0), { weekday: "short", day: "numeric" })}{off ? " · off" : ""}</div>;
+          return <div key={d} className="t-caption border-l border-line bg-paper p-2 text-center">{dayLabel(at(d, 12, 0), { weekday: "short", day: "numeric" })}{off ? " · off" : ""}</div>;
         })}
         <div className="relative">
-          {hours.map((h) => <div key={h} className="bg-paper pr-2 text-right text-[12px] text-ink-muted" style={{ height: ROW }}>{h === 24 ? "" : `${h % 12 || 12}${h < 12 ? "am" : "pm"}`}</div>)}
+          {hours.map((h) => <div key={h} className="t-micro bg-paper pr-2 text-right text-ink-muted" style={{ height: ROW }}>{h === 24 ? "" : `${h % 12 || 12}${h < 12 ? "am" : "pm"}`}</div>)}
         </div>
         {days.map((d) => {
           const off = c.daysOff.includes(`2026-10-${d}`);
@@ -439,7 +439,7 @@ function WeekGrid({ c, days, next }: { c: Ctx; days: number[]; next: Call | unde
                 const tone = isNext ? "offset-butter bg-butter" : x.held ? "border-2 border-dashed border-[#8E8A74] bg-[#FAE8B4]" : x.kind === "hello" ? "bg-[#DDE5D2]" : "bg-[#FAE8B4]";
                 return (
                   <button key={x.id} type="button" onClick={() => c.setOpenCall(x.id)} style={{ top, height: h }}
-                    className={`coach-slot absolute inset-x-1 z-[5] overflow-hidden rounded-xl px-2 py-1 text-left text-[12px] leading-[15px] text-[#34402A] ${tone} ${x.state === "done" ? "opacity-70" : ""}`}>
+                    className={`coach-slot t-micro absolute inset-x-1 z-[5] overflow-hidden rounded-xl px-2 py-1 text-left text-[#34402A] ${tone} ${x.state === "done" ? "opacity-70" : ""}`}>
                     <span className="flex items-center gap-1 font-bold">{m.name}{x.moved && <Icon name="icon-move" size={14} />}{x.held && <span className="font-semibold">· Held</span>}{x.state === "done" && <Icon name="icon-done" size={14} />}</span>
                     <span className="block truncate">{callLabel(x)}{herTime(x.start, m)}</span>
                   </button>
@@ -468,7 +468,7 @@ function MonthGrid({ c }: { c: Ctx }) {
         {cells.map((d, i) => d === 0 ? <div key={`x${i}`} /> : (
           <button key={d} type="button" onClick={() => setDay(d)} className={`flex min-h-16 flex-col items-center justify-center gap-1 rounded-2xl ${day === d ? "bg-butter text-[#34402A]" : c.daysOff.includes(`2026-10-${d}`) ? "bg-sunk" : "border border-line bg-paper"}`}>
             <span className="font-semibold">{d}</span>
-            {onDay(d).length > 0 && <span className="flex items-center gap-0.5 text-[12px] font-bold">{onDay(d).slice(0, 3).map((x) => <span key={x.id} className="h-1.5 w-1.5 rounded-full bg-current" />)} {onDay(d).length}</span>}
+            {onDay(d).length > 0 && <span className="t-micro flex items-center gap-0.5 font-bold">{onDay(d).slice(0, 3).map((x) => <span key={x.id} className="h-1.5 w-1.5 rounded-full bg-current" />)} {onDay(d).length}</span>}
           </button>
         ))}
       </div>
@@ -532,7 +532,7 @@ function FeedLink({ c, compact = false }: { c: Ctx; compact?: boolean }) {
   if (compact) return <ButtonOutline className="!w-auto" onClick={download}><Icon name="icon-time" size={22} /> Add to my calendar</ButtonOutline>;
   return (
     <div className="flex flex-col gap-3">
-      <p className="break-all rounded-2xl bg-sunk p-3 font-mono text-[13px]">https://roomformama.com/api/public/feed/{c.feedToken || "…"}.ics</p>
+      <p className="t-caption break-all rounded-2xl bg-sunk p-3 font-body">https://roomformama.com/api/public/feed/{c.feedToken || "…"}.ics</p>
       <div className="flex flex-wrap gap-3">
         <ButtonOutline className="!w-auto" onClick={download}>Download .ics</ButtonOutline>
         <ButtonOutline className="!w-auto" onClick={() => { c.setFeedToken(newFeedToken()); setRenewed(true); }}>Make a new link</ButtonOutline>
@@ -572,7 +572,7 @@ function Notes({ c, m }: { c: Ctx; m: Mom }) {
   return (
     <div className="flex flex-col gap-2">
       <p className="t-caption text-ink-muted">Private notes (only you see these)</p>
-      {m.notes.map((n, i) => <p key={i} className="rounded-2xl bg-sunk p-3 text-[15px]">{n}</p>)}
+      {m.notes.map((n, i) => <p key={i} className="t-compact rounded-2xl bg-sunk p-3">{n}</p>)}
       <div className="flex gap-2">
         <input value={t} onChange={(e) => setT(e.target.value)} placeholder="A note for you…" className="min-h-12 w-full rounded-2xl border border-line bg-paper px-4" />
         <button type="button" disabled={!t.trim()} onClick={() => { c.setMoms((ms) => ms.map((x) => (x.id === m.id ? { ...x, notes: [...x.notes, t.trim()] } : x))); setT(""); }} className="rfm-button min-h-12 shrink-0 rounded-full border-2 border-line-strong px-5 font-semibold disabled:opacity-50">Add</button>
@@ -601,7 +601,7 @@ function MothersView({ c }: { c: Ctx }) {
           return (
             <button key={m.id} type="button" onClick={() => c.setOpenMom(m.id)} className="micro-card flex min-h-16 w-full flex-wrap items-center gap-x-4 gap-y-1 border-b border-line px-5 py-3 text-left last:border-b-0">
               <span className="min-w-[140px] flex-1"><span className="block font-semibold">{m.name}</span><span className="t-caption text-ink-muted">{m.city} · {m.zone}</span></span>
-              <span className="rounded-full bg-sunk px-3 py-1 text-[13px] font-semibold">{m.status}</span>
+              <span className="t-caption rounded-full bg-sunk px-3 py-1">{m.status}</span>
               <span className="t-caption w-full text-ink-muted sm:w-48">{nx ? `Next: ${dayLabel(nx.start)}, ${fmtTime(nx.start, KHI)}` : "No call booked"}</span>
             </button>
           );
@@ -727,7 +727,7 @@ function RulesView({ c }: { c: Ctx }) {
         {[["Pakistan", "Asia/Karachi"], ["UK", "Europe/London"], ["UAE", "Asia/Dubai"], ["Saudi Arabia", "Asia/Riyadh"], ["US", "America/New_York"], ["Canada", "America/Toronto"]].map(([country, zone]) => (
           <div key={country} className="flex flex-col gap-1 border-b border-line py-2 last:border-b-0 sm:flex-row sm:gap-4">
             <p className="w-32 shrink-0 font-semibold">{country}</p>
-            <p className="text-[15px]">{helplinesFor(zone!).map((l) => `${l.name} ${l.number}${l.hours ? ` (${l.hours})` : ""}`).join(" · ")}</p>
+            <p className="t-compact">{helplinesFor(zone!).map((l) => `${l.name} ${l.number}${l.hours ? ` (${l.hours})` : ""}`).join(" · ")}</p>
           </div>
         ))}
       </Panel>
@@ -764,7 +764,7 @@ function GivenBackView({ c }: { c: Ctx }) {
       <Panel className="flex flex-col gap-2">
         <p className="t-heading">What ran by itself</p>
         {[...c.log].reverse().map(([t, what, m], i) => (
-          <p key={i} className="flex justify-between gap-3 border-b border-line py-2 text-[15px] last:border-b-0"><span><span className="t-time mr-3">{t}</span>{what}</span><span className="text-ink-muted">{m} min</span></p>
+          <p key={i} className="t-compact flex justify-between gap-3 border-b border-line py-2 last:border-b-0"><span><span className="t-time mr-3">{t}</span>{what}</span><span className="text-ink-muted">{m} min</span></p>
         ))}
       </Panel>
       {!c.ran ? (
