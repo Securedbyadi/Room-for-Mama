@@ -505,6 +505,34 @@ button[aria-pressed="true"] .theme-icon { opacity: 1; }
   .rfm-deal-card { min-height: 390px; }
 }
 
+@media (max-width: 1199px) {
+  .rfm-deal-card .fan-art {
+    flex: none;
+    height: 250px;
+  }
+  .rfm-deal-card .fan-art > div {
+    align-items: center;
+    justify-content: center;
+  }
+  .rfm-deal-card .fan-art picture,
+  .rfm-deal-card .fan-art img {
+    max-height: 230px;
+    object-fit: contain;
+  }
+  .rfm-deal-card .rfm-illo-her-half-hour picture {
+    width: 88%;
+  }
+  .rfm-deal-card .home-card-title {
+    display: flex;
+    min-height: 48px;
+    align-items: flex-end;
+    margin-top: 0;
+  }
+  .rfm-deal-card .home-card-copy {
+    min-height: 116px;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .fan-card, .fan-art, .logo-rise, .theme-swap, .fan-more, .rfm-button, .micro-link, .micro-card, .form-illustration, .final-illustration, .language-icon-card,
   .bup-scene, .bup-sheet, .bup-slot, .bup-selected, .bup-cta { animation: none; transition: none; }
