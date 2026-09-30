@@ -76,27 +76,43 @@ export function WebsiteFooter() {
   }, []);
   const link = "micro-link flex min-h-10 items-center";
   return (
-    <footer className="band-ink">
-      <div className="mx-auto max-w-[1200px] px-5 py-12">
-        <div className="grid gap-8 md:grid-cols-[minmax(0,2fr)_minmax(0,1fr)_minmax(0,1fr)]">
-          <div><Logo height={30} /><p className="mt-3 text-ink-muted">A little room for you.</p></div>
-          <nav aria-label="Explore">
-            <p className="eyebrow mb-2">Explore</p>
-            <Link to="/what-i-offer" className={link}>What I offer</Link>
-            <Link to="/who-its-for" className={link}>Who it’s for</Link>
-            <Link to="/prices" className={link}>Prices and FAQ</Link>
-            <Link to="/privacy" className={link}>Privacy</Link>
-          </nav>
-          <nav aria-label="Your calls">
-            <p className="eyebrow mb-2">Your calls</p>
-            <Link to="/fit-check" className={link}>Book a free hello call</Link>
-            <Link to="/manage" className={link}>Manage my calls</Link>
-            <Link to="/demo/coach" className={link}>See the coach’s side</Link>
-            <Link to="/judges" className={link}>For judges</Link>
-          </nav>
+    <footer className="bg-page px-0 md:px-5">
+      <div className="footer-panel relative mx-auto max-w-[1200px] overflow-hidden bg-sunk px-5 py-12 md:px-10">
+        <div aria-hidden className="hero-sun pointer-events-none absolute -top-64 -left-40 h-[560px] w-[560px] rounded-full opacity-25" />
+        <div aria-hidden className="pointer-events-none absolute top-6 right-8 h-14 w-14 rounded-full" style={{ background: "#f3b08f" }} />
+        <div className="relative grid gap-10 md:grid-cols-[1.2fr_0.8fr]">
+          <div className="footer-card bg-paper p-6">
+            <div className="grid gap-5 md:grid-cols-[150px_minmax(0,1fr)] md:items-center">
+              <Drawing name="illo-tea-warm" className="w-[150px]" />
+              <div>
+                <h2 className="t-title">A little room <em className="italic">for you.</em></h2>
+                <p className="mt-2 text-ink-muted">A free 20-minute hello call, in your time zone.</p>
+                <div className="mt-4 md:max-w-[280px]"><ButtonMain to="/fit-check">Book a free hello call</ButtonMain></div>
+              </div>
+            </div>
+          </div>
+          <div className="grid gap-8 sm:grid-cols-2">
+            <nav aria-label="Explore">
+              <p className="eyebrow mb-2">Explore</p>
+              <Link to="/what-i-offer" className={link}>What I offer</Link>
+              <Link to="/who-its-for" className={link}>Who it’s for</Link>
+              <Link to="/prices" className={link}>Prices and FAQ</Link>
+              <Link to="/privacy" className={link}>Privacy</Link>
+            </nav>
+            <nav aria-label="Your calls">
+              <p className="eyebrow mb-2">Your calls</p>
+              <Link to="/fit-check" className={link}>Book a free hello call</Link>
+              <Link to="/manage" className={link}>Manage my calls</Link>
+              <Link to="/demo/coach" className={link}>See the coach’s side</Link>
+              <Link to="/judges" className={link}>For judges</Link>
+            </nav>
+          </div>
         </div>
-        <div className="mt-10"><SafetyNote zone={zone} /></div>
-        <p className="t-caption mt-8 text-ink-muted">© 2026 Room for Mama · Lahore, Pakistan</p>
+        <div className="relative mt-10 rounded-[22px] bg-paper p-5 text-[16px]"><SafetyNote zone={zone} /></div>
+        <div className="relative mt-8 grid items-center gap-3 sm:grid-cols-[auto_minmax(0,1fr)]">
+          <Logo height={26} />
+          <p className="t-caption text-ink-muted sm:text-right">© 2026 Room for Mama · Lahore, Pakistan</p>
+        </div>
       </div>
     </footer>
   );
