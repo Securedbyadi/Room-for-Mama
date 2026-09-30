@@ -92,7 +92,7 @@ function Home() {
 
         <section className="section-reveal mx-auto grid max-w-[1200px] gap-10 px-5 py-16 md:grid-cols-[360px_minmax(0,1fr)] md:py-24"><div><p className="eyebrow">Questions</p><h2 className="section-title mt-3">Questions mothers ask</h2></div><div className="divide-y divide-line border-t border-line">{faqs.map(([q,a],i)=><div key={q} className="py-5"><h3><button type="button" onClick={()=>setOpenFaq(openFaq===i?-1:i)} aria-expanded={openFaq===i} className="t-heading grid w-full grid-cols-[minmax(0,1fr)_auto] items-center gap-4 text-left"><span>{q}</span><span className="text-2xl" aria-hidden>{openFaq===i?"−":"+"}</span></button></h3>{openFaq===i&&<p className="anim-fade mt-3 max-w-[620px] text-ink-muted">{a}</p>}</div>)}</div></section>
 
-        <section className="bg-butter px-5 py-16 text-center md:py-20"><h2 className="section-title !text-[#34402A]">Make a little room <span className="t-italic">for you</span><br />this week.</h2><p className="mt-3 !text-[#34402A]">A free 20-minute hello call, in your time zone.</p><div className="mx-auto mt-7 max-w-[300px]"><ButtonMain to="/fit-check" className="!bg-[#34402A] !text-[#F6EEE3]">Book a free hello call</ButtonMain></div></section>
+        <section className="bg-butter px-5 py-16 text-center md:py-20"><h2 className="section-title !text-[#34402A]">Make a little room <span className="t-italic">for you</span><br />this week.</h2><p className="mt-3 !text-[#34402A]">A free 20-minute hello call, in your time zone.</p><div className="mx-auto mt-7 max-w-[300px]"><ButtonMain to="/fit-check">Book a free hello call</ButtonMain></div></section>
       </main>
     </WebsitePage>
   );
