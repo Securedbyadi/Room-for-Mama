@@ -476,7 +476,25 @@ button[aria-pressed="true"] .theme-icon { opacity: 1; }
 .rfm-splash > * { position: relative; width: min(78vw, 240px); max-width: 240px; border: 0 !important; box-shadow: none !important; }
 .form-illustration, .final-illustration, .language-icon-card { animation: rfm-illustration-arrive 320ms ease-out both; }
 .rfm-button { transition: transform 120ms ease-out, opacity 120ms ease-out, color 160ms ease-out, background-color 160ms ease-out, border-color 160ms ease-out; }
+.rfm-button { position: relative; }
 .rfm-button:active:not(:disabled) { transform: scale(.98); }
+/* Light under-shade that slides in below a button on hover */
+.rfm-button::after {
+  content: "";
+  position: absolute;
+  left: 14%;
+  right: 14%;
+  bottom: -7px;
+  height: 4px;
+  border-radius: 999px;
+  background: var(--butter);
+  opacity: 0;
+  transform: scaleX(.35) translateY(-4px);
+  transform-origin: center;
+  transition: opacity 260ms ease-out, transform 260ms ease-out;
+  pointer-events: none;
+}
+.rfm-button:hover:not(:disabled)::after { opacity: 1; transform: scaleX(1) translateY(0); }
 /* Hover fill: main buttons invert, outline buttons warm up */
 .rfm-button:hover:not(:disabled) { background: var(--peach-soft); color: var(--ink); border-color: var(--ink); }
 .rfm-button.bg-primary:hover:not(:disabled) { background: var(--butter); color: var(--ink); }
