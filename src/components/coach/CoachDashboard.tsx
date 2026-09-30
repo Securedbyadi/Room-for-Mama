@@ -288,16 +288,16 @@ function TodayView({ c }: { c: Ctx }) {
         <Panel className="flex flex-col gap-3">
           <h2 className="t-heading">How was your hello call with {c.mom(afterHello.momId).name}?</h2>
           {decided === null ? (
-            <div className="grid gap-3 sm:grid-cols-2">
-              <ButtonMain onClick={() => setDecided("offer")}>Offer Make Room</ButtonMain>
-              <ButtonOutline onClick={() => setDecided("no")}>Not a fit</ButtonOutline>
+            <div className="flex flex-wrap gap-2">
+              <CoachBtn primary onClick={() => setDecided("offer")}>Offer Make Room</CoachBtn>
+              <CoachBtn onClick={() => setDecided("no")}>Not a fit</CoachBtn>
             </div>
           ) : decided === "offer" ? <Done>Make Room offer sent to {c.mom(afterHello.momId).name}.</Done>
             : <p className="t-compact rounded-2xl bg-sunk p-3"><span className="font-semibold">Sent your note:</span> {NOT_A_FIT_NOTE}</p>}
           <label className="t-caption text-ink-muted" htmlFor="small-step">Small step (optional, goes in her thank-you email)</label>
           <div className="flex gap-2">
-            <input id="small-step" value={step} onChange={(e) => { setStep(e.target.value); setStepSaved(false); }} placeholder="One small step…" className="min-h-12 w-full rounded-2xl border border-line bg-paper px-4" />
-            <button type="button" disabled={!step.trim()} onClick={() => setStepSaved(true)} className="rfm-button min-h-12 shrink-0 rounded-full border-2 border-line-strong px-5 font-semibold disabled:opacity-50">{stepSaved ? "Saved" : "Save"}</button>
+            <input id="small-step" value={step} onChange={(e) => { setStep(e.target.value); setStepSaved(false); }} placeholder="One small step…" className="min-h-10 w-full rounded-2xl border border-line bg-paper px-4" />
+            <button type="button" disabled={!step.trim()} onClick={() => setStepSaved(true)} className="rfm-button min-h-10 shrink-0 rounded-full border border-line-strong px-4 text-[15px] font-semibold disabled:opacity-50">{stepSaved ? "Saved" : "Save"}</button>
           </div>
         </Panel>
       )}
