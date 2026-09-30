@@ -478,7 +478,8 @@ button[aria-pressed="true"] .theme-icon { opacity: 1; }
 .rfm-button { transition: transform 120ms ease-out, opacity 120ms ease-out; }
 .rfm-button:active:not(:disabled) { transform: scale(.98); }
 .micro-link { transition: color 160ms ease-out, text-underline-offset 160ms ease-out; }
-.micro-link:hover { color: var(--ink); text-underline-offset: 7px; }
+.micro-link:hover { color: var(--ink); text-underline-offset: 7px; text-decoration-color: var(--peach); text-decoration-thickness: 2px; }
+.micro-link.underline-border:hover { border-color: var(--peach); }
 .micro-card { transition: transform 160ms ease-out; }
 .micro-card:hover { transform: translateY(-4px); }
 @keyframes rfm-illustration-arrive { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
