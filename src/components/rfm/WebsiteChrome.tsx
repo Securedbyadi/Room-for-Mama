@@ -8,6 +8,7 @@ const LINKS = [
   ["What I offer", "/what-i-offer"],
   ["Who it’s for", "/who-its-for"],
   ["Prices and FAQ", "/prices"],
+  ["Coach dashboard", "/demo/coach"],
 ] as const;
 
 /** The one header, on every page: logo, three links, the main button; the round toggle sits in it on phones. */
@@ -101,9 +102,6 @@ export function WebsiteFooter() {
             <nav aria-label="Your calls">
               <p className="eyebrow mb-2">Your calls</p>
               <Link to="/fit-check" className={link}>Book a free hello call</Link>
-              <Link to="/manage" className={link}>Manage my calls</Link>
-              <Link to="/demo/coach" className={link}>See the coach’s side</Link>
-              <Link to="/judges" className={link}>For judges</Link>
             </nav>
           </div>
         </div>

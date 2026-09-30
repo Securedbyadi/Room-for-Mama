@@ -182,7 +182,7 @@ export function CoachDashboard() {
           return (
             <button key={id} type="button" onClick={() => go(id)} className={`t-caption relative flex min-h-16 flex-col items-center justify-center gap-1 ${tab === id ? "" : "text-ink-muted"}`}>
               <Icon name={t.icon} size={24} />{t.label}
-              {id === "today" && openNeeds.length > 0 && <span className="absolute top-2 right-[28%]"><Badge n={openNeeds.length} /></span>}
+              {id === "today" && openNeeds.length > 0 && <span className="t-micro absolute top-1.5 right-[26%] inline-flex h-4 min-w-4 items-center justify-center rounded-full bg-butter px-1 text-[10px] font-semibold text-[#34402A]">{openNeeds.length}</span>}
             </button>
           );
         })}
