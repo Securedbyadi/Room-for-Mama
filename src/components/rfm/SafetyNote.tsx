@@ -5,7 +5,7 @@ import { Icon } from "./brand";
 export function SafetyNote({ zone, lines: given }: { zone?: string | undefined; lines?: Helpline[] | undefined }) {
   const lines = given ?? (zone ? helplinesFor(zone) : []);
   return (
-    <aside className="grid grid-cols-[auto_minmax(0,1fr)] gap-3 rounded-[22px] bg-sunk p-5 text-[13px] leading-[19px] text-ink-muted">
+    <aside className="t-caption grid grid-cols-[auto_minmax(0,1fr)] gap-3 rounded-[22px] bg-sunk p-5 text-ink-muted">
       <Icon name="icon-helplines" size={28} className="mt-0.5" />
       <div>
       <p>{SAFETY_NOTE}</p>

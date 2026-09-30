@@ -68,7 +68,7 @@ export function ThemeControl({ compact = false }: { compact?: boolean | undefine
             type="button"
             aria-pressed={mode === value}
             onClick={() => choose(value)}
-            className={`flex min-h-10 items-center justify-center gap-1.5 rounded-full px-3 text-[13px] font-semibold ${
+            className={`t-caption flex min-h-10 items-center justify-center gap-1.5 rounded-full px-3 ${
               mode === value ? "bg-paper text-ink" : "text-ink-muted"
             }`}
           >

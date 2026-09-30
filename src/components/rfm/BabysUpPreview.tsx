@@ -18,19 +18,19 @@ export function BabysUpPreview() {
             <Drawing name="illo-baby-up" className="aspect-square w-14 shrink-0 rounded-full [&>div]:p-1" />
             <div>
               <p className="t-heading">No problem.</p>
-              <p className="text-[14px] text-ink-muted">Babies don’t read calendars.</p>
+              <p className="t-caption text-ink-muted">Babies don’t read calendars.</p>
             </div>
           </div>
-          <p className="t-heading mb-2 text-[18px]">Pick a new time</p>
+          <p className="t-heading mb-2">Pick a new time</p>
           <div className="flex flex-col gap-2">
             {options.map((o, i) => (
               <div key={o.start.toISOString()} className={`bup-slot bup-slot-${i} flex min-h-12 items-center justify-between rounded-2xl px-4 ${i === 0 ? "bup-selected border-2 border-[#34402A] bg-butter !text-[#34402A] text-opacity-100" : "border border-line bg-paper"}`}>
-                <span className="t-time text-[14px]">{fmtLong(o.start, zone)}</span>
+                <span className="t-caption t-time">{fmtLong(o.start, zone)}</span>
                 <Icon name={i === 0 ? "icon-done" : "icon-time"} size={22} className={i === 0 ? "!text-[#34402A]" : ""} />
               </div>
             ))}
           </div>
-          <div className="bup-cta mt-3 flex min-h-11 items-center justify-center rounded-full bg-primary text-[15px] font-semibold text-primary-foreground">Move my call</div>
+          <div className="bup-cta t-compact mt-3 flex min-h-11 items-center justify-center rounded-full bg-primary font-semibold text-primary-foreground">Move my call</div>
           <p className="t-caption mt-2 text-center text-ink-muted">Moving is always free.</p>
         </div>
       </div>
