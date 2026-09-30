@@ -141,7 +141,7 @@ function Book() {
     try {
       const r = await book({ data: { start: selected.start.toISOString(), firstName: name.trim(), email: email.trim(), phone: phone.trim() || undefined, zone: parsed.zone, city: parsed.city ?? null, days: parsed.days, notBeforeLocal: parsed.notBeforeLocal, notAfterLocal: parsed.notAfterLocal } });
       if (r.ok && r.token) void navigate({ to: "/manage/$token", params: { token: r.token }, search: { just: "booked" } });
-      else if (r.ok) setErr("You’re in. Check your email for your link.");
+      else if (r.ok) setErr("Thank you — you’re in. Check your email for your link and calendar invite.");
       else setErr(r.reason === "taken" ? "That time just went. Pick another." : "Lots of bookings just now. Try again in an hour.");
     } catch {
       setErr("Something went quiet on my side. Try again in a moment.");
