@@ -24,7 +24,7 @@ export function WebsiteHeader({ home = false }: { home?: boolean }) {
     <>
       <header className={`sticky top-0 z-30 transition-colors duration-300 ${scrolled ? "border-b border-line bg-page/95 backdrop-blur" : "border-b border-transparent bg-page"}`}>
         <div className="mx-auto grid min-h-20 max-w-[1200px] grid-cols-[minmax(0,1fr)_auto] items-center gap-4 px-5">
-          <HeaderLogo revealed={scrolled} stacked={home} height={32} stackedHeight={44} />
+          <HeaderLogo revealed={!scrolled} stacked={home} height={32} stackedHeight={44} />
           <div className="hidden items-center gap-8 lg:flex">
             <nav className="flex items-center gap-7" aria-label="Main navigation">
               {LINKS.map(([label, to]) => <Link key={label} to={to} viewTransition className="micro-link t-caption whitespace-nowrap text-ink-muted">{label}</Link>)}
