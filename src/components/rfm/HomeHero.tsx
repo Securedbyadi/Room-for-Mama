@@ -56,7 +56,7 @@ function Fan({ deals }: { deals: Deal[] }) {
   return (
     <div className="fan relative mx-auto h-[520px] w-full max-w-[640px]">
       <div aria-hidden className="hero-sun absolute top-1/2 left-1/2 h-[500px] w-[500px] -translate-x-1/2 -translate-y-1/2 rounded-full" />
-      <div aria-hidden className="founding-sticker absolute top-0 right-0 z-20 grid h-[124px] w-[124px] rotate-12 place-items-center rounded-full border-2 border-[#34402A] bg-peach text-center text-[#34402A]">
+      <div aria-hidden className="founding-sticker absolute top-0 right-0 z-20 grid h-[124px] w-[124px] rotate-12 place-items-center rounded-full border-2 border-[#34402A] bg-peach text-center !text-[#34402A]">
         <span className="t-caption leading-4">First 10<br /><strong className="font-display text-[25px] leading-6">US$80</strong><br />founding price</span>
       </div>
       {deals.map((d, i) => (
