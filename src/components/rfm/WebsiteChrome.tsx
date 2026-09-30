@@ -74,7 +74,7 @@ export function WebsiteFooter() {
   useEffect(() => {
     try { setZone(Intl.DateTimeFormat().resolvedOptions().timeZone); } catch { /* show anywhere-else line */ }
   }, []);
-  const link = "micro-link flex min-h-10 items-center";
+  const link = "micro-link flex min-h-10 items-center border-b border-line";
   return (
     <footer className="bg-page px-0 md:px-5">
       <div className="footer-panel relative mx-auto max-w-[1200px] overflow-hidden bg-sunk px-5 py-12 md:px-10">
