@@ -12,7 +12,7 @@
 - Tests use `bun run test` with the separate vitest config so app plugins stay out.
 - Home uses a compact hero; mother flows split on desktop and stack on phones to match references.
 - Approved plans are copied into docs; connected GitHub auto-sync records every change.
-- Theme is device-local, defaults to Auto, and applies before paint to prevent flashing.
+- Theme is device-local, defaults to Day (light), and applies before paint to prevent flashing.
 - Mother actions use server functions and checked manage tokens; visitors never read tables.
 - Coach functions require auth, the coach role, and the verified email adilmushtaq088@gmail.com.
 - Real coach app is `/coach`; `/demo/coach` uses only in-memory sample rows.

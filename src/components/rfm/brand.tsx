@@ -123,12 +123,37 @@ export function Drawing({
   );
 }
 
-export function Logo({ height = 28, className = "" }: { height?: number; className?: string }) {
+export function Logo({
+  height = 28,
+  className = "",
+  stacked = false,
+  stackedHeight = 44,
+}: {
+  height?: number;
+  className?: string;
+  /** On mobile show the stacked lockup; desktop keeps the horizontal one. */
+  stacked?: boolean;
+  stackedHeight?: number;
+}) {
+  if (!stacked) {
+    return (
+      <Link to="/" aria-label="Room for Mama, home" className={`inline-flex ${className}`}>
+        <span className="rfm-logo-wrap">
+          <img className="rfm-logo-day" src="/brand/logo/rfm-logo-horizontal.svg" alt="Room for Mama" style={{ height }} />
+          <img className="rfm-logo-night" src="/brand/logo/rfm-logo-horizontal-night.svg" alt="Room for Mama" style={{ height }} />
+        </span>
+      </Link>
+    );
+  }
   return (
     <Link to="/" aria-label="Room for Mama, home" className={`inline-flex ${className}`}>
-      <span className="rfm-logo-wrap">
-        <img className="rfm-logo-day" src="/brand/logo/rfm-logo-horizontal.svg" alt="Room for Mama" height={height} style={{ height }} />
-        <img className="rfm-logo-night" src="/brand/logo/rfm-logo-horizontal-night.svg" alt="Room for Mama" height={height} style={{ height }} />
+      <span className="rfm-logo-wrap rfm-logo-stacked">
+        <img className="rfm-logo-day" src="/brand/logo/rfm-logo-stacked.svg" alt="Room for Mama" style={{ height: stackedHeight }} />
+        <img className="rfm-logo-night" src="/brand/logo/rfm-logo-stacked-night.svg" alt="Room for Mama" style={{ height: stackedHeight }} />
+      </span>
+      <span className="rfm-logo-wrap rfm-logo-horizontal-when-stacked">
+        <img className="rfm-logo-day" src="/brand/logo/rfm-logo-horizontal.svg" alt="Room for Mama" style={{ height }} />
+        <img className="rfm-logo-night" src="/brand/logo/rfm-logo-horizontal-night.svg" alt="Room for Mama" style={{ height }} />
       </span>
     </Link>
   );
