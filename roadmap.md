@@ -24,3 +24,4 @@
 - [x] Header shows the mark only at the top and reveals the full lockup on scroll; header sticky everywhere
 - [x] Footer redesigned as a rounded sunk panel with offset-print booking card and link columns
 - Fix before/after tea section background so it pairs with the butter on the right (user says the two don't go together).
+- Add a light animated under-shade (like a border) below every CTA on hover, sitewide.
