@@ -25,3 +25,4 @@
 - [x] Footer redesigned as a rounded sunk panel with offset-print booking card and link columns
 - [x] Before/after tea section: Before half re-toned to the warm alabaster paper beside the butter half
 - [x] Sitewide button hover: hero-card style — slight tilt, small lift, fill changes (invert for main, peach-soft for outline) and the offset-print peach hard shadow, checked in night mode
+- [x] Button hover: butter fill with dark ink text in both themes (was peach-soft, text could turn cream/invisible)

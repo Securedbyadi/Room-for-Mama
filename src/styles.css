@@ -479,13 +479,7 @@ button[aria-pressed="true"] .theme-icon { opacity: 1; }
 .rfm-button:active:not(:disabled) { transform: scale(.98) rotate(-1.5deg); }
 /* Hover like the hero cards: a little tilt, a small lift, and the hard offset-print shadow */
 .rfm-button:hover:not(:disabled),
-.rfm-button:active:not(:disabled) { transform: translateY(-2px) rotate(-1.5deg); background: var(--peach-soft); color: var(--ink); border-color: var(--ink); box-shadow: 4px 4px 0 0 var(--peach); }
-.rfm-button.bg-primary:hover:not(:disabled),
-.rfm-button.bg-primary:active:not(:disabled) { background: var(--butter); color: var(--ink); }
-:root[data-theme="night"] .rfm-button:hover:not(:disabled),
-:root[data-theme="night"] .rfm-button:active:not(:disabled) { background: var(--peach-soft); color: var(--ink); }
-:root[data-theme="night"] .rfm-button.bg-primary:hover:not(:disabled),
-:root[data-theme="night"] .rfm-button.bg-primary:active:not(:disabled) { background: var(--ink); color: var(--page); }
+.rfm-button:active:not(:disabled) { transform: translateY(-2px) rotate(-1.5deg); background: var(--butter); color: #34402a; border-color: #34402a; box-shadow: 4px 4px 0 0 var(--peach); }
 .micro-link { transition: color 160ms ease-out, text-underline-offset 160ms ease-out; }
 .micro-link:hover { color: var(--ink); text-underline-offset: 7px; text-decoration-color: var(--peach); text-decoration-thickness: 2px; }
 .micro-link.underline-border:hover { border-color: var(--peach); }
