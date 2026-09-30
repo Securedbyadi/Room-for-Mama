@@ -265,13 +265,13 @@ function TodayView({ c }: { c: Ctx }) {
           <p className="t-title mt-2">{m.name}</p>
           <p className="font-semibold">{callLabel(next)}</p>
           <p className="t-time mt-2">{fmtTime(next.start, KHI)} Lahore{herTime(next.start, m)}</p>
-          <div className="mt-5 grid gap-3 sm:grid-cols-2">
-            <a href={PLACEHOLDERS.meetLink} target="_blank" rel="noreferrer" className="rfm-button inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-[#34402A] px-6 font-semibold text-[#F6EEE3]">
-              <Icon name="icon-video-call" size={22} /> Join
+          <div className="mt-5 flex flex-wrap gap-2">
+            <a href={PLACEHOLDERS.meetLink} target="_blank" rel="noreferrer" className="rfm-button inline-flex min-h-10 items-center justify-center gap-2 rounded-full bg-[#34402A] px-4 text-[15px] font-semibold text-[#F6EEE3]">
+              <Icon name="icon-video-call" size={20} /> Join
             </a>
             {!bup ? (
-              <button type="button" onClick={() => setBup(true)} className="rfm-button inline-flex min-h-12 items-center justify-center gap-2 rounded-full border-2 border-[#34402A] px-6 font-semibold">
-                <Icon name="icon-babys-up" size={22} /> Baby’s up
+              <button type="button" onClick={() => setBup(true)} className="rfm-button inline-flex min-h-10 items-center justify-center gap-2 rounded-full border border-[#34402A]/60 px-4 text-[15px] font-semibold">
+                <Icon name="icon-babys-up" size={20} /> Baby’s up
               </button>
             ) : <p className="anim-fade self-center font-semibold">Sent {m.name} three new times.</p>}
           </div>
@@ -335,10 +335,10 @@ function NeedCard({ c, n }: { c: Ctx; n: Need }) {
     : n.kind === "missed" ? [["Mark missed", `Marked missed. Her first missed Make Room call is put back.`], ["Offer a new time", `Sent ${m.name} three new times.`]]
     : [["Offer new times", `Sent ${m.name} three new times away from your day off.`]];
   return (
-    <div className="offset-butter rounded-[22px] !bg-[#FBF6EE] p-5 text-[#34402A] [&_.text-ink-muted]:!text-[#5B6450] [&_.rfm-button:not(.bg-primary)]:!border-[#34402A] [&_.rfm-button:not(.bg-primary)]:!text-[#34402A] [&_.bg-primary]:!bg-[#34402A] [&_.bg-primary]:!text-[#F6EEE3]">
+    <div className="rounded-[22px] border border-line bg-paper p-5">
       <p className="t-heading">{n.title}</p>
       <p className="mt-1 text-ink-muted">{n.reason}</p>
-      <div className="mt-4 grid gap-3 sm:grid-cols-2">
+      <div className="mt-4 flex flex-wrap gap-2">
         {acts.map(([label, msg], i) => {
           const run = () => {
             c.resolve(n.id, msg);
@@ -347,7 +347,7 @@ function NeedCard({ c, n }: { c: Ctx; n: Need }) {
               if (i === 0) { c.setCalls((cs) => cs.map((x) => (x.momId === n.momId ? { ...x, held: false } : x))); c.setMoms((ms) => ms.map((x) => (x.id === n.momId ? { ...x, status: "Make Room" } : x))); }
             }
           };
-          return i === 0 ? <ButtonMain key={label} onClick={run}>{label}</ButtonMain> : <ButtonOutline key={label} onClick={run}>{label}</ButtonOutline>;
+          return <CoachBtn key={label} primary={i === 0} onClick={run}>{label}</CoachBtn>;
         })}
       </div>
     </div>
