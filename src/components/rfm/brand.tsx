@@ -159,6 +159,54 @@ export function Logo({
   );
 }
 
+/**
+ * Header lockup. At the top of the page only the mark shows; once the page is
+ * scrolled the full lockup fades in (stacked on phones, horizontal on desktop).
+ */
+export function HeaderLogo({
+  revealed,
+  stacked = false,
+  height = 32,
+  stackedHeight = 44,
+}: {
+  revealed: boolean;
+  stacked?: boolean;
+  height?: number;
+  stackedHeight?: number;
+}) {
+  return (
+    <Link
+      to="/"
+      aria-label="Room for Mama, home"
+      className={`logo-morph ${revealed ? "is-revealed" : ""}`}
+    >
+      <span className="lm-mark rfm-logo-wrap">
+        <img className="rfm-logo-day" src="/brand/logo/rfm-mark.svg" alt="Room for Mama" style={{ height: stacked ? stackedHeight : height }} />
+        <img className="rfm-logo-night" src="/brand/logo/rfm-mark.svg" alt="Room for Mama" style={{ height: stacked ? stackedHeight : height }} />
+      </span>
+      <span className="lm-full">
+        {stacked ? (
+          <>
+            <span className="rfm-logo-wrap rfm-logo-stacked">
+              <img className="rfm-logo-day" src="/brand/logo/rfm-logo-stacked.svg" alt="" style={{ height: stackedHeight }} />
+              <img className="rfm-logo-night" src="/brand/logo/rfm-logo-stacked-night.svg" alt="" style={{ height: stackedHeight }} />
+            </span>
+            <span className="rfm-logo-wrap rfm-logo-horizontal-when-stacked">
+              <img className="rfm-logo-day" src="/brand/logo/rfm-logo-horizontal.svg" alt="" style={{ height }} />
+              <img className="rfm-logo-night" src="/brand/logo/rfm-logo-horizontal-night.svg" alt="" style={{ height }} />
+            </span>
+          </>
+        ) : (
+          <span className="rfm-logo-wrap">
+            <img className="rfm-logo-day" src="/brand/logo/rfm-logo-horizontal.svg" alt="" style={{ height }} />
+            <img className="rfm-logo-night" src="/brand/logo/rfm-logo-horizontal-night.svg" alt="" style={{ height }} />
+          </span>
+        )}
+      </span>
+    </Link>
+  );
+}
+
 /* ---------- buttons ---------- */
 
 type ButtonProps = {
