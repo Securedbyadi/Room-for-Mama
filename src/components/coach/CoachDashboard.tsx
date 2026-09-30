@@ -193,8 +193,8 @@ export function CoachDashboard() {
 
       {moreOpen && (
         <Sheet onClose={() => setMoreOpen(false)} title="More">
-          <ButtonOutline onClick={() => go("rules")}><Icon name="icon-notes" size={22} /> Rules</ButtonOutline>
-          <ButtonOutline onClick={() => go("given-back")}><Icon name="icon-time-given-back" size={22} /> Given back</ButtonOutline>
+          <CoachBtn onClick={() => go("rules")}><Icon name="icon-notes" size={20} /> Rules</CoachBtn>
+          <CoachBtn onClick={() => go("given-back")}><Icon name="icon-time-given-back" size={20} /> Given back</CoachBtn>
         </Sheet>
       )}
       {callSheet && <CallSheet c={ctx} call={callSheet} onClose={() => setOpenCall(null)} />}
@@ -523,7 +523,7 @@ function TimeOffSheet({ c, onClose }: { c: Ctx; onClose: () => void }) {
           <Chip key={d} active={on} onClick={() => setPick((p) => (on ? p.filter((x) => x !== k) : [...p, k]))}>{dayLabel(at(d, 12, 0))}</Chip>
         ); })}
       </div>
-      <ButtonMain onClick={apply}>Save days off</ButtonMain>
+      <CoachBtn primary onClick={apply}>Save days off</CoachBtn>
     </Sheet>
   );
 }
@@ -539,13 +539,13 @@ function FeedLink({ c, compact = false }: { c: Ctx; compact?: boolean }) {
     const a = document.createElement("a"); a.href = url; a.download = "room-for-mama.ics"; a.click();
     setTimeout(() => URL.revokeObjectURL(url), 1000);
   };
-  if (compact) return <ButtonOutline className="!w-auto" onClick={download}><Icon name="icon-time" size={22} /> Add to my calendar</ButtonOutline>;
+  if (compact) return <CoachBtn onClick={download}><Icon name="icon-time" size={20} /> Add to my calendar</CoachBtn>;
   return (
     <div className="flex flex-col gap-3">
       <p className="t-caption break-all rounded-2xl bg-sunk p-3 font-body">https://roomformama.com/api/public/feed/{c.feedToken || "…"}.ics</p>
-      <div className="flex flex-wrap gap-3">
-        <ButtonOutline className="!w-auto" onClick={download}>Download .ics</ButtonOutline>
-        <ButtonOutline className="!w-auto" onClick={() => { c.setFeedToken(newFeedToken()); setRenewed(true); }}>Make a new link</ButtonOutline>
+      <div className="flex flex-wrap gap-2">
+        <CoachBtn onClick={download}>Download .ics</CoachBtn>
+        <CoachBtn onClick={() => { c.setFeedToken(newFeedToken()); setRenewed(true); }}>Make a new link</CoachBtn>
       </div>
       {renewed && <Done>New link made. The old one no longer works.</Done>}
     </div>
@@ -561,9 +561,9 @@ function CallSheet({ c, call, onClose }: { c: Ctx; call: Call; onClose: () => vo
   return (
     <Sheet onClose={onClose} title={`${m.name} · ${callLabel(call)}`}>
       <p className="t-time">{dayLabel(call.start, { weekday: "long", day: "numeric", month: "long" })}, {fmtTime(call.start, KHI)} Lahore{herTime(call.start, m)}</p>
-      <div className="grid gap-3">
-        <a href={PLACEHOLDERS.meetLink} target="_blank" rel="noreferrer" className="rfm-button inline-flex min-h-12 items-center justify-center gap-2 rounded-full bg-primary px-6 font-semibold text-primary-foreground"><Icon name="icon-video-call" size={22} /> Join</a>
-        {!bup ? <ButtonOutline onClick={() => setBup(true)}><Icon name="icon-babys-up" size={22} /> Baby’s up</ButtonOutline> : <Done>Sent {m.name} three new times.</Done>}
+      <div className="flex flex-wrap gap-2">
+        <a href={PLACEHOLDERS.meetLink} target="_blank" rel="noreferrer" className="rfm-button inline-flex min-h-10 items-center justify-center gap-2 rounded-full bg-primary px-4 text-[15px] font-semibold text-primary-foreground"><Icon name="icon-video-call" size={20} /> Join</a>
+        {!bup ? <CoachBtn onClick={() => setBup(true)}><Icon name="icon-babys-up" size={20} /> Baby’s up</CoachBtn> : <Done>Sent {m.name} three new times.</Done>}
       </div>
       <div className="rounded-2xl bg-sunk p-4">
         <p className="t-caption text-ink-muted">Payment</p>
@@ -571,7 +571,7 @@ function CallSheet({ c, call, onClose }: { c: Ctx; call: Call; onClose: () => vo
       </div>
       {plan.length > 0 && <MakeRoomPlan plan={plan.map((x) => ({ start: x.start, end: x.end }))} zone={m.zone} />}
       <Notes c={c} m={m} />
-      {!shared ? <ButtonOutline onClick={() => setShared(true)}><Icon name="icon-helplines" size={22} /> Share helplines</ButtonOutline> : <Done>Emailed {m.name} her country’s helplines.</Done>}
+      {!shared ? <CoachBtn onClick={() => setShared(true)}><Icon name="icon-helplines" size={20} /> Share helplines</CoachBtn> : <Done>Emailed {m.name} her country’s helplines.</Done>}
       <button type="button" onClick={() => { onClose(); c.setTab("mothers"); c.setOpenMom(m.id); }} className="min-h-12 font-semibold underline">Open {m.name}’s page</button>
     </Sheet>
   );
@@ -584,8 +584,8 @@ function Notes({ c, m }: { c: Ctx; m: Mom }) {
       <p className="t-caption text-ink-muted">Private notes (only you see these)</p>
       {m.notes.map((n, i) => <p key={i} className="t-compact rounded-2xl bg-sunk p-3">{n}</p>)}
       <div className="flex gap-2">
-        <input value={t} onChange={(e) => setT(e.target.value)} placeholder="A note for you…" className="min-h-12 w-full rounded-2xl border border-line bg-paper px-4" />
-        <button type="button" disabled={!t.trim()} onClick={() => { c.setMoms((ms) => ms.map((x) => (x.id === m.id ? { ...x, notes: [...x.notes, t.trim()] } : x))); setT(""); }} className="rfm-button min-h-12 shrink-0 rounded-full border-2 border-line-strong px-5 font-semibold disabled:opacity-50">Add</button>
+        <input value={t} onChange={(e) => setT(e.target.value)} placeholder="A note for you…" className="min-h-10 w-full rounded-2xl border border-line bg-paper px-4" />
+        <button type="button" disabled={!t.trim()} onClick={() => { c.setMoms((ms) => ms.map((x) => (x.id === m.id ? { ...x, notes: [...x.notes, t.trim()] } : x))); setT(""); }} className="rfm-button min-h-10 shrink-0 rounded-full border border-line-strong px-4 text-[15px] font-semibold disabled:opacity-50">Add</button>
       </div>
     </div>
   );
@@ -658,13 +658,13 @@ function MotherPage({ c, id }: { c: Ctx; id: string }) {
       </Panel>
       <Panel><Notes c={c} m={m} /></Panel>
       <Panel className="flex flex-col gap-3">
-        {!shared ? <ButtonOutline onClick={() => setShared(true)}><Icon name="icon-helplines" size={22} /> Share helplines</ButtonOutline>
+        {!shared ? <CoachBtn className="w-fit" onClick={() => setShared(true)}><Icon name="icon-helplines" size={20} /> Share helplines</CoachBtn>
           : <Done>Emailed {m.name}: {lines.map((l) => l.name).join(", ") || "findahelpline.com"}.</Done>}
         {act ? <Done>{act}</Done> : (
-          <div className="grid gap-3 sm:grid-cols-3">
-            <ButtonOutline onClick={() => { setAct(`Paused. ${m.name}’s calls wait up to 8 weeks.`); c.setMoms((ms) => ms.map((x) => (x.id === id ? { ...x, status: "Paused" } : x))); }}>Pause</ButtonOutline>
-            <ButtonOutline onClick={() => setAct(past.some((x) => x.kind === "make-room" && x.state === "done") ? "Cancelled. The rest can pause instead of a refund." : "Cancelled with a full refund.")}>Cancel</ButtonOutline>
-            <ButtonOutline onClick={() => { setAct(`${m.name}’s data is deleted.`); }}>Delete her data</ButtonOutline>
+          <div className="flex flex-wrap gap-2">
+            <CoachBtn onClick={() => { setAct(`Paused. ${m.name}’s calls wait up to 8 weeks.`); c.setMoms((ms) => ms.map((x) => (x.id === id ? { ...x, status: "Paused" } : x))); }}>Pause</CoachBtn>
+            <CoachBtn onClick={() => setAct(past.some((x) => x.kind === "make-room" && x.state === "done") ? "Cancelled. The rest can pause instead of a refund." : "Cancelled with a full refund.")}>Cancel</CoachBtn>
+            <CoachBtn onClick={() => { setAct(`${m.name}’s data is deleted.`); }}>Delete her data</CoachBtn>
           </div>
         )}
       </Panel>
@@ -778,7 +778,7 @@ function GivenBackView({ c }: { c: Ctx }) {
         ))}
       </Panel>
       {!c.ran ? (
-        <ButtonMain className="sm:!w-auto" onClick={() => { c.setRan(true); c.setLog((l) => [...l, ["14:05", "Sent Sara her Keep my spot link", 10], ["14:05", "Sent Hina her 30-minute reminder", 5]]); }}>Run today’s automations now</ButtonMain>
+        <CoachBtn primary className="w-fit" onClick={() => { c.setRan(true); c.setLog((l) => [...l, ["14:05", "Sent Sara her Keep my spot link", 10], ["14:05", "Sent Hina her 30-minute reminder", 5]]); }}>Run today’s automations now</CoachBtn>
       ) : <Done>Done. 1 reminder and 1 Keep my spot sent. 15 minutes given back, estimated.</Done>}
     </>
   );
